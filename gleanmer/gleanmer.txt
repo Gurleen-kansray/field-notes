@@ -1,0 +1,128 @@
+© 2026 IEEE. Personal use of this material is permitted. Permission from IEEE must be obtained for all other uses, in any current or future media, including reprinting/republishing this material
+for advertising or promotional purposes, creating new collective works, for resale or redistribution to servers or lists, or reuse of any copyrighted component of this work in other works.
+Gleanmer: A 6 mW SoC for Real-Time 3D Gaussian Occupancy Mapping
+Zih-Sing Fu*, Peter Zhi Xuan Li*, Sertac Karaman, Vivienne Sze
+Massachusetts Institute of Technology, Cambridge, MA, USA
+*These authors contributed equally to this work.
+Abstract Energy-Efficient Free Gaussian Bases Generation
+High-fidelity 3D occupancy mapping is essential for many To generate local occupied Gaussians from a depth image,
+edge-based applications (such as AR/VR and autonomous Scanline Segmentation (SS) first extracts line segments from
+navigation) but is limited by power constraints. We present image rows, which are then merged across adjacent rows via
+Gleanmer, a system on chip (SoC) with an accelerator for Segment Fusion (SF) to represent individual obstacles.
+GMMap, a 3D occupancy map using Gaussians. Through Traditionally, free Gaussian bases are generated from the
+algorithm-hardware co-optimizations for direct computation sensor rays associated with line segments, as shown in Fig. 4a.
+and efficient reuse of these compact Gaussians, Gleanmer However, the computational cost scales with the total number
+reduces construction and query energy by up to 63% and 81%, of line segments (in the thousands) and accounts for 26% to
+respectively. Approximate computation on Gaussians reduces 65% of the total map construction energy. To reduce energy
+accelerator area by 38%. Using 16nm CMOS, Gleanmer usage by 22% to 63% (see Fig. 7a), the Free Gaussian Bases
+processes 640(cid:3400)480 images in real time beyond 88 fps during Generation Unit (see Fig. 3) computes free Gaussian bases
+map construction and processes over 540K coordinates per directly from occupied Gaussians (see Fig. 4b). Since sensor
+second during map query. To our knowledge, Gleanmer is the rays are not stored during SS for memory efficiency, a small
+first fabricated SoC to achieve real-time 3D occupancy set of representative rays is sampled from each occupied
+mapping under 6 mW for edge-based applications. Gaussian to efficiently generate these free Gaussian bases.
+Keywords: 3D mapping, autonomous navigation, AR/VR. Reusing Gaussians Across Successive Queries
+Introduction To ensure collision-free motion, the device queries
+3D occupancy maps classify the 3D environment into occupancy probabilities at coordinates along piecewise-linear
+occupied, free, and unexplored regions using probabilities. trajectories in the constructed global map. Since trajectory
+While sparse maps (e.g., LiDAR/SLAM point clouds [1]) only coordinates are spatially proximate, they typically traverse
+contain a few points within occupied regions of the similar R-Tree paths (see Fig. 5). To eliminate redundant path
+environment, occupancy maps completely capture all spatial traversals, Gleanmer utilizes batch querying, where a single
+regions (see Fig. 1, top). This enables edge devices and their bounding box enclosing successive coordinates retrieves
+users to navigate safely by staying within free regions and overlapping Gaussians for all these coordinates through the R-
+avoiding high-risk occupied and unexplored regions. Tree. These Gaussians are time-interleaved across all
+Traditional 3D occupancy maps, such as OctoMap [2], lack coordinates to share the Gaussian Regression Unit (see Fig. 3)
+compactness and consume over 100 mW even with hardware with a negligible 2% accelerator area overhead for registers
+acceleration [3], exceeding edge power budgets [4][5][6]. To storing intermediate results. This batching strategy for 16
+achieve superior energy efficiency and compactness, GMMap coordinates increases query throughput by 4 to 10(cid:3400) while
+utilizes occupied (red) and free (blue) Gaussian ellipsoids (see reducing energy consumption by 74% to 81% (see Fig. 7b).
+Fig. 2) to represent occupied and free regions [7], respectively. Reducing Area with Approximate Computation
+These 3D Gaussians, defined by their means and covariances, The buffer area in Gaussian Generation is reduced by 8(cid:3400)
+are indexed via an R-Tree of their bounding boxes for efficient by 1) generating free Gaussian bases directly from occupied
+retrieval. The map is constructed frame-by-frame from sensor Gaussians to avoid storing these bases for line segments, and
+rays derived from depth images and their corresponding 2) a single-cycle slope approximation in the feedback stage of
+camera poses. Gaussian Generation extracts local occupied the SS Unit so that line segments from only one depth-image
+Gaussians from sensor endpoints and free Gaussian bases row (instead of four) are buffered. The SS Unit uses a
+from ray paths of the current image. During Gaussian Fusion, feedback stage to compute the line segment slope, which
+these bases are refined into local free Gaussians; subsequently, typically requires four cycles. To sustain throughput, the core
+all local Gaussians are fused into the global map. After must time-interleave across four rows, which requires storing
+construction, the map is queried via Gaussian Regression, 4(cid:3400) line segments. By approximating the slope in one cycle
+which computes the occupancy probability at a given with its value from four cycles prior (i.e., minimal slope
+coordinate by evaluating its spatially overlapping Gaussians. variance across neighboring pixels of the same line in Stage 4
+Existing embedded software implementations of GMMap of Fig. 6), the SS Unit achieves equivalent throughput without
+consume over 2 W [7] and are prohibitive for many edge time-interleaving. Finally, reducing Gaussian precision from
+devices. Thus, we present Gleanmer to enable real-time 32-bit to 19-bit yields a 38% reduction in Fusion and
+mapping under 6 mW. Gleanmer leverages direct Gaussian Regression Engine area. Covariance matrices remain in 32-bit
+computation and cross-query Gaussian reuse to reduce energy, to prevent degeneracy. In total, these approximations reduce
+while the silicon area is reduced via approximate computing. the accelerator area by 38% (Fig. 7c) and shrink the map size
+Architecture Overview by 44 to 63% while maintaining map accuracy (Fig. 8, top).
+Fig. 3 shows Gleanmer’s architecture with a GMMap Implementation and Results
+accelerator. The CPU is used to reconfigure the accelerator. Fig. 8 summarizes Gleanmer’s performance across three
+Depth images are streamed through external IOs into the diverse environments [8][9] (see Fig. 9). Fig. 10 shows the
+Depth Decoder. Dedicated engines accelerate Gaussian chip testing setup and micrograph. With comparable accuracy,
+Generation and Fusion. To ensure efficient map sharing Fig. 11 shows that Gleanmer achieves higher construction and
+without duplication, the constructed global map is stored in a query throughput than the NVIDIA Jetson TX2 for GMMap
+global buffer accessible via a shared AXI-4 bus. The Gaussian [7] and the OMU accelerator for OctoMap [3]. For
+Management Engine reduces map access latency by using an construction, Gleanmer processes 640(cid:3400)480 depth images in
+R-Tree Engine to organize Gaussians into a tree of bounding real-time above 88 fps. For query, Gleanmer achieves superior
+boxes, enabling Gaussian insertion, removal, and search in throughput of 540K to 1320K coordinates per second (cps).
+logarithmic time. Since these operations access one small The power consumption is under 6 mW which is at least 341(cid:3400)
+subregion of the global map at a time, a 44 KB cache exploits lower than NVIDIA Jetson TX2 and 44(cid:3400) lower than OMU.
+the temporal locality of this subregion to increase construction Acknowledgements: MIT-MathWorks Fellowship, Amazon,
+throughput by 4 to 7(cid:3400) and query throughput by 3 to 9(cid:3400). NSF CPS 2400541, Intel USP for silicon donation.
+© 2026 IEEE. Personal use of this material is permitted. Permission from IEEE must be obtained for all other uses, in any current or future media, including reprinting/republishing this material
+for advertising or promotional purposes, creating new collective works, for resale or redistribution to servers or lists, or reuse of any copyrighted component of this work in other works.
+© 2026 IEEE. Personal use of this material is permitted. Permission from IEEE must be obtained for all other uses, in any current or future media, including reprinting/republishing this material
+for advertising or promotional purposes, creating new collective works, for resale or redistribution to servers or lists, or reuse of any copyrighted component of this work in other works.
+Fig. 1. Top: Visual differences between a 2D sparse map from point
+cloud and a 2D occupancy map. Bottom: Gleanmer uses a sequence
+of depth images and their camera poses to construct a 3D occupancy Fig. 2. Simplified illustration of GMMap for map construction
+map (GMMap) consisting of occupied and free Gaussians. (Gaussian Generation and Fusion) and query (Gaussian Regression).
+Fig. 3. System architecture of Gleanmer SoC, including a RISC-V Fig. 4. (a) An example of generating free Gaussian bases from line
+CPU, 512 KB global buffer, external I/Os, and a GMMap accelerator. segments, which dominates up to 65% of map construction power.
+The GMMap accelerator is composed of dedicated engines to (b) To reduce energy by 22% to 63%, free Gaussian bases are directly
+accelerate Gaussian Generation, Fusion and Regression. from occupied Gaussians instead.
+Fig. 5. Comparison between single and batch query at three
+successive coordinates along a trajectory. For this example, querying
+one coordinate at a time (single query) results in three similar R-Tree Fig. 6. A signal flow diagram of the Scanline Segmentation Unit that
+traversal paths with a total length of 8. To reduce memory accesses processes pixel by pixel. At Stage 4, the current slope requires four
+associated with traversal, querying a batch of coordinates using an cycles to update. Instead of waiting for the update, the prior slope
+enclosing bounding box (batch query) reduces path length to 4. four cycles ago is retrieved in 1 cycle and feedback to Stage 2.
+© 2026 IEEE. Personal use of this material is permitted. Permission from IEEE must be obtained for all other uses, in any current or future media, including reprinting/republishing this material
+for advertising or promotional purposes, creating new collective works, for resale or redistribution to servers or lists, or reuse of any copyrighted component of this work in other works.
+© 2026 IEEE. Personal use of this material is permitted. Permission from IEEE must be obtained for all other uses, in any current or future media, including reprinting/republishing this material
+for advertising or promotional purposes, creating new collective works, for resale or redistribution to servers or lists, or reuse of any copyrighted component of this work in other works.
+Fig. 7. Energy / area reductions of our accelerator. (a) Comparison Fig. 8. Top: Map accuracy and size of Gleanmer across three
+between free Gaussian bases generation (FGBG) from line segments environments. Algorithm-hardware co-optimizations in Gleanmer do
+(baseline) and occupied Gaussians (ours). (b) Comparison between not degrade the map accuracy compared with software. Middle:
+map query via one coordinate at a time (baseline) and a batch of Gleanmer’s throughput and power consumption across all three
+coordinates (ours). (c) Cumulative reduction in accelerator area environments. Bottom: Area and power breakdown of Gleanmer’s
+achieved through successive algorithm-hardware co-optimizations. compute engines when averaged across all three environments.
+Fig. 9. Top: A 2D horizontal cross section of the 3D occupancy map
+where the variations of the occupancy probability are visualized from Fig. 10. Top: Chip testing and map visualization setup. Bottom: Chip
+occupied (red) to unexplored (yellow) to free (blue). Bottom: micrograph with engines in the GMMap accelerator enclosed in
+Occupied Gaussians are visualized for a subregion of the 3D map. green rectangles. Performance of Gleanmer is tabulated.
+References
+[1] A. Suleiman, IEEE JSSC, vol. 54, no. 4, pp. 1106–1119, 2019,
+doi: 10.1109/JSSC.2018.2886342.
+[2] A. Hornung et al., Auton Robot, vol. 34, no. 3, pp. 189–206,
+2013, doi: 10.1007/s10514-012-9321-0.
+[3] T. Jia et al., DATE, 2022, pp. 909–914, doi:
+10.23919/DATE54114.2022.9774508.
+[4] Q. Tao et al., IEEE TMech, vol. 26, no. 4, pp. 1859–1904, 2021,
+doi: 10.1109/TMECH.2021.3073966.
+[5] Y. Chukewad et al., IEEE T-RO, vol. 37, no. 6, pp. 2025–2040,
+2021, doi: 10.1109/TRO.2021.3075374.
+[6] S. Suhr et al., RSS, 2005, doi: 10.15607/RSS.2005.I.042.
+[7] P. Li et al., IEEE T-RO, vol. 40, pp. 1339–1355, 2024, doi:
+10.1109/TRO.2023.3348305.
+[8] J. Sturm et al., IEEE IROS, 2012, doi:
+10.1109/IROS.2012.6385773.
+[9] W. Wang et al., IEEE IROS, 2020, doi:
+Fig. 11. Comparison among NVIDIA Jetson TX2, OMU, and
+10.1109/IROS45743.2020.9341801.
+Gleanmer. With comparable accuracy (<1% difference), Gleanmer’s
+power consumption is at least 341(cid:3400) lower than Jetson TX2 and 44(cid:3400)
+lower than OMU. Since GMMap is at least 5(cid:3400) more compact than
+OctoMap [7], Gleamer contains 3(cid:3400) less on-chip memory than OMU.
+© 2026 IEEE. Personal use of this material is permitted. Permission from IEEE must be obtained for all other uses, in any current or future media, including reprinting/republishing this material
+for advertising or promotional purposes, creating new collective works, for resale or redistribution to servers or lists, or reuse of any copyrighted component of this work in other works.
