@@ -1,0 +1,1456 @@
+SurfSLAM: Sim-to-Real Underwater Stereo Reconstruction For Real-Time
+SLAM
+OnurBagoren∗ SethIsaacson∗ SacchinSundar Yung-ChingSun AnjaSheppard
+HaoyuMa AbrarShariff RamVasudevan KatherineA.Skinner
+https://umfieldrobotics.github.io/SurfSLAM/
+Figure1. SurfSLAMperformsreal-timeSLAMinchallengingunderwaterenvironmentsbyfusingproprioceptivedatawithglobalreg-
+istration. Accurate global registration is enabled by an underwater stereo disparity estimation algorithm that is fine-tuned via a novel
+sim-to-real pipeline. Illustrated is our BlueROV data collection platform navigating a shipwreck. Two stereo frames along the robot’s
+path(drawninpink)arevisualized. BackgroundimagecourtesyoftheNationalOceanicandAtmosphericAdministrationThunderBay
+NationalMarineSanctuary.
+more, real-world underwater scenes frequently lack rich
+Abstract texture useful for stereo depth estimation and 3D recon-
+struction.Asaresult,stereoestimationnetworkstrainedon
+Localizationandmappingarecoreperceptualcapabilities in-air data cannot transfer directly to the underwater do-
+for underwater robots. Stereo cameras provide a low-cost main. Inaddition,thereisalackofreal-worldunderwater
+means of directly estimating metric depth to support these stereo datasets for supervised training of neural networks.
+tasks. However, despite recent advances in stereo depth Poorunderwaterdepthestimationiscompoundedinstereo-
+estimation on land, computing depth from image pairs in basedSimultaneousLocalizationandMapping(SLAM)al-
+underwaterscenesremainschallenging. Inunderwateren- gorithms,makingitafundamentalchallengeforunderwa-
+vironments, images are degraded by light attenuation, vi- ter robot perception. To address these challenges, we pro-
+sual artifacts, and dynamic lighting conditions. Further- pose a novel framework that enables sim-to-real training
+of underwater stereo disparity estimation networks using
+∗Denotesequalcontribution simulated data and self-supervised finetuning. We lever-
+ThisworkwassupportedbytheNationalScienceFoundationunder ageourlearneddepthpredictionstodevelopSurfSLAM,a
+AwardNo.2337774.
+novelframeworkforreal-timeunderwaterSLAMthatfuses
+AllauthorsarewiththeDepartmentofRobotics,UniversityofMichi-
+gan,AnnArbor,MI48109,USA stereocameraswithIMU,barometric,andDopplerVelocity
+Correspondingauthore-mail:obagoren@umich.edu
+1
+6202
+peS
+41
+]OR.sc[
+3v41801.1062:viXra
+Log(DVL)measurements. Lastly,wecollectachallenging reliable metric depth from underwater stereo imagery. We
+real-worlddatasetofshipwrecksurveysusinganunderwa- demonstrate that our sim-to-real training enables state-of-
+ter robot. Our dataset features over 24,000 stereo pairs, the-art stereo depth estimation in the underwater domain.
+alongwithhigh-quality,densephotogrammetrymodelsand As a result, the dense depth maps estimated by our ap-
+referencetrajectoriesforevaluation. Throughextensiveex- proachprovidestronggeometricpriorstoimprovenaviga-
+periments,wedemonstratetheadvantagesoftheproposed tionandmappingcapabilities. OurproposedSLAMframe-
+trainingapproachonreal-worlddataforimprovingstereo work fuses depth predictions with measurements from an
+estimationintheunderwaterdomainandforenablingaccu- IMU,DopplerVelocityLog(DVL),andbarometertotrack
+ratetrajectoryestimationand3Dreconstructionofcomplex vehicle pose. The vehicle pose and dense depth maps are
+shipwreck sites. Code, real-world underwater data, and thenusedtoestimateadense3Dmapofthescene.
+simulatedtrainingdatawillbemadepubliclyavailable. Our method is evaluated on a dataset of long-duration
+shipwreck surveys for visual-acoustic-inertial SLAM. Our
+dataset includes reference 3D reconstructions and vehicle
+1.Introduction trajectories to support qualitative and quantitative evalua-
+tion. Wepresentextensiveexperimentsdemonstratingthat
+Underwater simultaneous localization and mapping
+SurfSLAM improves both trajectory accuracy and recon-
+(SLAM) is a key challenge in marine robotics, with wide-
+structionqualityforunderwaterSLAMinchallengingreal-
+ranging applications such as underwater inspection [23]
+world environments compared to existing state-of-the-art
+and semantic mapping [63]. Vision plays a crucial role
+methods.Code,modelweights,real-worldunderwaterdata,
+in this context. Cameras are relatively low-cost sensors,
+andsimulatedtrainingdatawillbemadepubliclyavailable
+and stereo cameras can provide metric depth information
+uponpublication.
+usefulforreconstructingthescenegeometry. However,un-
+derwaterimagingpresentsseveralfundamentaldifferences 2.RelatedWork
+from in-air imagery. The presence of haze, attenuation,
+dynamiclighting,andsuspendedparticlesreducescontrast SurfSLAM is a method that combines underwater SLAM,
+and detail. Further, large areas of real-world underwater stereo depth estimation, and the transfer of deep learning
+scenes often lack distinctive, trackable textures useful for methodstotheunderwaterdomain. Wereviewtherelevant
+estimating geometry [3, 34]. These underwater effects literaturebelow.
+can vary significantly between locations and conditions,
+2.1.VisualSLAM
+making it challenging to develop perception systems that
+remainrobustacrossdiverseunderwaterenvironments[27]. Thetask ofestimating cameramotion fromstereo images,
+Classical, hand-designed methods for stereo depth esti- optionally fused with inertial sensing, has received enor-
+mationstruggleintexturelessandhazyregions;asaresult, mousattention. ORB-SLAManditsvariants[8]operateby
+theydonotgeneralizewelltotheunderwaterdomain[21]. matching and triangulating image features, tracking cam-
+Forthein-airdomain,significantattentionhasbeendevoted eramotionrelativetofeaturemapswithinertialpriors,and
+tothemonoculardepthestimationproblem[84]. Intheun- jointly optimizing trajectories with a map via bundle ad-
+derwaterdomain,severalworkshaveadaptedin-airmonoc- justment [8]. These methods also implement a keypoint-
+ular depth estimation networks to account for underwater based visual place recognition method that helps mitigate
+imagecharacteristics [86–88]. Still,monoculardepthesti- long-termdrift. WhileORB-SLAM3providesoutstanding
+mation cannot reliably provide metric-scale depth. Recent trajectory accuracy in visually rich scenes, it is prone to
+deep stereo networks achieve excellent performance in es- tracking loss in featureless regions and does not output a
+timating in-air metric depth [28, 77, 79]. However, as we dense map useful for scene understanding. As an alterna-
+demonstrate in this work, their accuracy degrades signifi- tivetofeature-basedmethods,Droid-SLAMusesalearned
+cantlyunderwaterduetothedomainshiftinducedbyhaze, optical flow module on images for dense correspondence
+attenuation,anddynamiclighting. Severalworkshavepro- matchingandalearnedposeupdateoperatorforincremen-
+posedlearning-basedsolutionstounderwaterdepthestima- tally estimating the state and producing a dense map rep-
+tion[65,78,85],butalackoffoundation-scaleunderwater resentation [68]. Still, Droid-SLAM struggles in feature-
+trainingdataandlimitationsinsimulationfidelityhavelim- sparse regions and lacks loop closure detection. More re-
+itedtheiraccuracy. centapproacheshaveappliedlargevisionfoundationmod-
+Inthiswork,weproposeSurfSLAM,illustratedinFig- elsasthebackbonetovisualSLAM.Prominentworklever-
+ure 1. SurfSLAM is a novel framework for Sim-to-real ages vision transformers (ViTs) pretrained on large-scale
+Underwater stereo Reconstruction For real-time SLAM. simulated in-air data for zero-shot feature matching or 3D
+Our sim-to-real stereo depth estimation pipeline leverages reconstruction [33, 74], with MASt3R-SLAM integrating
+knowledgeofunderwaterimagingeffectstorecoverdense, MASt3Rpointmapsintoamonocularkeyframe-basedesti-
+2
+mator [40]. VGGT-SLAM instead jointly estimates struc- 2.3.StereoDepthEstimation
+ture and motion on the SL(4) group from uncalibrated se-
+Classical stereo and 3D reconstruction methods rely on
+quences [37]. These systems remain image-centric, heav-
+hand-crafted pipelines for matching cost computation,
+ilyrelyonViT,andperformpoorlyinunderwaterdomains
+disparity optimization, and refinement [6, 22, 50, 56].
+where images fall out of the training distribution. In con-
+Commonly used methods include EpicFlow-based match-
+trast, our proposed method, SurfSLAM, fuses acoustic-
+ing[6],[73],andAgisoftMetashape[2]. Theseapproaches
+inertialdatawithlearnedstereodepthestimationandvisual
+tendtobehighlysensitivetohyperparameters, whichmay
+place recognition to produce accurate trajectories in both
+need to be re-tuned depending on the scene. Other meth-
+featurelessandfeature-richenvironments.
+odsfocusonmatchingkeypointsbetweenimages,thentri-
+angulating and optimizing 3D map points[58, 59]. While
+2.2.UnderwaterVisualSLAM this may provide good geometric accuracy, these methods
+cannot operate in textureless regions. Furthermore, they
+Early underwater visual SLAM focused on monocular- cantakeseveralhourstoseveraldaystorunonreal-world
+based navigation for large-scale inspections using pose- scenes,limitingtheirutilityinthefield.
+graph formulations [15, 31, 32, 48]. These works intro- The introduction of deep learning for stereo depth es-
+ducedinformativevisualconstraintselectionbasedonlocal timation offers an alternative to hand-crafted approaches.
+geometryanddemonstratedrobuststateestimationbyfus- RAFT-Stereo[35]employsrecurrentfeaturematchingand
+ing vision with DVL and inertial measurements for large- iterativerefinementwithatypicalencoder-decodernetwork
+scale inspections [5, 43]. Later works studied how visual architecturetoproducedisparitymapsfromastereoimage
+characteristics in underwater settings, such as directional pair. However, this approach often requires finetuning on
+light, could be leveraged within the visual front end, im- a target domain for optimal performance. The recent re-
+provingbothtrackingandmappingperformance[48]. lease of FoundationStereo [77] has demonstrated the po-
+tential of models trained on large-scale simulated datasets
+Laterworkstightlycoupledacousticandinertialsensors
+to achieve excellent cross-domain, generalizable zero-shot
+withvisualinformationformorerobuststateestimationand
+performance on in-air data. Foundation stereo leverages
+mappingperformance[4,72,80].Panetal.presentatightly
+a pre-trained and frozen foundation model encoder from
+integrated imaging sonar-IMU-camera system [44], while
+DepthAnything V2 [83]. The foundation model features
+SVIn2fusesabarometerandamechanicallyscanningsonar
+are fused with side-tuned CNN features and processed by
+intoasonar-visual-acousticstateestimator[49]. Thomset
+a combination of convolutions, transformer mechanisms,
+al. integrate a camera, DVL, IMU, and LiDAR for an au-
+and iterative refinement to produce high-quality disparity
+tonomoussurfacevehicle, providingfoundationalworkon
+estimates [77]. DEFOM-Stereo [28] also uses a founda-
+theintegrationoftheDVLintoapose-graph-basedformu-
+tionmodeltogeneratemonoculardepthestimationcues,but
+lation[69]. AQUA-SLAMsimilarlyintegratesaDVLinto
+leveragesaRAFT-Stereobackbone. IGEV++[79]forgoes
+avisual-inertialodometry(VIO)frameworkforunderwater
+foundation model encoders and instead introduces multi-
+applications, with online extrinsic calibration [82]. These
+rangegeometryencodingvolumestocapturedifferentlev-
+approaches yield robust pose estimates but produce sparse
+els of encoding granularity, leading to strong performance
+mapsthatlackthedenseinformationavailablefromstereo
+in large-disparity scenes. While IGEV++ cannot achieve
+cameraspresentineachofthemethods.
+thelevelofdetailandaccuracyof[28,77],itproducescom-
+Song et al. produce dense maps through depth fusion
+petitive results with significantly lower memory footprint
+of stereo depth maps along trajectories estimated by an
+and inference time than foundation model-based methods.
+acoustic-inertial tracker [66]. Wang et al. perform a simi-
+A prominent feature of deep learning methods for stereo
+larprocessbyusingaSumofAbsoluteDifferencestocom-
+predictionnetworksistheiterativerefinementprocess,typ-
+putestereodisparities,combinedwithposesestimatedfrom
+icallymodeledasavariantofagatedrecurrentunit(GRU)
+SVIn2[76].
+layer[77]oranincrementaldisparityupdatestep[28]. The
+Ourworkincorporatesmetricdepthmeasurementsesti- iterativerefinementstepupdatesaninitialdisparityestimate
+mated by a stereo network to form global registration fac- basedoncorrelationfeaturesextractedearlyinthenetwork
+tors,andcombinesthemintoanacoustic-visuo-inertialpose architecture,providingcontextrelevantforrefiningdispar-
+graph. As a result, SurfSLAM both maintains accurate ityestimates. Still, sincethesemethodsaredevelopedand
+tracking in featureless regions via acoustic-inertial fusion trained for in-air stereo depth estimation, they lack gener-
+and mitigates long-term drift via global place recognition. alizability to underwater conditions such as turbidity, low
+Furthermore, with dense stereo depth estimation, SurfS- light, caustics, and attenuation. The lack of large-scale
+LAMisabletooutputadensemapofcomplexunderwater trainingsetsfortrainingunderwaterstereonetworkslimits
+environments. theabilitytore-trainthesenetworksonrealstereoimagery
+3
+Stereo Estimation Global Registration Outputs
+Place 3D Outlier
+Recognition Registration Rejection
+Factor Graph
+DVL Preintegrate
+DVL Factor
+IMU Factor
+IMU Preintegrate
+Barometer Factor
+Registration Factor
+Barometer Opti-Acoustic-Inertial SLAM
+Figure2.AnoverviewofSurfSLAM.Wetakeasinputmeasurementsfromabarometer,IMU,DVL,andastereoimagepair.Wemaintain
+anacoustic-inertialposegraphthatpreintegratesmeasurementstomaintainaposethroughoutoperation. Inparallel,weuseourfinetuned
+underwaterstereonetworktoproducemetricdepthmaps.Thesedepthestimatesandstereoimagesareusedtoperformgeometrictracking
+toperformglobalregistration,andreducedriftoveroperation,producingaccuratetrajectoriesanddensemapsduringoperation.
+fromunderwaterscenes. model with direct supervision on the stereo disparity esti-
+mates. This train-time augmentation is made possible due
+2.4.DeepLearningforUnderwaterStereo to the simulated data being coupled with the stereo intrin-
+sic and extrinsic parameters, a key addition coupled with
+Aclassofworkthataimstoovercomedatascarcityinun-
+our simulated data. As a fine-tuning approach, similar
+derwater stereo matching trains a network with direct su-
+to [65, 78], we employ a warping loss for self-supervised
+pervision, using augmentations to make the training data
+training. As a novel contribution over existing methods,
+morecloselyresembletheappearanceofunderwaterimages
+weproposeadditionalregularizationtoguidethemodelto
+[36,85,89].In[89],theauthorsemployastyletransfernet-
+make correct predictions when the background (i.e., water
+worktotransformareferenceunderwaterimageintoatar-
+column) is present in the stereo image pairs. The depths
+getin-airstereopairimagewithground-truthdisparity,and
+from the finetuned model are then used in our SurfSLAM
+thentrainthenetworkusingtheseaugmentedimages.Other
+framework to enable tracking and mapping in environ-
+workshaveleveragedaphysics-basedapproach,following
+mentswherethegeometriccuesallowforplacerecognition,
+underwaterimageformationmodelstoaugmentlargein-air
+globalregistration,andloopclosures.
+datasetswithwatercolumneffects[36].
+Whilesimulateddatamitigatethedatascarcityproblem,
+3.MethodOverview
+accurately simulating the complex underwater image for-
+mation remains challenging. Self-supervised approaches WeproposeSurfSLAM,anovelframeworkforSim-to-real
+aim to overcome this by leveraging stereo image pair con- Underwater stereo Reconstruction For real-time SLAM.
+sistencyobjectives. UWStereoNet[65]pre-trainsanunsu- AnoverviewoftheproposedmethodisshowninFigure2.
+pervisedSiamesenetworkfordisparityestimationonin-air First,oursim-to-realstereodepthestimationpipelinelever-
+dataandthenfine-tunesitonunderwaterdatausingaself- ages knowledge of underwater imaging effects to recover
+supervised objective of warping the stereo pairs onto each dense, reliable metric depth from underwater stereo im-
+other and computing a photometric error between them. agery. Then, SurfSLAM fuses our dense stereo depth pre-
+More recently, StereoAdapter [78] targets underwater do- dictions using global registration with measurements from
+main shift by parameter-efficiently adapting a monocular anIMU,DVL,andbarometerfortrackingvehiclepose.The
+foundationencoderandaself-supervisedobjectivethatsim- posesanddepthmapsarethenusedtobuildadense3Dre-
+ilarly minimizes a photometric error between stereo pairs constructionofthescene.
+with additional losses to handle occlusions and improve Thediscussionoftheproposedtechnicalapproachisor-
+depthsatedges. In[78],adatasetof40,000simulatedim- ganized as follows: Subsection 3.1 provides the notation
+ages is also released, consisting of augmentations, texture andcoordinateconventionsusedthroughoutthepaper.Sec-
+mapsandenvironmentstobettermatchtheunderwaterim- tion 4 presents our proposed methodology for sim-to-real
+ageconditions,andperformpre-trainingwiththisdataset. training of underwater stereo disparity estimation. Then,
+We propose a fusion of the two approaches. We first Section 5 describes our SurfSLAM system, which fuses
+develop a novel, comprehensive train-time augmentation stereo depth estimation with acoustic and inertial sensing
+pipelinetogeneraterealisticunderwaterimagesfromlarge- for real-time localization and dense mapping of complex
+scale in-air datasets, producing simulated data to train a underwaterscenes.
+4
+3.1.Preliminaries sceneassetsarecollectedfromEpicFab[14]andSketchfab
+[64], totaling eight scenes. These scenes are selected for
+3.1.1.Notation
+their similarity in terrain properties (i.e., rocky and sandy
+We denote scalars as lowercase italics (x,y,z,...), matri-
+seafloors)andstructure(i.e.,openwater,caves). Theassets
+ces as uppercase bold (X,Y,Z,...) and vectors as low-
+are selected to reflect common underwater structures, in-
+ercase bold (x,y,z,...). Sensor measurements are de-
+cludinglargeandsmallshipwrecks,rocksspanningarange
+noted as capitalized calligraphic (X,Y,Z,...), and esti-
+of scales and textures, and marine vegetation. During the
+matedvariablesaredenotedwithabarx¯.
+initial simulated data generation stage, the position of the
+stereocamerapairisrandomlysampledfromapre-recorded
+3.1.2.FrameDefinitions
+trajectoryineachscene,andarandomorientationatthepo-
+ThereferenceframesareshowninFigure3,whereredindi-
+sition is applied to ensure diversity of views of the scene.
+catesthex-axis,greenthey-axis,andbluethez-axis. The
+Witheachrender,thestereopairimageisgenerated,along
+reference frames include the fixed world frame, W, and the
+withthecameraintrinsics,depthimage,andscenenormals.
+North-East-Down(NED)frame,N. Thebaseframe,B,and
+We note that when rendering the initial simulated im-
+IMU frame, I, are shown to be coincident, similar to that
+ages,wedonotapplyanyunderwatereffects. Whilethere
+of [16],andthesensorframesarerepresentedastheDVL
+hasbeenarecentriseinGPU-acceleratedsimulatorsforthe
+frame,D,thebarometerframe,P,andtheleftcameraframe,
+underwaterdomain[47,53,67], simulatedeffectsarelim-
+C. Alltransformationsandtheirnotationsfollowthedefini-
+ited to haze and attenuation. We also seek to model caus-
+tionsin[17].
+tics, dynamic lighting, and suspended particles. Thus, we
+proposeanaugmentationpipelinethattakesinsimulatedin-
+air images and applies train-time augmentations. This has
+theaddedbenefitofrandomizingaugmentationsattraining
+time,yieldingmultipleconfigurationsofunderwaterimage
+parametersforeachsimulatedimage.
+4.2.UnderwaterDataAugmentation
+Thissectionpresentsatraining-timeaugmentationpipeline
+that transforms the simulated in-air stereo imagery into
+physically plausible underwater renderings while preserv-
+ingdensedisparitygroundtruth. Weexplicitlymodeldom-
+inant components of underwater image formation and ap-
+plythemascomposableoperatorstothesimulateddataset.
+Figure 3. Coordinate frames of the robot. Red indicates the x- Concretely,thepipelinecomprisesfouraugmentationmod-
+axis,greenthey-axis,andbluethez-axis. TheIMU(I)andbase ules: (1) ambient water-column illumination, (2) surface-
+(B)framesarecoincident.TheDVL(D)andbarometer(P)frames inducedcausticsfromrefractedsunlight,(3)directionaland
+sharethesameframeconventionandthecameraframe(C)follows
+diffusesunlight,and(4)specularhighlightsfromsuspended
+theOpenCVframeconvention[1].
+sedimentparticles.Thecumulativeeffectoftheseoperators
+ontheinputimagesisillustratedinFigure4.Notethatsince
+thepresentedaugmentationsonlyrequirethesimulatedin-
+4.UnderwaterStereoEstimation
+air stereo images, ground-truth depths, the camera intrin-
+sics, and the stereo extrinsics, it is broadly transferable to
+This section introduces our proposed method for learning-
+otherin-airdatasetsthatcontaindenseground-truthdepth.
+based underwater stereo depth estimation, including data
+generation, data augmentations, implementation details, 4.2.1.WaterColumnEffects
+andtrainingloss.
+We model water-column effects using the light transport
+model described in [57, 61]. For an in-air image, J , with
+4.1.SimulatedDataGeneration c
+depthmap, z, thesimulatedunderwater pixelintensity, I ,
+c
+Motivated by the lack of real-world underwater stereo atlocationx=(u,v)isgivenby
+datasets with ground truth depth, and inspired by the suc-
+cessofstereodisparityestimationin[77],weleveragesim- I (x,z)=J (x)·t (z)+B ·(1−t (z)) (1)
+c c c c,∞ c
+ulateddatafornetworktraining. Togeneratetrainingdata, t (z)=exp(−β z) (2)
+c c
+wefirstleveragetheOmniverseRTXrenderer[41]togen-
+erate rendered images in an IsaacSim environment [42], where β is a per-channel attenuation coefficient for
+c
+as shown in the first column of Figure 4. Objects and c ∈ {R,G,B} and B is the per-channel veiling-light
+c,∞
+5
+TABLE1
+AsummaryofunderwaterSLAMandstereodatasets.Weproposetwonewdatasets:alargesimulateddatasetwithcomprehensive
+underwateraugmentationandareal-worlddataset.✓*denotesthatthedatasetwillbereleaseduponpublication.Photogrammetryis
+shortenedtoPGMandsimulationisshortenedtoSim.forthegroundtruthcolumn.
+No. Publicly WaterEffects AdditionalSensors
+Name Camera Splits GroundTruth
+Images Avail. Turbid LowLight Dir.Light DVL IMU Baro.
+Train 4,047 ✓
+UWStereoNet[65] Stereo LiDAR ✓
+Test 15 ✓
+SQUID[6] Stereo - 57 ✓ PGM ✓
+FLSea[50] Stereo - 19,596 ✓ PGM ✓ ✓
+SOTRUE[38] Stereo - 8,497 ✓ Encoder ✓ ✓
+UWStereo[36] Sim. - 29,568 ✕ Sim. ✓ ✓
+StereoAdapter[78] Sim. Both 40,000 ✓ Sim. ✓ ✓ ✓
+UWSim(Ours) Sim. - 105,600 ✓* Sim. ✓ ✓ ✓
+Train 19,950 - ✓ ✓ ✓
+oeretS
+SUDS(Ours) Stereo ✓*
+Test 1,486 PGM ✓ ✓ ✓
+UWslam[7] Stereo - 3,111 ✓ PGM ✓
+FLSea[50] Mono. - 22,456 ✓ PGM ✓ ✓ ✓
+SVIn2[49] Custom - 25,145 ✓ PGM ✓ ✓ ✓ ✓ ✓
+Tank[81] Stereo - 40,649 ✓ AprilTag ✓ ✓ ✓ ✓ ✓ ✓
+MALS
+SUDS(Ours) Stereo - 29,319 ✓* PGM ✓ ✓ ✓ ✓ ✓ ✓
+(backscatter) term at infinite range. We randomly sample Kaolin[26].
+β according to Jerlov water types [27], and we sample
+c 4.2.3.DirectionalLight
+B overarangeofconditionstospandiverseunderwater
+c,∞
+Inspired by the presence of directional lighting in under-
+appearancesateachtimeweapplytheaugmentation. This
+waterdatasets(seeTable1)andbymethodsthatexplicitly
+approach is flexible enough to sample and generate the
+exploit lighting for reconstruction [54], we incorporate di-
+appearance of additional water column parameters for
+rectionallightsimulationintoourdatasetgeneration.
+targetedaugmentationstoemulatevariouswaterconditions
+Given the depth map, z(x), and its computed normals,
+extendingbeyondtheselectedJerlovwatertypes[62]. The
+N(x), we place a point light source at position p in the
+effect of this model applied to a simulated in-air image is
+camera frame with pose P and color C . For a pixel at
+showninthesecondcolumnofFigure4. c
+locationx=(u,v),thelightdirectionis
+4.2.2.Caustics (cid:104) (cid:105)T
+L(x)=p−z(x)K−1 u v 1 . (4)
+Causticsarisefromsunlightrefractionatthedynamicwater
+surface [70]; while analytic, surface-based caustic render-
+whereK isthecameraintrinsicmatrix. Thecontributionof
+ingisavailableinreal-timegraphicsengines[67],itisim-
+thedirectionallighttotheoriginalimageis
+practicaltointegratesuchpipelineswithinatrain-timeaug-
+mentation. We instead model underwater caustics via tex- PC
+I (x)= c max(0,⟨L(x),N⟩)t (∥L(x)∥),
+turemapping. GivenanimageJ
+c
+withdepthmapz(x),we light,c ∥L(x)∥2 c
+computeperpixelscenenormals,N(x),andapplyacaus- (5)
+tictexturemap,T ,underaplanarlightsourcealigned
+caustic
+with the scene +z-axis with direction L z . The resulting where t c is depth-dependent, per-channel attenuation
+causticintensityimageis definedin(2). Forastereopair,wekeeppfixedintheleft
+camera frame and simulate the light contribution on the
+I (x)=T (x)max(0,⟨L ,N(x)⟩). (3) right image. The effect of directional lighting is shown in
+caustic caustic z
+thefourthcolumninFigure4.
+This single-channel image is used to relight the image J .
+c
+Forstereopairs,weusetheknownstereoextrinsicstowarp
+4.2.4.Sunlight
+the texture map for consistent caustic projection. The ef-
+fect of thecaustic simulation is shownin the third column Inshallow-waterapplications,sunlightsignificantlyaffects
+in Figure 4. In practice, the normals are computed using thecapturedimage. Thisisevidentinthereal-worldimage
+6
+Simulated In-Air Simulated Water Simulated Specular Real World
+Simulated Caustics Simulated Lighting
+Image Column Effect Particles Reference
+Increasing augmentations
+Figure4.Ademonstrationofourunderwateraugmentationpipeline.Fromlefttoright,thefirstfivecolumnsdemonstrateincreasinglevels
+ofaugmentation.Therightmostcolumnshowsthereferenceimagethattheaugmentationsaimtomatch.
+showninthebottomrowofFigure4. Effectslikecrepuscu- texturemapisadditivelyblendedwiththebaseimage. The
+larraysareprevalentintheseenvironments,andthestrong effect of simulated particles is shown in the fifth row of
+sunlightsourcecontributestoagradientofcolorchangein Figure4.
+the water column [45]. We model two dominant sunlight
+modes purely in image space, without relying on the 3D
+4.2.6.FullAugmentationPipeline
+scenegeometry: planarandradialillumination.
+For the full augmentation pipeline, shown graphically in
+For planar illumination, we impose a vertical intensity
+Figure 4, we apply all lighting effects first, then add wa-
+gradient in the image, with pixels near the top receiving
+terhazetosimulateanunderwaterimage. Wedefinearelit
+thestrongestcontribution. Thisisparametrizedbythesun
+imageI as
+color, C , the additional brightness, b , and satura- relit,c
+sun planar
+tion distance in image space, d . Color and saturation
+sat I (x)=J (x)(1+I (x))(1+I (x)). (6)
+changes are computed consistently with the water column relit,c c light,c caustic
+parameters, β and B , used to add the water column
+c ∞ Weapplythewater-columnmodeltoI toensureall
+relit,c
+effects. For radial illumination, we define C and a sun
+sun illuminationissubjecttomediumeffects:
+position, p , in image coordinates; radial distance from
+sun
+p sun controls the color and intensity change, again tied to I water,c (x,z)=I relit,c t c (z)+B ∞ (1−t c (z)). (7)
+β andB . Samplingp abovetheimageplaneincreases
+c ∞ sun
+thecurvatureofthehalo, mimickingasunjustoutsidethe As a final step, we apply the sunlight and particles di-
+camera’sfieldofview.Theeffectofaplanarsunlightonthe rectlyontoI . Theparametersofeachaugmentationare
+water
+augmentedimageisshowninthefourthcolumninFigure4. randomlysampledtoformalargedistributionofwateref-
+fects.
+4.2.5.Particles 4.3.StereoTraining
+Suspended particles are a common feature of underwater
+In this section, we describe a unified training strategy for
+imagery, arising from high turbidity or sediment in the
+fine-tuning existing stereo depth networks in underwater
+water column. We model only particles located between
+environments. We combine supervised objectives on our
+thesceneandthecamera. Tosimulateparticleappearance,
+augmentedsyntheticdatawithself-supervisedobjectiveson
+we apply a procedurally generated particle texture map
+realunderwaterstereodataandapplythisstrategyacrossa
+directlyinimagespace. Foreachparticletexturemap, we
+rangeofmodelsizesandarchitectures[28,77].
+randomlyplaceasetofellipsoidsacrosstheimage,varying
+4.3.1.LossFunctions
+in orientation and size. Each ellipsoid’s opacity decreases
+radiallyoutwardfromitscenter,simulatingthemotionblur Stereonetworksproduceasetofrefineddisparityestimates
+experienced during image capture. The resulting particle dˆ = (dˆ,...,dˆ ), where dˆ is the finalprediction after R
+0 R r
+7
+refinementsteps. Thetraininglossswitchesbetweensuper- is the loss function proposed by [71]. Unlike the directly
+vised(L )andself-supervised(L )lossesdependingon supervised loss in (10), the self-supervised loss is applied
+sup self
+whethertheground-truthdisparity,d∗,isavailable. Thatis, onlytothefinalupsampledpredictiondˆ .
+K
+(cid:40) While [71] applies warping only from the right image
+L (dˆ,d∗) d∗known
+L(dˆ)= sup (8) to the left, we follow [65] and apply the loss in both
+λ ·L (dˆ ) otherwise directions. Although (12) is written as the average of the
+self self R
+two losses, in practice, the warped image may contain
+whereλ isascalarhyperparameter.
+self invalid pixels at the edges (caused by parts of the scene
+4.3.2.DirectDisparitySupervision being out of view in one camera). In such cases, we keep
+Ground-truth disparity, d∗, is available only for simulated only the valid camera’s loss and weight it twice, while
+discardingtheinvalidcamera’sloss.
+data. For training on simulated data, to avoid supervising
+onregionsoftheimageseverelydegradedbywatercolumn
+effects,weusetheknownper-channelattenuationt (x) =
+c 4.3.4.OccamRegularizer
+exp(−β x)fromouraugmentationpipeline. Wemaskout
+c
+regions where t (x) < t for any channel, retaining Eventhough(12)provideseffectiveself-supervisionintex-
+c min,c
+onlypixelsthatcarryinformationaboutthescenegeometry. tured regions, low-texture areas cause many disparities to
+producethesamewarpedimage, especiallyinbackground
+d∗(x)=d∗(x)1[t (x)≥t ] (9)
+c min,c regionswheredisparityshouldbezero. Toresolvethis,we
+addanOccamregularizerthatfavorszerodisparitywhenit
+Withthismaskedground-truth,weusethesamelossfunc-
+yieldsresultssimilartolargerdisparities.
+tionasin[77]:
+Let L (dˆ ) be the photometric loss in (12) for the
+warp K
+L (dˆ,d∗)=|dˆ −d∗| + (cid:88) R γR−r∥dˆ −d∗∥ predicteddisparitymapdˆ K .Wecomputeanalternativeloss
+sup 0 smooth r 1
+L (0)correspondingtoazero-disparityhypothesisbydi-
+r=1 warp
+(10) rectlycomparingtheunwarpedstereopair. Then,wedefine
+where|·| smooth denotestheSmoothL1lossand∥·∥ 1 denotes ∆ occam (dˆ K )=L warp (dˆ K )−L warp (0), (14)
+thestandardL1Loss,asdescribedby[18,77].
+which measures the gain from the predicted disparity over
+4.3.3.Self-SupervisedWarpingLoss zerodisparity.
+Ifthepredictionissignificantlyworsethanzerodispar-
+Whenground-truthdisparityisnotavailable,weuseanal-
+ity,weaddapenalty:
+ternate supervision strategy. Following several past works
+[65, 71], we use a self-supervising loss that uses the es-
+L (dˆ )=ReLU(τ +∆ (dˆ )), (15)
+timated disparity to warp each image to the frame of the occam K occam occam K
+other. That is, given a rectified pair of images (I ,I )
+L R
+along with the rectified intrinsics, K, and the stereo base- whereτ occam isamarginparameter.
+line,b,eachimageisback-projectedto3Dbyconvertingthe
+disparitiestodepths. Then,the3Dpointsareprojectedinto
+4.3.5.TotalLossFunction
+the frame of the other image and interpolated to form the
+final image. We denote this operation Iˆ = warp(I ,d) Finally,asin[71],weaddtheedge-awaresmoothnessreg-
+L R
+andIˆ R = warp(I L ,d), wherethedependenceoncalibra- ularizer, L smooth , from[19]. Thus, thefinalself-supervised
+tionsisomittedforbrevity. Inpractice,thiswarpoperation lossis
+isimplementedbytheopen-sourceKornialibrary[52].
+Using the estimated images and ground-truth, the fol- L self (dˆ K )=λ warp L warp (dˆ K )
+lowinglossiscomputed: +λ L (dˆ ) (16)
+occam occam K
+Iˆ L =warp(I R ,dˆ K ) Iˆ R =warp(I L ,dˆ K ) (11) +λ smooth L smooth (dˆ K )
+(cid:20) (cid:21)
+1
+L warp (dˆ K )= 2 L DTD (Iˆ L ,I L )+L DTD (Iˆ R ,I R ) , (12) where λ warp ,λ occam and λ smooth are scalar weights deter-
+minedexperimentally. Inpractice,wetrainthemodelwith
+where two stages. In the first stage, we train using only simu-
+L (I,Iˆ)=λ ·|I−Iˆ| lated data for a fixed number of iterations. We then fine-
+DTD DTD 1
+(13) tune on the second stage using a mixture of simulated and
++(1−λ )·SSIM(I,Iˆ)
+DTD real-worlddata.
+8
+5.SurfSLAM measurements as Z consisting of the IMU, DVL and
+k
+barometeruntiltimet :
+k
+Our proposed algorithm SurfSLAM applies the finetuned
+stereo depth estimation module and tightly integrates the Z ={I ,D ,P } . (20)
+IMU, DVL, barometer, and stereo depth maps to estimate
+k ij ij ij i,j∈Kk
+the robot’s pose and to build a dense 3D reconstruction of The estimator optimizes state estimates to maximize the
+thescene.WebaseourtrackingsystemonTURTLMap[66] posterior distribution given the measurements Z and a
+k
+duetoitsmetricallyconsistentodometryinlow-textureun- priordistributionoverthestatesX :
+0
+derwater environments. We treat the stereo-derived geom-
+etryasahigh-levelmeasurementusedtocorrectdriftwith X k ∗ =argmaxp(X k |Z k ) (21)
+globalregistrationfactorswhilerelyingonacoustic–inertial Xk
+sensingforlocallyconsistentmotion. Forthesakeofclar- ∝argmaxp(X 0 )p(Z k |X k ) (22)
+ity,wedescribethefullacoustic-inertial-stereomethodbe-
+Xk
+low. We assume that the sensor measurements are condition-
+allyindependentandhavezero-meanGaussiannoise. Fol-
+5.1.StateDefinition
+lowing this, we can transform the objective function into
+Therobotstateatakeyframeiisrepresentedasacombina- a weighted least squares problem by minimizing the log-
+tionofthepose,velocity,andsensorbiases: likelihood of each measurement and the prior over the
+states,weightedbytheirassociateduncertainties. Thisob-
+x i =[R i ,p i ,v i ,bg i ,ba i ,bv i ]∈SO(3)×R15, (17) jectiveisgivenas
+where R ∈ SO(3) and p ∈ R3 represent the orientation
+i i
+andpositionintheNEDframe,v ∈R3representsthebody X∗ =argmin∥r ∥2
+f a b r n i a a d m s. a e c W c li e e n l e m e a r a o r i m v n e t e a l t o i e n c r i t b t h y i e a , s b s e t g i s a , , te b a s n a i o d v ∈ b e v i r R i a ∈ 3 s a e R r t e 3 o t i f h s k e t e h I y e M f D r U a V m g L e y s v ro el s o c c o i p ty e k + X (cid:88) k (cid:16) 0 ∥r Σ I 0 ij ∥2 ΣIij +∥r Dij ∥2 ΣDij +∥r Pij ∥2 ΣPij (cid:17) ,
+i,j∈Kk
+(23)
+X ={x } , (18)
+n i i∈Kn
+where∥·∥2 denotestheMahalanobisdistancewithcovari-
+where K represents the keyframes up until time t . In Σ
+n n anceΣ,andrdenotestheresidualassociatedwiththefactor
+practice,weaddkeyframesat1Hztobalancefactorgraph
+forthemeasurementsZ andthepriorbeliefX . Inprac-
+k 0
+complexity,stereoinferencetime,andestimationaccuracy.
+tice,thisoptimizerissolvediterativelyasmeasurementsar-
+riveusingiSAM2[30]. Theresidualsandnoisemodelsfor
+5.2.MeasurementDefinitions
+thesensorsarederivedin[16,66,69].
+We consider sensor measurements from an IMU, a DVL,
+andabarometerbetweentwoconsecutivekeyframesiand 5.4.GlobalRegistration
+j. Forastereocamera, weconsiderthemeasurementsbe- This section describes how the tracking method from [66]
+tweenaquerykeyframeattimeq andamatchedkeyframe isaugmentedwithglobalregistration. Globalregistrationis
+attimem.
+performed in three steps: (1) global place recognition, (2)
+Thedepthestimatesfromthestereocameraaredenoted visualfeaturematching,and(3)geometricalignment. Each
+S ij . The IMU measurements are denoted as I ij , and are stepisdescribedbelow.
+composedofasetofangularvelocityω˜ ∈R3andlinearac-
+celerationa˜ ∈R3 measurements. TheDVLmeasurements, 5.4.1.GlobalPlaceRecognition
+denoted D , consist of a linear velocity v˜ ∈ R3 measure- Let K denote the set of keyframes up to a time t ≤ t ,
+ij q q k
+ment, and the barometer measurement, denoted as P is andletk ∈K betheqthkeyframethatisusedtoquerythe
+ij q q
+composed of a pressure measurement, z˜. The full set of placerecognitionsystem.Theleftimageofk ,denotedI ,
+q q,l
+measurementsisdenoted is first histogram equalized using Contrast-Limited Adap-
+tive Histogram Equalization (CLAHE) [46]. Then, Super-
+Z n ={S qm ,I ij ,D ij ,P ij } i,j,q,m∈Kn . (19) Pointfeatures(asproposedandtrainedby[11,55])areex-
+tractedfromtheequalizedimage.Thelocalfeaturedescrip-
+tors from the SuperPoint features are accumulated into an
+5.3.Acoustic-InertialPoseGraphFormulation
+image-level descriptor using the Vector of Locally Aggre-
+We follow the formulation presented in [66] for acoustic- gated Descriptors (VLAD) method [29]. In practice, the
+inertialodometry. Wedenotethesubsetofacoustic-inertial K-nearestneighborsprocesswithinVLADisimplemented
+9
+via[13]. Theimage-leveldescriptorscomputedbyVLAD strategy,registrationfactorsareweightedbyarobustHuber
+arecomparedwithotherkeyframesthatareatleast20sec- kernel [24] in the backend to reject incorrect registrations
+onds old. The top three most similar images are retrieved thatsurvivetheoutlierrejectionprocess.
+andpassedtothevisualfeaturematchingstep. Thefinalobjectivebecomes
+5.4.2.VisualFeatureMatching
+X∗ =argmin∥r ∥2
+We denote a matched image candidate as I m,l . Initial fea-
+k
+Xk
+0 Σ0
+turematchingisperformedusingSuperGlue[55]. Outliers (cid:88) (cid:16) (cid:17)
++ ∥r ∥2 +∥r ∥2 +∥r ∥2
+arerejectedbycomputingtheessentialmatrixbetweenthe Iij ΣIij Dij ΣDij Pij ΣPij
+queryandmatchimagesusingRANSAC.IfRANSACesti-
+i,j∈Kk
+(25)
+matessufficientinliers,thematchcandidateproceedstothe
+(cid:88) (cid:16) (cid:17)
+geometricvalidationstep. + ρ ∥r ∥2 , (26)
+Sqm ΣSqm
+5.4.3.GeometricValidation
+q,m∈Kq
+Using the stereo estimation described in 4, a depth image where the stereo pose registration residual r is defined
+Sqm
+is computed for both the query and matched images. Us- as
+(cid:16) (cid:17)
+ingthesedepthimages,thefiltered2Dcorrespondenceses- r =Log T˜−1T¯ ∈se(3) (27)
+timated by SuperGlue are lifted to 3D. These 3D feature
+Sqm qm qm
+correspondencesareusedtoestimatea3Dtransformation, whereT˜ representstheposemeasurementfromtheGICP
+TC qm ,betweenthetwokeyframes. Thisisagainperformed estimate q , m T¯ represents the estimated relative pose, Log
+qm
+usingRANSACtorejectpoorcorrespondences. Ifinsuffi-
+representsthemappingfromtheLiegroupSE(3)toitsLie
+cient inliers are detected, the registration is rejected. Oth-
+algebrase(3)andρdenotestherobustHuberkernel.
+erwise, the RANSAC-estimated transform is refined using
+GICP [60] on the full point clouds estimated by the stereo 5.5.Mapping
+depth estimation network, yielding a final geometric rela-
+tive pose measurement T˜C ∈ SE(3), which we simply For mapping, we adopt a similar approach to that of [68]
+qm
+denoteasthestereomeasurement,S . and maintain the stereo depth at each keyframe as a map
+qm
+Whileglobalplacerecognitionproducesthreecandidate frame primitive. Each incoming keyframe contributes a
+frames, at most one is passed to the optimizer. That is, depth image that isback-projected into a local point cloud
+the first match candidate to survive the above heuristics is using the calibrated stereo intrinsics and extrinsics. These
+passed to the pose graph, while any remaining candidates keyframepointsetsareaccumulatedtoformanexplicitge-
+arediscarded. ometricreconstructionoftheenvironment.
+To address noise introduced to the pointcloud by depth
+5.4.4.PoseGraphFormulation
+discontinuities, weapplyalightweight, GPU-basedoutlier
+We incorporate S qm as a factor added to the acoustic- rejection and noise cleaning step prior to the map frame
+inertial tracking to constrain the relative motion between construction. Specifically, we apply an edge cleaning, fol-
+the keyframes. Before adding the registration to the pose lowedbyastatisticaloutlierremovalandradiusoutlierre-
+graph, afinalprobabilistictestisperformed. Astereofac- moval step. This results in a map with minimal noise and
+tor, S qm , is added to the graph after keyframes at time t q errorsandmaintainstheglobalregistrationsthatanchorthe
+andt m havebeenoptimizedusingtheacoustic-inertialfac- poseduringthetrackingphaseofSurfSLAM.
+torsdescribedinSection5.2. Asaresult,thetrackingsys-
+tem can be queried for a belief over TC , including mean 6.Experiments
+qm
+µ andmarginalcovarianceΣ . WecomputetheMa-
+TC TC
+hal q a m nobisdistancebetweenthester q e m oregistrationresultand 6.1.DataCollectionandGeneration
+thetracker’sestimateaccordingto
+Real-world underwater stereo data was collected at the
+(cid:13) (cid:13)2 Thunder Bay National Marine Sanctuary in Alpena, MI,
+d qm =(cid:13) (cid:13) T q C m −µ TC (cid:13) (cid:13) (24) with multiple shipwreck sites and in an outdoor test tank
+qm Σ Tq C m across multiple days. The data collection platform is a
+Registrations with d > 2.5 are treated as outliers and human-operated BlueROV2 with a forward-facing stereo
+qm
+discarded;onlythosesatisfyingd ≤2.5areaddedtothe camera. Field sequences span depths from 4 to 20 m and
+qm
+posegraphasstereofactorsS . relyonnaturalillumination;additionalsequenceswereac-
+qm
+Inpractice,eachoftheoutlierrejectionmethodsistuned quired around an artificial rock target in an outdoor pool
+to add as many registrations to the factor graph as possi- (both day and night), where the BlueROV2 lights provide
+ble. To deal with the noisy estimates resulting from this additionallightingasneeded. Thedatasetexhibitsabroad
+10
+Ground Truth pairs with labeled ground-truth disparity, poses, and 3D
+Left Image Foreground Mask
+Disparity
+reconstruction. The ground truth for the stereo evalua-
+re tion dataset was obtained through a metric photogramme-
+lle
+p try pipeline. We provide stereo intrinsic and extrinsic pa-
+o
+rP
+rametersandper-framedepthmapsthroughthemetricpho-
+togrammetry pipeline. Reconstructions of four sequences
+e
+n areshowninthefirstrowofFigure 6.
+ig
+n
+E Wenotethatakeyevaluationmetricistoassessthesuc-
+cess of stereo depth estimation methods in the water col-
+tfa umn. Stereodepthestimationmethodstrainedinairtendto
+h mistakethewatercolumnforscenegeometry. Toassessthe
+S
+abilityofstereonetworkstorejectthebackground,weman-
+ually annotated each image with foreground-background
+Figure5. Anexamplefromthreeoftheninestereosequencesis
+masks. These manual annotations were augmented with
+shown.Thefirstcolumnshowstheleftrectifiedimage;thesecond
+automated ground plane annotations. To reconstruct the
+columnshowsthedisparityestimatedfromourmetricphotogram-
+metry pipeline; the last column shows the manually-annotated ground plane, the distance to the ground plane was com-
+foregroundmaskoverlaidontheleftimage. Thedisparitycolor puted for each camera pose using the DVL’s altitude mea-
+maps are so that lighter (yellow) is higher disparity and darker surements from its four beams. A plane was fit to these
+(purple)islowerdisparity,withblackbeingzerodisparity. groundmeasurementsandprojectedintoeachcameraview.
+Theforeground-backgroundmasksareusedonlyforevalu-
+ationandreportingmetrics,andareneverusedintraining.
+rangeofturbidity,caustics,lighting,andsuspendedpartic-
+Sample outputs from the evaluation dataset are shown
+ulates(seetherightmostcolumnof Figure 4andleftmost
+in Figure 5. All stereo evaluations are conducted on our
+columnofFigure 5).
+real-worlddataset.
+Ourcollecteddataset,whichwecallStereoUnderwater
+6.1.2.Real-worldSLAMDatasets
+DatasetforShipwrecks(SUDS),containsthreesubsets: (i)
+stereoevaluation,(ii)stereotraining,and(iii)SLAMeval- With SUDS, we provide three sequences for evaluating
+uation. All three dataset splits were collected at different SurfSLAM. Each sequence includes 1080p stereo video at
+shipwrecksites. Testdatawascollectedatshipwrecksites 30 fps with time-synchronized IMU, DVL, and barometer
+thatwerenotseenduringtraining. measurements. TheIMUisrecordedat200Hz,theDVLat
+Our simulation dataset, which we call UnderWater 8Hzandthebarometerat5Hz.
+Simulation (UWSim), contains simulated data of realistic Ground truth is generated by taking a downsampled 5
+underwater scenes generated as described in Section 4.1 fpsversionofthe1080pstereovideoandrunningthemet-
+and is used for training our stereo networks. This differs ricphotogrammetrypipeline,detailedinSection6.2.1.This
+fromalternativedatasetsusedinunderwaterstereotraining, ensuredthateveninregionswherethereislowtexture,the
+which use either simulated images from non-underwater photogrammetry would track the camera poses and yield
+images or lack the visual properties of underwater se- a near-full trajectory of the robot with minimal dropouts.
+quences. To the extent of our knowledge, the SLAM sequence of
+SLAMevaluationcomprisesthreesequencesonasingle theSUDSdatasetpresentsthefirstpubliclyreleasedin-the-
+shipwreckundervaryinghaze, texture, andgeometry. The wild dataset with ground truth trajectory and maps for a
+datasetstatisticsareprovidedinTable1. robot equipped with an IMU, DVL, barometer, and stereo
+camera. We refer to these three scenes as Boiler, Engine,
+6.1.1.Real-worldStereoDataset
+andLong. AreconstructionoftheBoilerandLongscenes,
+The real-world stereo training dataset consists of twenty- alongwiththegroundtruthcameratrajectories,isshownin
+two real-world sequences without accompanying ground- thesecondrowofFigure6.
+truth data, intended for self-supervision, with detailed TheBoilersequenceisa180-second-longtrajectorycir-
+statistics in Table 1. This dataset is composed of a vari- cling a large boiler followed by a short traversal over it.
+ety of underwater lighting conditions, turbidity levels, and The Engine sequence is a 284-second-long run alongside
+distractors. In addition to the stereo images, this dataset the engine section of a shipwreck, transitioning from mo-
+alsoconsistsofthestereointrinsicandextrinsicparameters, tion along the engine to lateral passes in front of the stern
+making the dataset suitable for self-supervised training, as whileinspectingthepropeller. Ofthethreesequences, the
+describedinSection4.3.3. Engine sequence is the most consistently visually rich se-
+The SUDS stereo evaluation dataset comprises nine se- quence. The Long sequence is a 550-second-long survey
+quences across five shipwreck sites, totaling 1,486 stereo spanninglongdistancesalongtheshipwreck,includingex-
+11
+o
+es
+re
+tS
+h tu
+rT
+d
+n
+o itc
+u rts
+n
+o
+nc
+ue
+oR
+rG Propeller Engine Shaft Ribs
+M
+A
+L S
+h
+s e
+c
+tu
+rT
+n
+e u
+d n u q e S
+o
+rG
+Boiler Long
+Figure6. Avisualizationofasubsetofthegroundtruthmetricreconstructionsfromthestereo(firstrow)andSLAMsequences(second
+row)usedforevaluations. TheSLAMsequencesshowtheground-truthposesasredcamerafrustumsandasparseCOLMAPreconstruc-
+tion.TheEngineSLAMsequence,notpictured,isasecondsequencearoundtheright-handsideoftheLongreconstruction.
+tendedintervalsoverlow-textureregionsobservingtheter- Afterbatchoptimization, theintrinsicandextrinsiccal-
+rain. ibrations are fixed, and camera poses and map points are
+refined on a per-sequence basis. During per-sequence re-
+6.2.GeneratingGroundTruthforRealData finement, map points are explicitly treated as optimization
+variablestoallowrobustkernelstodownweightpoorcorre-
+Fordatacollectedinthefield,groundtruthisgeneratedus-
+spondencesfromCOLMAP.
+ingametricphotogrammetrypipeline.
+6.2.3.Stereo-OnlyStereoMetricOptimization
+6.2.1.MetricPhotogrammetryPipeline
+Forstereo-onlysequences,noIMUdataisavailabledueto
+We follow a two-step approach to obtain accurate metric equipmentfailureduringfieldtesting. Asaresult,thescene
+reconstructions,cameraposes,intrinsiccalibration,andex- scale cannot be directly optimized when the stereo base-
+trinsic calibration of both the stereo pair and IMU. First, line is unknown. In this case, the stereo baseline is fixed
+structure-from-motion(SfM)isrunonsequencesofuncali- to the value estimated by Kalibr. Without IMU factors, a
+bratedstereoimagesusingCOLMAP[58,59]. Anapproxi- two-stagerefinementisunnecessary.Instead,cameraposes,
+mateintrinsiccalibrationproducedbyKalibr[51]isusedas intrinsics,stereoextrinsics,andmappointsarejointlyopti-
+aninitialguessforCOLMAP.Wethenapplyacustomop- mizedtominimizereprojectionerror. Thisoptimizationis
+timizertoresolvethemetricscaleofthescene. Theformu- performedinbatchacrossallstereosequences.
+lationofthismetricoptimizationdiffersbetweensequences
+usedforSLAMandthoseusedforstereoevaluation. 6.3.StereoTrainingDetails
+Weprovidedetailsonthetrainingdoneforfine-tuningexist-
+6.2.2.Stereo-IMUSLAMMetricOptimization
+ingstereonetworksforunderwaterstereodepthprediction.
+Torecoverthemetricscaleofthescene,wedevelopacus-
+6.3.1.TrainingDatasets
+tom optimizer. Kalibr [51] is first used to estimate initial
+cameraintrinsicsandstereo-IMUextrinsics. Featuretracks Datasets For Supervised Training Supervised pretrain-
+arethenexportedfromCOLMAPandimportedintoafactor ing uses three simulated stereo datasets: UWSim (ours),
+graphoptimizer. IMUdataisrecoveredfromdatalogsand TartanAir,andFlyingThings3D[39,75]. Weapplythefull
+temporallyassociatedwiththecorrespondingimages. Fol- underwateraugmentationpipelineonlytoUWSimandTar-
+lowinganimplementationcloselybasedon[9],mappoints tanAir,andkeepFlyingThings3Dunaugmentedtopreserve
+aremarginalizedwhilecameraposes,intrinsics,andextrin- areferencedomain. Thisreducestheeffectivedomainshift
+sics are jointly optimized. This optimization is solved in introduced by augmentations and helps prevent optimiza-
+batchoverallSLAMsequencestoenforceaconsistentcal- tion instabilities that can otherwise lead to divergence and
+ibration. degradedaccuracyinmodelperformance.
+12
+TABLE2
+ing SVIn2 [49], a method developed for underwater state
+Trainingparametersforthemodelfinetunedforunderwater
+estimation, and ORB-SLAM3 [8]. For SVIn2, we com-
+stereodisparityestimation.
+pare the maps produced by the method coupled with [76].
+Weadditionallycompareourtrackingandmappingagainst
+Parameter Description Value
+Droid-SLAM [68], MASt3R-SLAM [40], and VGGT-
+LearningRate Optimizerstepsize 1e−5 SLAM [37], three representative methods for learning-
+λ occam Occamlossweight 1.0 based visual SLAM. Finally, SLAM results are compared
+τ occam Occammargin 0.01 againstTURTLMap[66]asabaselineacoustic-inertialfu-
+λ smooth Smoothnessweight 0.005 sionmethod.
+λ Photometriclossweight 10.0
+warp
+6.5.EvaluationMetrics
+t Visibilitythreshold 0.05
+min,c
+6.5.1.DisparityMetrics
+For disparity evaluation, we use the metrics from Founda-
+Datasets for Self-Supervised Training For self-
+tionStereo [77]. We report the end-point error (EPE), de-
+supervisedtraining,weutilizereal-worldSUDSsequences
+fined as the average per-pixel disparity error, and BP-X,
+in conjunction with additional in-the-wild underwater
+thepercentageofpixelswhosepredicteddisparitydeviates
+stereo data from SVIn2 and UWslam (Lizard Island),
+from the ground truth by more than X pixels. In addition,
+leveraging the provided calibrated stereo intrinsic and
+wereporttheD1metric,whichmeasuresthepercentageof
+extrinsic parameters [7, 49]. These sequences include
+pixelswithdisparityerrorsexceedingboth3pixelsand5%
+broadviewpointvariationanddiversewaterandscenecon-
+oftheground-truthdisparity.
+ditions, expanding the coverage of underwater appearance
+Stereo metrics are decomposed into three regions us-
+distributionusedduringtheself-supervisedfinetuning.
+ingthemanuallyannotatedforeground/backgroundmasks.
+6.3.2.ModelArchitecture Combinedconsidersallpixels,OnGeometryconsiderspix-
+We finetune three different models in our stereo training: els with valid ground-truth disparity from the photogram-
+FoundationStereo, DEFOM with VIT-L weights, and DE- metry pipeline, and Water Column considers the manually
+FOM with VIT-S weights. We elect to finetune architec- labeled water-column pixels where the correct disparity is
+tures with a transformer backbone, as it has been widely zero. In all configurations, pixels labeled as foreground
+shown that with large-scale datasets with heavy augmen- thatlackacorrespondingground-truthdepthareconsidered
+tation, vision transformer models (ViTs) scale better com- holes in the ground truth. As a result, these pixels are ex-
+pared to alternative architectures [10, 12]. The selected cludedfromallmetrics.
+modelsincludebothViT-LandViT-Sweights,withtheViT-
+6.5.2.TrackingMetrics
+Lweightstargetedtowardsmoreaccurate,offlinetasksand
+The absolute pose error (APE) is measured between the
+the ViT-S weights targeted for real-time stereo depth esti-
+reference and estimated trajectories. We use the popular
+mation, which we show can be used for real-time SLAM.
+Evo package [20] to compute the tracking metrics. Since
+The parameters used to finetune each of the three models
+MASt3R-SLAM and VGGT-SLAM are monocular meth-
+areshowninTable2.
+ods,wecomputetrajectorymetricsforthesemethodsupto
+6.4.Baselines scale.
+WeevaluatethestereodisparityestimationandSLAMac- 6.5.3.MappingMetrics
+curacyseparatelyagainstdifferentsetsofbaselines.
+Wefollowtheprocedurefrom[25]toevaluatemaps. Each
+6.4.1.StereoBaselines map is first downsampled to a 5cm resolution. Then, the
+accuracy, completion, precision, and recall are computed.
+We evaluate the proposed method against state-of-the-art
+Accuracy measures the mean distance from each point in
+stereo depth estimation networks. These include Founda-
+the estimate to each point in the ground truth: a high ac-
+tionStereo[77],DEFOM-Stereo[28],IGEV++Stereo[79]
+curacyvalueindicatesalargenumberofpointsthatarefar
+andRAFT-Stereo[35]. Additionally, wecompareourper-
+from the ground truth. Completion is the complementary
+formancewithastereodepthestimationmethoddeveloped
+measurethatevaluatesthemeandistancefromeachground
+fortheunderwaterdomain,trainedondataaugmentedwith
+truthpointtoeachpointintheestimate: ahighcompletion
+water column effects only [85]. For models with multiple
+valueindicatesmissingportionsofthereconstruction. Pre-
+weights,wereportthebestobservedperformance.
+cisioncomputestheproportionofpointsintheestimatethat
+6.4.2.SLAMBaselines
+arewithin0.1mofapointinthegroundtruth.Finally,recall
+For our SLAM evaluation, we compare against exist- computestheproportionofpointsinthegroundtruthwhere
+ing state-of-the-art methods in VIO and SLAM, includ- thereisapointintheestimatewithin0.1m.
+13
+TABLE3
+WeseparatestereoevaluationsintoLargeModelswithViT-LbackbonesandSmallModelsthatuseViT-Sornovisiontransformer.In
+bothcases,‘Ours’referstoDEFOMwithoursimulationandself-supervisedtraining.EPE(EndPointError)ismeasuredinpixels.
+BP-1.0andD1aredescribedinSection6.5.1.Lowerisbetterforallmetrics.TheParamscolumnsgivethetotalnumberofparametersin
+eachmodeland,separately,thenumberthataretrainable,whichdiscountsanyfrozenbackbones.
+Model Params(M) Combined OnGeometryOnly WaterColumnOnly
+Method Total Train. EPE BP-1.0 D1 EPE BP-1.0 D1 EPE BP-1.0 D1
+FoundationStereo(ViT-L)[77] 374.52 39.20 30.79 81.82 51.92 1.76 61.75 3.14 55.62 99.68 98.98
+Large
+DEFOM(ViT-L)[28] 382.62 47.30 10.61 78.71 52.30 1.74 55.57 3.29 18.83 99.83 99.64
+Models
+Ours(ViT-L) 382.62 47.30 1.51 31.32 4.24 1.84 55.05 3.88 1.41 6.71 5.66
+IGEV++[79] 14.53 – 23.22 81.65 52.42 1.90 62.69 4.14 43.63 99.75 99.24
+FoundationStereo(ViT-S)[77] 62.34 37.55 29.98 84.64 52.59 1.97 68.39 4.83 56.42 99.67 98.93
+Small
+UnderwaterStereo[85] 2.97 – 25.17 81.81 55.51 7.73 62.61 8.75 41.31 99.59 98.67
+Models
+DEFOM(ViT-S)[28] 43.29 18.51 4.03 76.10 49.05 2.31 49.06 5.52 6.15 99.84 91.44
+Ours(ViT-S) 43.29 18.51 1.68 36.39 5.37 1.79 59.07 3.46 2.05 17.07 9.58
+Figure7. Qualitativecomparisonofthesmallmodels, includingthosebasedontheSmallVisionTransformer(ViT-S)orwithoutany
+transformerbackbone.Oursisafine-tunedDEFOMViT-S,whereasUnderwaterStereoandIGEV++arebothconvolutionalarchitectures.
+Ofthebaselinemethods,UnderwaterStereoistheonlyonetobetrainedon(simulated)underwaterimages.
+6.6.ComputationDetails for deployment in the field. The Jetson Thor experiments
+were conducted on a benchtop using a stream of sensor
+Different compute systems were used for stereo training,
+data,andisintendedtoevaluatethecomputationalfeasibil-
+stereo inference, metric ground truth reconstructions, and
+ityofrunningthemethodonhardwaresuitableforonboard
+SLAMexperiments.
+roboticdeployment.
+The compute- and memory-intensive ground-truth opti-
+mizations were performed on a server equipped with dual
+7.StereoEvaluationResults
+AMDEpyc774264-coreCPUsand4TBofRAM.
+The stereo networks were fine-tuned on a system with Table 3 provides a quantitative comparison of our trained
+anAMDThreadripperPro7975WX32-coreCPUandfour models against baseline methods for stereo depth estima-
+NVIDIA Blackwell Pro 6000 GPUs. Inference was per- tion,wherewereportthebest-performingmodelsfromthe
+formedonaseparatemachinewithasingleNVIDIABlack- three that we fine-tuned. We compare our models against
+wellPro6000. three different model classifications: models with a ViT-L
+AllSLAMbaselineswererunonasystemwithanAMD backbone [28, 77], ViT-S backbone [28, 77], and models
+Ryzen 5950X CPU and NVIDIA RTX A6000 GPU. Our thatlackaViTcomponent[79,85]. Notethatourmethod
+SLAMmethodwasevaluatedbothonthatdesktopmachine uses a DEFOM-Stereo architecture (large and small mod-
+andonanNVIDIAJetsonThorplatform,whichissuitable els) with our proposed train-time augmentations and loss
+14
+TABLE4 TABLE5
+Weablatefourfeatures:H,hazeandwater-columnsimulation; Estimatedtrajectoriesarecomparedagainstthegroundtruth.The
+FA,fullaugmentation(lighting,caustics,particles);WL, reportedmetricisRootMeanSquareAbsolutePoseError(APE).
+inclusionofaself-supervisedwarpingloss;andIA,in-airdatato Eachresultisthemedianoffiveruns.MASt3R-SLAMisa
+limitdriftfromtheinitialization.Performanceismeasuredby monocularmethod,soscale-invarianttrajectoryevaluationswere
+EPE(pixels;lowerisbetter).Allresultsareobtainedby conductedforMASt3R-SLAMonly.Lowerisbetter.
+fine-tuningDEFOMViT-L.
+Method Platform Engine Boiler Long
+AblationSetting On Water DROID-SLAM[68] CPU+GPU 0.164 3.121 5.794
+H FA WL IA Combined Geom. Column
+MASt3RSLAM[40] CPU+GPU 0.395 0.462 1.963
+✓ ✕ ✕ ✕ 6.14 1.86 10.30
+ORB-SLAM3[8] CPU 1.662 2.844 6.783
+✓ ✓ ✕ ✕ 1.68 1.90 1.79
+SVIn2[49] CPU 1.085 2.413 2.774
+✓ ✓ ✓ ✕ 1.57 1.86 1.54
+TURTLMap[66] CPU 0.399 0.528 1.312
+✓ ✓ ✕ ✓ 1.53 1.91 1.42
+Ours CPU+GPU 0.216 0.246 0.444
+✓ ✓ ✓ ✓ 1.51 1.84 1.41
+7.1.AblationStudyonStereoDepthEstimation
+function,asitwasthebest-performingmodelfromourfine- Weperformanablationoverthekeycomponentsofthepro-
+tuning. posedstereonetworkfine-tuning. Theevaluationoftheab-
+lationisdonebycomparingtheEPEontheOnGeometry,
+In quantitative evaluations, the most drastic improve-
+WaterColumn,andCombinedmetrics. Theablationresults
+mentseeninourproposedmodelistheabilitytocorrectly
+areshowninTable4.
+identifythewatercolumninthedepthprediction,asnoted
+Each ablation removes a single component while keep-
+intheWaterColumnOnlyevaluation. Ourmodelsperform
+ing all others fixed, allowing isolation of its effect on ge-
+competitively with or better than existing methods in the
+ometryestimationandwater-columnestimation. Theabla-
+on-geometry evaluation. The Combined metric, which en-
+tionrevealsthreedistincteffects. Fullaugmentations(FA)
+capsulatestheoverallperformanceofeachmodel, demon-
+are necessary to reduce predictions in the water column.
+stratesthatourproposedtrainingimprovesstereodepthes-
+Theself-supervisedwarpingloss(WL)primarilyimproves
+timationinunderwaterenvironments.
+depth accuracy on observed geometry, while the inclusion
+Figure 7 shows qualitative comparisons of the small of in-air data (IA) prevents degradation under heavy aug-
+models and Figure 8 shows qualitative comparisons of the mentation. ThecombinationofWLandIAyieldsthebest
+largemodels.Thequalitativeresultsdemonstratethatexist- trade-off between geometric fidelity and incorrect predic-
+ing stereo depth estimation methods fail to transfer to un- tionsonthewatercolumn.
+derwatersettings,producingeithernoisydepthestimatesor
+systematic errors such as failure to estimate depth in the 8.SLAMEvaluationResults
+watercolumn. Ourmodelisabletoremovethewatercol-
+umnfromchallengingimagesacrossdifferentwatercolumn We evaluate the trajectories from each SLAM method.
+typesandhazelevels. ORB-SLAM3 is excluded from mapping metrics since
+the sparse keypoint map is not intended to be used as a
+structural map. We note that VGGT-SLAM, which is a
+calibration-freemonocularSLAMmethod[37],wasunable
+toproduceatrajectoryestimateonanyofthesequencesand
+isthusexcludedfromtheresulttables.ForSVIn2,themap-
+ping metrics are obtained using the dense fusion method
+proposedintheauthors’follow-upwork[76].
+8.1.TrajectoryTrackingEvaluation
+Results of the SLAM trajectory evaluation are shown in
+Table 5. Our proposed method shows the best perfor-
+manceontheBoiler and LongSLAMsequences, andsec-
+Figure 8. Qualitative results of the Large Vision Transformer ond best on the Engine sequence. TURTLMap, which
+(ViT-L)models. Ours,basedonDEFOMViT-L,balancesstrong doesnotapplyglobalregistration,producesreasonabletra-
+on-geometryperformancewitheffectivebackgroundremoval. jectories on all sequences. Yet, without a mechanism to
+mitigateaccumulateddrift, itunderperformsagainstmeth-
+15
+TABLE6 TABLE7
+AblationresultsfordisablingindividualsensorsfromtheSLAM Mapswereevaluatedusingphotogrammetryground-truth.The
+pipeline.Disablingthecameracorrespondstorunning TURTLBasecolumnindicatesaccumulatingdepthsfromthe
+TURTLMap[66].ThereportedmetricisRMSAPE;eachresult TURTLMaptrajectoryestimatesusingabaselineDEFOMViT-S
+isthemedianoffiveruns. stereodepthestimator.Incontrast,TURTLOursindicatesusing
+theTURTLMaptrajectoriesandourproposedDEFOMViT-S
+stereodepthestimator.Allnumbersarethemedianoffiveruns.
+Camera DVL Baro. Engine Boiler Long
+Foraccuracyandcompleteness,lowerisbetter.Forprecisionand
+✓ ✓ ✕ 0.226 0.246 0.386 recall,higherisbetter.
+✓ ✕ ✓ 14.439 102.070 450.411
+✕ ✓ ✓ 0.399 0.528 1.312 DROID- MASt3R- TURTL TURTL
+SVIn2 Ours
+SLAM SLAM Base Ours
+✓ ✓ ✓ 0.216 0.246 0.444
+ods that are able to successfully register against a global
+map. Ofthepurelyvision-basedmethods, DROID-SLAM
+and MASt3R-SLAM perform the best. This indicates that
+even without fine-tuning, learning-based SLAM is better
+equipped to deal with the challenges of the underwater
+domain compared to ORB-SLAM3, which uses carefully
+tuned feature-matching heuristics. SVIn2 converges on all
+sequencesbutdriftssignificantly. Wehypothesizethatthis
+driftresultsfromtheIMUinitializationprocedureinSVIn2,
+whichbenefitsfromtherobotstartingatrest.Inourfieldtri-
+als,itwasnotfeasiblefortherobottobestationarydueto
+dynamicenvironmentalconditions.
+We perform an ablation study of the sensors used for
+tracking,showninTable6.Theresultsdemonstratethatthe
+DVL plays a critical role in tracking, as disabling it leads
+tosubstantialdriftacrossallsequences. Disablingthecam-
+era corresponds to running TURTLMap [66] and degrades
+performance, particularly on the Long sequence, demon-
+strating the benefit of global registration for reducing ac-
+cumulateddrift. Incontrast, thebarometerhasarelatively
+smalleffectontrackingperformance: disablingitproduces
+similarresultsonEngineandBoiler andslightlyimproves
+performance on Long. We hypothesize that this is due to
+noiseorbiasinthebarometermeasurements,whichcanoc-
+casionallyintroduceinconsistentdepthconstraintswhenthe
+remainingsensorsalreadyprovidesufficientinformationto
+estimatethetrajectory.
+8.2.MappingEvaluation
+QuantitativemapevaluationsarepresentedinTable7. We
+presentthemappingmetricsfromthetrajectoriesevaluated
+onthedesktopplatform, andtheresultsindicatethatSurf-
+SLAM has comparable or better performance across these
+metrics. Onthecompletionandrecallmetrics, SurfSLAM
+demonstrates significant improvements, indicating more
+complete reconstructions. For the accuracy and precision
+metrics, performance is degraded on the Engine and Long
+sequencesduetoafewerroneousposeestimates,resulting
+inamisalignedprojecteddepthmap. Thisissupportedby
+the qualitative results shown in Figure 9, where the map
+relioB
+Acc. 0.29 0.44 1.75 1.05 0.48 0.30
+Comp. 0.39 0.09 0.16 0.16 0.15 0.04
+Prec. 0.17 0.32 0.14 0.25 0.26 0.39
+Rec. 0.07 0.82 0.63 0.42 0.41 0.96
+enignE
+Acc. 0.04 0.53 0.67 0.09 0.14 0.34
+Comp. 0.35 0.20 0.17 0.28 0.60 0.05
+Prec. 0.98 0.29 0.13 0.74 0.55 0.52
+Rec. 0.14 0.79 0.66 0.46 0.32 0.98
+gnoL
+Acc. 1.63 0.82 1.86 0.19 0.19 0.50
+Comp. 2.08 5.50 0.18 0.25 0.25 0.03
+Prec. 0.01 0.15 0.09 0.58 0.48 0.47
+Rec. 0.00 0.26 0.62 0.39 0.38 0.99
+produced by SurfSLAM shows consistently more accurate
+measurementsandfewermeasurementsmisalignedwiththe
+larger reconstructed map. On the Long sequence, which
+features the most low-texture regions, the advantages of
+SurfSLAM are most apparent, producing the most com-
+pletereconstruction.DROID-SLAMexcelsinaccuracyand
+precision on the feature-rich Engine scene. Yet, the com-
+pleteness and recall are comparatively worse than those of
+SurfSLAM,indicatinglesscompletemaps. SVIn2’sdense
+fusion struggles, likely due to its difficulty with trajectory
+estimation (See Table 5). Running TURTLMap with our
+stereonetworkiscomparabletoSurfSLAM,withaconsis-
+tentsplitacrossmetrics. Weshowconsistentimprovement
+inthecompletenessofthereconstructionswithcomparable
+accuracyonlongersequences. Globalregistrationtradesa
+smallamountoflocalaccuracyforsubstantiallymorecom-
+pletereconstructions.
+QualitativemappingresultsareshowninFigure9. Our
+methodproducesthemostcompleteandgeometricallycon-
+sistentreconstructionamongthecomparedapproaches. For
+DroidSLAM, the trajectory estimate diverges as the robot
+traverses the boiler and loses tracking, leading to an in-
+completemap,consistentwiththequantitativeresults. For
+MASt3R-SLAM, despite achieving the second-best trajec-
+tory accuracy, depth prediction errors introduce notice-
+able artifacts and reduce map accuracy. For SVIn2 and
+TURTLMap, accumulated drift distorts and misaligns the
+reconstruction: SVIn2 exhibits pronounced distortion on
+16
+SVIn2 TURTLMap TURTLMap + Our Depths
+Ground Truth
+(Metric Photogrammetry)
+MASt3R-SLAM DROID-SLAM Ours
+Figure9. QualitativecomparisonofthemapsgeneratedbyeachmethodontheBoilersequence. Methodsthatproducevastlyincorrect
+mapsduetotheirincorrectposeestimates(specifically,DroidSLAM[68],SVIn2[49,76],andTURTLMap[66])arecroppedforvisual-
+izationpurposes. TheSVIn2imagereferstorunningtheSVIn2[49]fortrajectoryestimationandusingthedensemappingmethodfrom
+[76].Ourmapproducesamoreaccurate,cleaner,andmorecompletemapthanthoseproducedbythebaselinemethods.
+TABLE8
+Toensurereal-timeoperation, eachcomponentdropsstale
+Wecomparethetrackingperformanceofourmethodoneachof
+data. Table9alsoreportsstatisticsonhowmanyframesare
+thethreesequencesontwoplatforms,ahigh-performance
+droppedwithinthesystem.Onthedesktopplatform,98.4%
+desktopmachineandanNVIDIAJetsonThor.Thereported
+ofinputstereoframesareprocessedbythestereoinference
+metricisRootMeanSquareAbsolutePoseError(APE).
+module. Allofthoseframesareprocessedbytheregistra-
+tionmoduletosearchforglobalregistrations.OntheJetson
+Platform Engine Boiler Long
+platform,thesame98.4%oftheinputstereoframesarepro-
+Desktop 0.216 0.246 0.444
+cessed. However, due to the slower stereo inference time,
+JetsonThor 0.171 0.216 0.333
+22.8% of frames processed by the stereo matcher become
+staleandaredroppedbeforeregistrationisattempted.
+theleftsideofthemap, whileTURTLMapshowsmissing
+9.Discussion&Conclusion
+geometry due to depth misalignment, causing valid obser-
+vationstobefilteredduringmapping. Finally,themappro-
+This paper presents a comprehensive methodology for
+ducedbyTURTLMapusingourproposeddepthsiscompa-
+stereo-based state estimation and scene reconstruction in
+rabletothemapsproducedbyTURTLMapalone.
+challengingunderwaterenvironments.Wefirstintroduceda
+sim-to-realtrainingpipelineforunderwaterstereodisparity
+8.3.ComputeComparisonandRuntime
+estimation and demonstrated that it outperforms the state-
+This section compares the performance of our method be- of-the-artinunderwaterdomains. Next,wepresentedSurf-
+tweenthedesktopplatformandtheNVIDIAJetsonThor. SLAM,amethodthatfusesstereoimageswithIMU,DVL,
+Table8showsthatSurfSLAMachievescomparableper- andbarometermeasurementstoperformlong-termstatees-
+formance on both desktop and embedded platforms, rein- timation and mapping in real-world underwater environ-
+forcingitssuitabilityforfielddeployment. Onallthreese- ments. Inadditiontothealgorithmcontributionsofthispa-
+quences,theJetsonyieldsslightlylowertrackingerrorthan per,wepresenttwonewdatasetsforunderwaterstereoper-
+thedesktop. BecausetheJetsondropsmoreframesduring ceptionandunderwaterSLAM.Thefirstdatasetcomprises
+stereomatching(seeTable9),aplausibleexplanationisthat bothacurateddatasetofscenesthatmimicavarietyofun-
+it skips a frame that would otherwise induce an erroneous derwater environments and an augmentation pipeline that
+registrationonthedesktopplatform. randomizesunderwaterimagingeffects. Wealsopresenta
+We present the runtime of key components of the algo- comprehensivedatasetofreal-worldshipwrecks.
+rithm in Table 9. On each of the platforms used to evalu- Theresultsofourexperimentsdemonstratestate-of-the-
+atethesystem, wereporttwokeytimingmetrics: timefor artperformanceonstereoestimationintheunderwaterdo-
+stereo inference and time to solve the backend optimiza- main. While several related works simulate underwater
+tion. Inpractice,severalofthecomponentsruninparallel. haze,weadditionallysimulatedirectionallighting,caustics,
+17
+TABLE9
+on Computer Vision and Pattern Recognition, pages 6723–
+Wereporttheruntimeofbothstereoinferenceandthebackend
+6732,2018. 2
+optimization(mean+/-standarddeviation),averagedacrossall
+[4] Lo¨ıcaAvantheyandLaurentBeaudoin. DenseInSituUn-
+sequencesand5trials.Duringreal-timeoperationofthesystem,
+derwater 3D Reconstruction by Aggregation of Successive
+staleframesaredroppedtopreventthesystemfromfalling
+PartialLocalClouds.RemoteSensing,16(24):4737,2024. 3
+behind.Forinstance,anN%registrationdropratemeansthatof
+[5] AyoungKimandR.Eustice. Pose-graphvisualSLAMwith
+alltheframestheregistrationmodulereceived,itdiscardedN%
+geometricmodelselectionforautonomousunderwatership
+oftheframesandprocessedtherest.
+hull inspection. In 2009 IEEE/RSJ International Confer-
+ence on Intelligent Robots and Systems, pages 1559–1565,
+Group Metric Ours(Desktop) Ours(Jetson)
+St.Louis,MO,2009.IEEE. 3
+StereoInference 359.3±26.4ms 786.1±51.2ms [6] DanaBerman,DeborahLevy,ShaiAvidan,andTaliTreibitz.
+Timing
+Optimization 6.7±3.4ms 9.9±5.1ms Underwater single image color restoration using haze-lines
+Stereo 1.6% 1.6% andanewquantitativedataset.IEEETransactionsonPattern
+Drops Registration 0.0% 21.5% AnalysisandMachineIntelligence,43(8):2822–2837,2020.
+Overall 1.6% 22.8% 3,6
+[7] Gideon Billings, Richard Camilli, and Matthew Johnson-
+Roberson. Hybrid visual slam for underwater vehicle ma-
+andsuspendedparticles. Experimentsdemonstratethatthis nipulatorsystems. IEEERoboticsandAutomationLetters,7
+comprehensive simulation improves performance over the (3):6798–6805,2022. 6,13
+haze-onlysimulation.Further,whilebaselinemethodsmost [8] CarlosCampos, RichardElvira, JuanJ.Go´mezRodr´ıguez,
+Jose´ M. M. Montiel, and Juan D. Tardo´s. Orb-slam3: An
+often train either on simulated data or via self-supervised
+accurateopen-sourcelibraryforvisual, visual–inertial, and
+training on real underwater images, we demonstrate that a
+multimap slam. IEEE Transactions on Robotics, 37(6):
+combinedapproachyieldssuperiorresults.
+1874–1890,2021. 2,13,15
+The results of our SLAM evaluation support the ap-
+[9] LucaCarlone,ZsoltKira,ChrisBeall,VadimIndelman,and
+proachofrelyingonacousticandinertialsensorsasthepri-
+FrankDellaert. Eliminatingconditionallyindependentsets
+mary local tracker, while using a highly accurate but slow infactorgraphs:Aunifyingperspectivebasedonsmartfac-
+vision model to correct drift when possible. The trajec- tors. In 2014 IEEE International Conference on Robotics
+toryevaluationresultssupporttheconclusionthatthisleads andAutomation(ICRA),pages4290–4297,2014. 12
+to stronger performance in challenging environments than [10] XiangningChen, Cho-JuiHsieh, andBoqingGong. When
+methodsthatrelyonfeaturetracking, whichissusceptible vision transformers outperform resnets without pretraining
+tofailureinlow-textureunderwaterscenes. or strong data augmentations. In International Conference
+onLearningRepresentations,2022. 13
+A limitation of our existing evaluations arises from the
+[11] Daniel DeTone, Tomasz Malisiewicz, and Andrew Rabi-
+difficultyofreconstructingmetricgroundtruthfromimages
+novich. Superpoint: Self-supervisedinterestpointdetection
+underhighlyturbidconditions. Whilewehypothesizethat
+and description. In 2018 IEEE/CVF Conference on Com-
+oursim-to-realpipelinewillhaveagreaterimpactinmore
+puterVisionandPatternRecognitionWorkshops(CVPRW),
+turbidwater,itischallengingtotestthishypothesisbecause
+pages337–33712,2018. 9
+photogrammetry methods cannot reconstruct ground truth
+[12] Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov,
+in such conditions. A potential avenue for future work is Dirk Weissenborn, Xiaohua Zhai, Thomas Unterthiner,
+to use other sensors, such as 3D SONAR or Underwater MostafaDehghani,MatthiasMinderer,GeorgHeigold,Syl-
+LiDAR,togeneratehigh-qualitygroundtruthinsuchenvi- vainGelly,JakobUszkoreit,andNeilHoulsby. Animageis
+ronments. worth16x16words: Transformersforimagerecognitionat
+An avenue for future work to improve SurfSLAM scale. ICLR,2021. 13
+is to augment the SLAM pipeline with bundle adjust- [13] Matthijs Douze, Alexandr Guzhva, Chengqi Deng, Jeff
+ment rather than relying on frame-to-frame registration. Johnson,GergelySzilvasy,Pierre-EmmanuelMazare´,Maria
+In practice, this is challenging in our target domain, Lomeli,LucasHosseini,andHerve´Je´gou. Thefaisslibrary.
+which includes large, textureless regions that can push IEEETransactionsonBigData,pages1–17,2025. 10
+the stability of existing bundle-adjustment methods. [14] Epic Games. Fab, 2024. Epic’s unified marketplace for
+digitalassets.[Online].Available: https://www.fab.
+com/. 5
+References [15] Ryan Eustice, Hanumant Singh, John Leonard, Matthew
+Walter,andRobertBallard.VisuallyNavigatingtheRMSTi-
+[1] OpenCV:CameraCalibrationand3DReconstruction. 5 tanicwithSLAMInformationFilters. InRobotics: Science
+[2] Agisoft LLC. Agisoft Metashape Professional, Version andSystemsI.Robotics: ScienceandSystemsFoundation,
+1.4.5,2018. Software. 3 2005. 3
+[3] Derya Akkaynak and Tali Treibitz. A revised underwater [16] Christian Forster, Luca Carlone, Frank Dellaert, and Da-
+image formation model. In 2018 IEEE/CVF Conference videScaramuzza. On-manifoldpreintegrationforreal-time
+18
+visual–inertialodometry.IEEETransactionsonRobotics,33 tionalConferenceonIntelligentRobotsandSystems,pages
+(1):1–21,2017. 5,9 1647–1654,SanFrancisco,CA,2011.IEEE. 3
+[17] Paul Furgale. Representing robot pose: The good, the [32] AyoungKimandRyanM.Eustice.Real-TimeVisualSLAM
+bad, and the ugly, 2025. [Online]. Available: https: for Autonomous Underwater Hull Inspection Using Visual
+//rpg.ifi.uzh.ch/docs/teaching/2025/ Saliency. IEEETrans.Robot.,29(3):719–733,2013. 3
+FurgaleTutorial.pdf. 5 [33] VincentLeroy,YohannCabon,andJeromeRevaud.Ground-
+[18] RossGirshick. Fastr-cnn,2015. 8 ing image matching in 3d with mast3r. In Computer Vi-
+[19] Cle´ment Godard, Oisin Mac Aodha, and Gabriel J. Bros- sion–ECCV2024:18thEuropeanConference,Milan,Italy,
+tow. Unsupervised monocular depth estimation with left- September 29–October 4, 2024, Proceedings, Part LXXII,
+right consistency. In 2017 IEEE Conference on Computer page71–91,Berlin,Heidelberg,2024.Springer-Verlag. 2
+VisionandPatternRecognition(CVPR),pages6602–6611, [34] JieLi,KatherineA.Skinner,RyanM.Eustice,andMatthew
+2017. 8 Johnson-Roberson. Watergan:Unsupervisedgenerativenet-
+[20] Michael Grupp. evo: Python package for the evalua- worktoenablereal-timecolorcorrectionofmonocularun-
+tion of odometry and slam. https://github.com/ derwater images. IEEE Robotics and Automation Letters,
+MichaelGrupp/evo,2017. 13 page1–1,2017. 2
+[21] HeikoHirschmuller.Stereoprocessingbysemiglobalmatch- [35] LahavLipson, ZacharyTeed, andJiaDeng. RAFT-Stereo:
+ingandmutualinformation. IEEETransactionsonpattern Multilevelrecurrentfieldtransformsforstereomatching. In
+analysisandmachineintelligence,30(2):328–341,2007. 2 InternationalConferenceon3DVision(3DV),2021. 3,13
+[22] HeikoHirschmuller.Stereoprocessingbysemiglobalmatch- [36] QingxuanLv,JunyuDong,YuezunLi,ShengChen,HuiYu,
+ingandmutualinformation. IEEETransactionsonPattern ShuZhang,andWenhanWang.UWStereo:Alargesynthetic
+AnalysisandMachineIntelligence,30(2):328–341,2008. 3 datasetforunderwaterstereomatching. IEEETransactions
+[23] ShitongHou,DaiJiao,BinDong,HaochenWang,andGang onCircuitsandSystemsforVideoTechnology,2025. 4,6
+Wu. Underwater inspection of bridge substructures using [37] DominicMaggio,HyungtaeLim,andLucaCarlone. Vggt-
+sonaranddeepconvolutionalnetwork. AdvancedEngineer- slam: Dense rgb slam optimized on the sl (4) manifold.
+ingInformatics,52:101545,2022. 2 Advances in Neural Information Processing Systems, 38:
+[24] PeterJHuber. Robustestimationofalocationparameter. In 129839–129867,2026. 3,13,15
+Breakthroughs in statistics: Methodology and distribution, [38] Aaron Marburg and Marc Micatka. A dataset for the as-
+pages492–518.Springer,1992. 10 sessmentofunderwaterslamdegradationinturbidwater. In
+[25] Seth Isaacson, Pou-Chun Kung, Mani Ramanagopal, Ram OCEANS2025Chicago,2025. 6
+Vasudevan, and Katherine A. Skinner. Loner: Lidar only [39] NikolausMayer, EddyIlg, PhilipHa¨usser, PhilippFischer,
+neuralrepresentationsforreal-timeslam.IEEERoboticsand Daniel Cremers, Alexey Dosovitskiy, and Thomas Brox.
+AutomationLetters,8(12):8042–8049,2023. 13 A large dataset to train convolutional networks for dispar-
+[26] Krishna Murthy Jatavallabhula, Edward Smith, Jean- ity, optical flow, and scene flow estimation. In 2016 IEEE
+Francois Lafleche, Clement Fuji Tsang, Artem Rozantsev, Conference on Computer Vision and Pattern Recognition
+WenzhengChen,TommyXiang,RevLebaredian,andSanja (CVPR),pages4040–4048,2016. 12
+Fidler. Kaolin: A pytorch library for accelerating 3d deep [40] Riku Murai, Eric Dexheimer, and Andrew J. Davison.
+learningresearch,2019. 6 Mast3r-slam: Real-time dense slam with 3d reconstruction
+[27] NilsGunnarJerlov. Opticaloceanography. Elsevier,1968. priors. In2025IEEE/CVFConferenceonComputerVision
+2,6 andPatternRecognition(CVPR),pages16695–16705,2025.
+[28] HualieJiang,ZhiqiangLou,LaiyanDing,RuiXu,Minglang 3,13,15
+Tan, Wenjie Jiang, and Rui Huang. Defom-stereo: Depth [41] NVIDIACorporation. Omniverse. Software. 5
+foundationmodelbasedstereomatching.In2025IEEE/CVF [42] NVIDIA Corporation. Nvidia isaac sim (version 4.5.1).
+Conference on Computer Vision and Pattern Recognition GitHubrepository,2025.Availableathttps://github.
+(CVPR),pages21857–21867,2025. 2,3,7,13,14 com/isaac-sim/IsaacSim. 5
+[29] Herve´Je´gou,MatthijsDouze,CordeliaSchmid,andPatrick [43] Paul Ozog and Ryan M. Eustice. Real-time SLAM with
+Pe´rez. Aggregatinglocaldescriptorsintoacompactimage piecewise-planarsurfacemodelsandsparse3Dpointclouds.
+representation. In2010IEEEComputerSocietyConference In 2013 IEEE/RSJ International Conference on Intelligent
+on Computer Vision and Pattern Recognition, pages 3304– RobotsandSystems,pages1042–1049,Tokyo,2013.IEEE.
+3311,2010. 9 3
+[30] Michael Kaess, Hordur Johannsson, Richard Roberts, [44] ShuPan,ZiyangHong,ZhangruiHu,XiandongXu,Wenjie
+ViorelaIla,JohnJLeonard,andFrankDellaert. isam2: In- Lu, and Liang Hu. Russo: Robust underwater slam with
+crementalsmoothingandmappingusingthebayestree. The sonaroptimizationagainstvisualdegradation. IEEE/ASME
+InternationalJournalofRoboticsResearch,31(2):216–235, TransactionsonMechatronics,30(6):5456–5467,2025. 3
+2012. 9 [45] Charilaos Papadopoulos and Georgios Papaioannou. Real-
+[31] AyoungKimandRyanM.Eustice. Combinedvisuallyand istic real-time underwater caustics and godrays. 19th In-
+geometricallyinformativelinkhypothesisforpose-graphvi- ternational Conference on Computer Graphics and Vision,
+sualSLAMusingbag-of-words. In2011IEEE/RSJInterna- GraphiCon’2009-ConferenceProceedings,2010. 7
+19
+[46] S.M. Pizer, R.E. Johnston, J.P. Ericksen, B.C. Yankaskas, puterVisionandPatternRecognition(CVPR),pages4104–
+andK.E.Muller. Contrast-limitedadaptivehistogramequal- 4113,2016. 3,12
+ization: speedandeffectiveness. In[1990]Proceedingsof [60] Aleksandr Segal, Dirk Ha¨hnel, and Sebastian Thrun.
+theFirstConferenceonVisualizationinBiomedicalComput- Generalized-icp.InRobotics:ScienceandSystems.TheMIT
+ing,pages337–345,1990. 9 Press,2009. 10
+[47] E. Potokar, S. Ashford, M. Kaess, and J. Mangelson. [61] Advaith Venkatramanan Sethuraman, Manikandasri-
+HoloOcean: An underwater robotics simulator. In Proc. ram Srinivasan Ramanagopal, and Katherine A Skinner.
+IEEE Intl. Conf. on Robotics and Automation, ICRA, WaterNeRF: Neural radiance fields for underwater scenes.
+Philadelphia,PA,USA,2022. 5 In OCEANS 2023-MTS/IEEE US Gulf Coast, pages 1–7.
+[48] Sharmin Rahman, Alberto Quattrini Li, and Ioannis Rek- IEEE,2023. 5
+leitis. Contour based reconstruction of underwater struc- [62] Md Abu Bakr Siddique, Jiayi Wu, Ioannis Rekleitis, and
+turesusingsonar,visual,inertial,anddepthsensor. In2019 MdJahidulIslam. Aquafuse:Waterbodyfusionforphysics-
+IEEE/RSJ International Conference on Intelligent Robots guidedviewsynthesisofunderwaterscenes. IEEERobotics
+andSystems(IROS),pages8054–8059,2019. 3 andAutomationLetters,10(5):4316–4323,2025. 6
+[49] Sharmin Rahman, Alberto Quattrini Li, and Ioannis Rek- [63] Kurran Singh, Jungseok Hong, Nicholas R Rypkema, and
+leitis. Svin2: Amulti-sensorfusion-basedunderwaterslam JohnJLeonard. Opti-acousticsemanticslamwithunknown
+system. TheInternationalJournalofRoboticsResearch,41 objectsinunderwaterenvironments. In2024IEEE/RSJIn-
+(11-12):1022–1042,2022. 3,6,13,15,17 ternational Conference on Intelligent Robots and Systems
+(IROS),pages1169–1176.IEEE,2024. 2
+[50] Yelena Randall, Ori Lifschitz, and Tali Treibitz. Flsea:
+Underwatervisual–inertialandstereovisionforward-looking [64] Sketchfab,Inc. Sketchfab,2025. Onlineplatformforpub-
+datasets. JournalofFieldRobotics,n/a(n/a),2026. 3,6 lishing,sharing,anddiscovering3Dcontent.[Online].Avail-
+able:https://sketchfab.com. 5
+[51] Joern Rehder, Janosch Nikolic, Thomas Schneider, Timo
+[65] KatherineA.Skinner,JunmingZhang,ElizabethA.Olson,
+Hinzmann, and Roland Siegwart. Extending kalibr: Cali-
+and Matthew Johnson-Roberson. UWStereoNet: Unsuper-
+bratingtheextrinsicsofmultipleimusandofindividualaxes.
+vised learning for depth estimation and color correction of
+In2016IEEEInternationalConferenceonRoboticsandAu-
+underwater stereo imagery. In 2019 International Confer-
+tomation(ICRA),pages4304–4311,2016. 12
+enceonRoboticsandAutomation(ICRA),pages7947–7954,
+[52] EdgarRiba,DmytroMishkin,DanielPonsa,EthanRublee,
+2019. 2,4,6,8
+and Gary Bradski. Kornia: an open source differentiable
+[66] Jingyu Song, Onur Bagoren, Razan Andigani, Advaith
+computer vision library for pytorch. In Winter Conference
+Sethuraman,andKatherineASkinner. Turtlmap: Real-time
+onApplicationsofComputerVision,2020. 8
+localization and dense mapping of low-texture underwater
+[53] Blake Romrell, Abigail Austin, Braden Meyers, Ryan An-
+environments with a low-cost unmanned underwater vehi-
+derson,CarterNoh,andJoshuaGMangelson. Apreviewof
+cle. In2024IEEE/RSJInternationalConferenceonIntelli-
+holoocean2.0. arXivpreprintarXiv:2510.06160,2025. 5
+gent Robots and Systems (IROS), pages 1191–1198. IEEE,
+[54] MonikaRoznere,PhilipposMordohai,IoannisRekleitis,and
+2024. 3,9,13,15,16,17
+Alberto Quattrini Li. 3-d reconstruction using monocular
+[67] JingyuSong,HaoyuMa,OnurBagoren,AdvaithV.Sethu-
+camera and lights: Multi-view photometric stereo for non-
+raman,YitingZhang,andKatherineA.Skinner. OceanSim:
+stationaryrobots.In2023IEEEInternationalConferenceon
+AGPU-acceleratedunderwaterrobotperceptionsimulation
+RoboticsandAutomation(ICRA),pages1026–1032,2023.6
+framework. In2025IEEE/RSJInternationalConferenceon
+[55] Paul-Edouard Sarlin, Daniel DeTone, Tomasz Malisiewicz,
+IntelligentRobotsandSystems(IROS),2025. 5,6
+and Andrew Rabinovich. Superglue: Learning feature
+[68] ZacharyTeedandJiaDeng. Droid-slam: Deepvisualslam
+matching with graph neural networks. In 2020 IEEE/CVF
+formonocular,stereo,andrgb-dcameras. Advancesinneu-
+Conference on Computer Vision and Pattern Recognition
+ralinformationprocessingsystems,34:16558–16569,2021.
+(CVPR),pages4937–4946,2020. 9,10
+2,10,13,15,17
+[56] Daniel Scharstein and Richard Szeliski. A taxonomy and [69] AlexanderThoms,GabrielEarle,NicholasCharron,andSri-
+evaluation of dense two-frame stereo correspondence algo- ramNarasimhan. Tightlycoupled,graph-baseddvl/imufu-
+rithms. International journal of computer vision, 47:7–42, sion and decoupled mapping for slam-centric maritime in-
+2002. 3 frastructureinspection. IEEEJournalofOceanicEngineer-
+[57] Y.Y.SchechnerandN.Karpel. Recoveryofunderwatervis- ing,48(3):663–676,2023. 3,9
+ibilityandstructurebypolarizationanalysis. IEEEJournal [70] C.Upstill. Lightcausticsfromripplingwater. Proceedings
+ofOceanicEngineering,30(3):570–587,2005. 5 oftheRoyalSocietyofLondon.SeriesA,Mathematicaland
+[58] Johannes L. Scho¨nberger, Enliang Zheng, Jan-Michael PhysicalSciences,365(1720):95–104,1979. 6
+Frahm, and Marc Pollefeys. Pixelwise view selection for [71] MadhuVankadari,SamuelHodgson,SangyunShin,Kaichen
+unstructuredmulti-viewstereo.InComputerVision–ECCV Zhou,AndrewMarkham,andNikiTrigoni. Dusktilldawn:
+2016, pages 501–518, Cham, 2016. Springer International Self-supervised nighttime stereo depth estimation using vi-
+Publishing. 3,12 sual foundation models. In 2024 IEEE International Con-
+[59] JohannesL.Scho¨nbergerandJan-MichaelFrahm.Structure- ferenceonRoboticsandAutomation(ICRA),pages17976–
+from-motionrevisited. In2016IEEEConferenceonCom- 17982,2024. 8
+20
+[72] Elizabeth Vargas, Raluca Scona, Jonatan Scharff Willners, thingv2.InAdvancesinNeuralInformationProcessingSys-
+TomaszLuczynski, YuCao, SenWang, andYvanR.Petil- tems,pages21875–21911.CurranAssociates,Inc.,2024. 3
+lot.RobustUnderwaterVisualSLAMFusingAcousticSens- [84] LiheYang, BingyiKang, ZilongHuang, ZhenZhao, Xiao-
+ing.In2021IEEEInternationalConferenceonRoboticsand gang Xu, Jiashi Feng, and Hengshuang Zhao. Depth any-
+Automation(ICRA),pages2140–2146,Xi’an,China,2021. thingv2. AdvancesinNeuralInformationProcessingSys-
+IEEE. 3 tems,37:21875–21911,2024. 2
+[73] DiWangandYongJiePang.Researchondisparitymapgen- [85] XinchenYe,JinyiZhang,YazhiYuan,RuiXu,ZhihuiWang,
+erationmethodofunderwatertargetbasedontheimproved andHaojieLi.Underwaterdepthestimationviastereoadap-
+siftalgorithm. AppliedMechanicsandMaterials,741:701– tationnetworks. IEEETransactionsonCircuitsandSystems
+704,2015. 3 forVideoTechnology,33(9):5089–5101,2023. 2,4,13,14
+[74] Jianyuan Wang, Minghao Chen, Nikita Karaev, Andrea [86] XinchenYe,YueChang,RuiXu,andHaojieLi.Uw-adapter:
+Vedaldi, Christian Rupprecht, and David Novotny. Vggt: Adaptingmonoculardepthestimationmodelinunderwater
+Visualgeometrygroundedtransformer. In2025IEEE/CVF scenes. IEEETransactionsonMultimedia,2025. 2
+Conference on Computer Vision and Pattern Recognition [87] BoxiaoYu,JiayiWu,andMdJahidulIslam. Udepth: Fast
+(CVPR),pages5294–5306,2025. 2 monoculardepthestimationforvisually-guidedunderwater
+[75] Wenshan Wang, Delong Zhu, Xiangwei Wang, Yaoyu Hu, robots. In2023IEEEInternationalConferenceonRobotics
+YuhengQiu,ChenWang,YafeiHu,AshishKapoor,andSe- andAutomation(ICRA),pages3116–3123,2023.
+bastianScherer.TartanAir:Adatasettopushthelimitsofvi- [88] Hongjie Zhang, Gideon Billings, and Stefan B Williams.
+sualSLAM.InIEEE/RSJInternationalConferenceonIntel- SPADE: Sparsity adaptive depth estimator for zero-shot,
+ligentRobotsandSystems(IROS),pages4909–4916,2020. real-time, monocular depth estimation in underwater envi-
+12 ronments. arXivpreprintarXiv:2510.25463,2025. 2
+[76] Weihan Wang, Bharat Joshi, Nathaniel Burgdorfer, Kon- [89] LvweiZhu,YakunJu,andYingGao. Anovelstereomatch-
+stantinosBatsos,AlbertoQuattriniLi,PhilipposMordohai, ingnetworkforunderwaterscenes. In2025IEEEInterna-
+and Ioannis Rekleitis. Real-time dense 3d mapping of un- tional Symposium on Circuits and Systems (ISCAS), pages
+derwaterenvironments. In2023IEEEInternationalConfer- 1–5,2025. 4
+enceonRoboticsandAutomation(ICRA),pages5184–5191.
+IEEE,2023. 3,13,15,17
+[77] Bowen Wen, Matthew Trepte, Joseph Aribido, Jan Kautz,
+OrazioGallo,andStanBirchfield. Foundationstereo: Zero-
+shot stereo matching. In 2025 IEEE/CVF Conference on
+Computer Vision and Pattern Recognition (CVPR), pages
+5249–5260,2025. 2,3,5,7,8,13,14
+[78] ZhengriWu, YiranWang, YuWen, ZeyuZhang, BiaoWu,
+andHaoTang.Stereoadapter:Adaptingstereodepthestima-
+tiontounderwaterscenes,2025. 2,4,6
+[79] GangweiXu,XianqiWang,ZhaoxingZhang,JundaCheng,
+Chunyuan Liao, and Xin Yang. Igev++: Iterative multi-
+rangegeometryencodingvolumesforstereomatching.IEEE
+TransactionsonPatternAnalysisandMachineIntelligence,
+2025. 2,3,13,14
+[80] Shida Xu, Tomasz Luczynski, Jonatan Scharff Willners,
+Ziyang Hong, Kaicheng Zhang, Yvan R. Petillot, and Sen
+Wang. Underwater Visual Acoustic SLAM with Extrinsic
+Calibration. In2021IEEE/RSJInternationalConferenceon
+Intelligent Robots and Systems (IROS), pages 7647–7652,
+Prague,CzechRepublic,2021.IEEE. 3
+[81] ShidaXu,JonatanScharffWillners,JoshuaRoe,SeanKata-
+giri,TomaszLuczynski,YvanPetillot,andSenWang. Tank
+dataset: Anunderwatermulti-sensordatasetforslamevalu-
+ation. TheInternationalJournalofRoboticsResearch,page
+02783649251364904,2025. 6
+[82] Shida Xu, Kaicheng Zhang, and Sen Wang. Aqua-slam:
+Tightly coupled underwater acoustic-visual-inertial slam
+withsensorcalibration. IEEETransactionsonRobotics,41:
+2785–2803,2025. 3
+[83] LiheYang, BingyiKang, ZilongHuang, ZhenZhao, Xiao-
+gang Xu, Jiashi Feng, and Hengshuang Zhao. Depth any-
+21
