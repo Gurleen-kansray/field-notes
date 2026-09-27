@@ -1,0 +1,844 @@
+1
+Navion: A 2mW Fully Integrated Real-Time
+Visual-Inertial Odometry Accelerator for
+Autonomous Navigation of Nano Drones
+Amr Suleiman, Member, IEEE, Zhengdong Zhang, Student Member, IEEE, Luca Carlone, Member, IEEE
+Sertac Karaman, Member, IEEE and Vivienne Sze, Senior Member, IEEE
+Abstract—This paper presents Navion, an energy-efficient be off-loaded to the cloud. As a result, a VIO system can
+accelerator for visual-inertial odometry (VIO) that enables au- output the estimated motion at significantly higher throughput,
+tonomous navigation of miniaturized robots (e.g., nano drones),
+which is critical for autonomous navigation for fast moving
+and virtual/augmented reality on portable devices. The chip
+robots/drones/vehicles, and also critical to reduce the motion
+uses inertial measurements and mono/stereo images to estimate
+the drone’s trajectory and a 3D map of the environment. This sickness of a consumer using AR/VR devices.
+estimateisobtainedbyrunningastate-of-the-artVIOalgorithm Many VIO algorithms have been proposed for implemen-
+based on non-linear factor graph optimization, which requires tation [5–7]. However, running these algorithms in real–time
+largeirregularlystructuredmemoriesandheterogeneouscompu- requires relatively powerful CPUs and/or GPUs [8]. Mounting
+tationflow.Toreducetheenergyconsumptionandfootprint,the
+powerful CPUs and GPUs on a big drone like Skydio R1 is
+entire VIO system is fully integrated on chip to eliminate costly
+feasible [9]. However, such solutions cannot be applied to off-chipprocessingandstorage.Thisworkusescompressionand
+exploits both structured and unstructured sparsity to reduce nano and pico drones/unmanned aerial vehicles (UAVs) as
+on-chip memory size by 4.1×. Parallelism is used under tight those presented in [10, 11]. This is because of the constraints
+area constraints to increase throughput by 43%. The chip is on the form factor as well as the extremely limited power
+fabricated in 65nm CMOS, and can process 752×480 stereo
+budget available on these miniature vehicles. For example,
+imagesfromEuRoCdatasetinreal-timeat20framespersecond
+the budget for a stable flight in nano/pico drone is around
+(fps) consuming only an average power of 2mW. At its peak
+performance, Navion can process stereo images at up to 171 fps 100mW [11], which is an order of magnitude lower than the
+and inertial measurements at up to 52 kHz, while consuming an power dissipation of embedded CPUs [12].
+averageof24mW.Thechipisconfigurabletomaximizeaccuracy, This motivates us to build a VIO accelerator for miniature
+throughput and energy-efficiency trade-offs and to adapt to
+drones.PotentialutilizationofcustomacceleratorsforVIOwas
+different environments. To the best of our knowledge, this is
+mentioned in a review article on pico drones, which appeared
+the first fully integrated VIO system in an ASIC.
+recently in Nature [13]. There has been a lot of work on
+IndexTerms—visualinertialodometry,VIO,localization,map-
+buildingenergy–efficientacceleratorsfortheseapplications[14–
+ping, SLAM, nano drones, navigation
+16].Aunifiedgraphicsandvisionprocessorforposeestimation
+is presented in [14]. However, the problem is simplified by
+I. INTRODUCTION usingknownmarkersinimageswhichcanbeimpractical.Hong
+et al. [15] implements a marker–less camera pose estimation
+Autonomous navigation has attracted a lot of attention with
+for a practical AR application, but it depends on off–chip
+many consumer products available on the market. In this
+image processing and external storage, which increase the
+application, estimating the 3D motion within an environment,
+overall system power consumption. Li et al. [16] implements
+referredtoasego-motion,isofcrucialimportance.Itisthefirst
+only parts of the image processing needed in a VIO/SLAM
+step towards higher level tasks including motion planning and
+system.Oneknowndownsideofcustomacceleratorscompared
+obstacle avoidance [1–3]. Motion estimation is also important
+to CPU/GPU–based implementations is the lack of flexibility,
+inotherapplicationssuchasaugmentedreality(AR)andvirtual
+which comes as a direct trade–off with the low power and fast
+reality (VR) [4]. This problem is well–known in the robotics
+processing that accelerators deliver. Some accelerators take it
+community as simultaneous localization and mapping (SLAM).
+to an extreme by hard–wiring the design to perform a specific
+Visual-Inertial Odometry (VIO) is a special instance of SLAM,
+task in a specific environment [17], which severely limits its
+wherevisual(camera)andinertialmeasurementunit(IMU)data
+practical applications.
+are used to estimate the location and map the surroundings.
+In all of these works, the hardware design is separated
+Fig. 1 illustrates the inputs and outputs of a VIO pipeline.
+from the algorithmic choices; however, it is shown in [18]
+Compared with a full SLAM system, VIO does not have loop
+with an FPGA prototype implementation that a co-design
+closure, which happens at much lower frequency and can
+strategy can provide significant benefits. This work builds
+A.Suleiman,Z.ZhangandV.SzearewiththeDepartmentofElectricaland on [18] and carries out more optimization for an efficient
+ComputerScience,MIT.L.CarloneandS.KaramanarewiththeDepartment ASIC implementation. Here is a summary of the contributions
+ofAeronauticsandAstronautics,MIT,CambridgeMA,02139.(Projectwebsite:
+and findings of this work:
+http://navion.mit.edu/).ThisworkwaspartiallyfundedbytheAFOSRYIP
+FA9550-16-1-0228andbytheNSFCAREER1350685. • We propose Navion, an energy-efficient and fully inte-
+8102
+peS
+51
+]OR.sc[
+1v08750.9081:viXra
+2
+frontend (VFE), IMU frontend (IFE), and Backend (BE)
+followingthestandardterminologyin[19].TheVFE tracks3D
+landmarks (L) in the scene by extracting their corresponding
+i
+2Dfeatures(i.e.,corners)fromacameraframe,andtracksthem
+between consecutive frames to create feature tracks. The IFE
+summarizes the IMU sensor data between two camera KFs
+into one measurement. The BE fuses the summarized inputs
+from the two sensors through a non-linear graph optimization,
+and then it outputs the position and orientation of the drone.
+A. Vision Frontend (VFE)
+Fig.1. Visual-InertialOdometry(VIO)processingimageandIMUmeasure- TheVFE detects and tracks 2D features that correspond to
+mentsstreamsfortrajectoryand3Dmapoutput. the 3D landmarks in the scene across frames from the camera.
+It supports both mono and stereo modes. VFE implements
+five main functions on the input images: feature tracking
+grated VIO implementation on-chip that runs in real– (FT), feature detection (FD), undistort & rectify (UR), stereo
+time to enable autonomous navigation in miniaturized matching (SM), and geometric verification (GV).
+robots/UAVs. Compared to an optimized software VIO
+• FeatureTracking(FT)usesthePyramidalLucas-Kanade
+implementation, Navion is 1582× more energy-efficient
+optical flow [21] to track features corresponding to the
+than Xeon desktop CPU, and 684× more energy-efficient
+same landmark across all frames, including non KFs.
+thanalowpowerembeddedARMCPU.Tothebestofour
+• FeatureDetection(FD)extractsfeaturesintheleftstereo
+knowledge, this is the first fully integrated VIO system
+frame using the lightweight Shi-Tomasi corners [22].
+in an ASIC.
+Features are detected on a grid to keep the number of
+• Multiple algorithmic and architectural optimizations are
+features in different regions of a KF constant.
+carriedoutinNavion.Efficientmemoryhierarchyanddata
+• Undistort & Rectify (UR) processes the left and right
+movement enable a 9× reduction of the external DRAM
+stereo frames only at KFs to prepare them for disparity
+bandwidth. Data compression reduces on-chip memory
+calculations.
+sizeby4.4×,whiletakingadvantageoffixedanddynamic
+• Stereo Matching (SM) is only active in stereo mode
+datasparsityenables5.2×and5.4×smallermemorysize,
+and it only runs on KFs. It gets the 3D coordinate of a
+respectively. Rescheduling and parallelism enable 43%
+feature using template matching between left and right
+faster processing with minimal to no overhead.
+stereo frames [23]. Since stereo frames are undistorted
+• We find that adding sufficient adaptability in Navion’s
+and rectified, template matching happens on a horizontal
+architecturecanimproveaccuracyandincreasethroughput
+search line.
+basedontheenvironmentandcameramovement.Adapting
+• Geometric Verification (GV) removes any incorrect
+Navion to the different sequences results in an additional
+matches (i.e., outliers) resulting from FT and/or SM, and
+2.5× improvement in energy efficiency.
+itrunsonlyatKFs.Randomsampleconsensus(RANSAC)
+The rest of the paper is organized as follows: Section II
+is used in this pipeline. In Navion, RANSAC is informed
+givesanoverviewoftheVIOalgorithm.InSectionIII,Navion
+bytherotationestimateproducedbygyroscopeintegration.
+architecture is presented showing the degree of flexibility in
+This enables using the simpler 2-point method [24] for
+the architecture. Section IV discusses some of the hardware
+FT (i.e.,monoRANSAC)and1-pointmethod[25]forSM
+optimizations for memory size reduction. Section V shows the
+(i.e., stereo RANSAC), instead of the more complicated
+evaluation of Navion’s accuracy and an analysis of the effect
+5-point RANSAC method.
+of changing the chip’s configuration parameters on overall
+In summary,VFE processes the input mono/stereo frames
+performance. Finally, Section VI concludes the paper.
+to track several landmarks (L in Fig. 2) based on their
+i
+2D projections in the images (i.e., features f in Fig. 2).
+i
+II. OVERVIEWOFVISUAL-INERTIALODOMETRY(VIO)
+VFE outputs landmark IDs, and their corresponding feature
+The Visual-Inertial Odometry (VIO) can be used to estimate coordinates in left and right frames; this information will be
+the trajectory of a sensing device (e.g., sensors mounted on a usedtogeneratefeaturetracksintheBE.InNavion,VFE uses
+drone)whilereconstructingamapoftheenvironmentasshown feature tracking rather than feature descriptors to find features
+in Fig. 2. The trajectory is the collection of the drone’s state x, correspondencebetween frames.Thisavoidsthecomputational
+specifically its position P and orientation R, over time. These overhead of the costly feature matching process.
+statesareestimatedbasedonmeasurementsoftheenvironment.
+Navionimplementsthekeyframe-basedVIOpipelinedescribed
+B. IMU Frontend (IFE)
+in [7]. The keyframes (KFs) are a subset of the incoming
+frames at which the state estimation is performed. IMU is The IFE summarizes all the IMU measurements between
+used for a continuous motion/state estimation in between two consecutive KFs into a single preintegrated measurement.
+KFs. The pipeline consists of three main components: Vision The mathematical details are outside the scope of this paper
+3
+Fig.2. VIOpipelinebasedon[20].IFE summarizestheIMUmeasurementsbetweenKFs,whileVFE tracksfeaturesininputimagesthatcorrespondto
+importantlandmarksinthescene.VFE isKF based,i.e.,ittracksfeaturesinallframes,butremovesoutliers,addsnewfeaturestocompensatelostones,and
+performsstereomatchingonlyatKFs.BE fusesVFE andIFE outputstoperformstateestimationatKFsusingfactorgraphoptimization.
+and can be found in [20]. The preintegration between KFs that describes the constraints between the 3D position and
+i and j gives the relative rotation (∆RRR˜ ), velocity (∆vvv˜ ) and orientationofalltheKFsthatobservethesamelandmark;IMU
+ij ij
+position (∆ppp˜ ). At each KF, IFE outputs the preintegration factors describes the difference between the relative motion
+ij
+measurements to BE. between a pair of KFs given by the IMU measurements and
+the estimated relative motion from the state variables, and
+marginalization factor the describes the constraints between
+C. Graph Optimization Backend (BE)
+the states of the KFs that were connected by any factor
+TheBE fusesthefeaturetracksfromtheVFE outputandthe that fall outside the current horizon. The BE must perform
+IMU data from the IFE by solving a non-linear optimization an optimization to find the KF states that best satisfies the
+problem whose solution is the KF state estimation, which
+constraintssetbythesefactorsandminimizeanydiscrepancies.
+describes the drone’s trajectory and a sparse 3D landmarks
+BE solves the minimization problem using an on manifold
+map.Theoptimizationisperformedonmultiplestateswithina
+Gauss-Newton method [20]. The four main functions are
+sliding time window, referred to as the horizon, using a fixed-
+linearization, linear solver, marginalization, and retract as
+lag smoother to compute the maximum a posterior (MAP)
+shown on the right side of Fig. 2. Specifically, the factors
+estimate [20]. It formulates the problem as a factor graph [26],
+are linearized and accumulated into a large system of linear
+which describes the relationship and thus constraints1 between
+equations (H∆x=ε), where the Hessian matrix H and the error
+all states in the horizon; these relationships between states
+vector ε describe how the frontend measurements affect each
+defined by the factors are non-linear. There are three main
+KF state in the horizon, and the solution vector ∆x is the state
+types of factors in BE: vision factors are the feature tracks
+update.
+A linear solver uses Cholesky factorization and back-
+1Here,wedon’tusetheformaldefinitionofconstraintsforoptimization.
+Instead,thesefactorsareincludedintheobjectivefunctionintheoptimization. substitution to solve this linear system of equations [27].
+4
+Marginalization summarizes the information of the states that c) VIO vs VO: Including inertial measurements increases
+fall outside of the current time window. All the factors that the robustness of a SLAM system, especially in the indoor
+constrainthesestatesareremovedfromthegraph.Asaresultof environments where insufficient visual features can be detected
+marginalization and limited horizon, the structure of the factor and tracked (e.g., a drone facing a white wall). It can also
+graph is dynamically updated over time. Finally, the solution provide a good initialization for the non–linear optimization
+of the linear system (∆x) is used to update the remaining KF in the backend, reducing the number of iterations needed for
+statesinthehorizonusingretractsuchthattheupdatedvariable BE to converge to a good state estimation.
+is also on the manifold. Generally, the Gauss-Newton method d) Stereo vs Mono: Using stereo frames avoids the scale
+isiterativebutourBErunsonlyoneiterationbecausetheIMU ambiguity of a mono VIO system [23]. However, a stereo
+information is used to provide a good initialization. camera has higher power consumption than a mono camera.
+Navion’s BE supports a very large and continuously varying Therefore,Navionsupportsbothmonoandstereomodesforthe
+factor graph problem, with a maximum of 20 KFs in the user to choose depending on the target application scenario.
+horizon and 4000 vision factors (i.e., landmarks); the selection
+of these parameters are described next in Section II-D. This III. NAVION:ARCHITECTURE
+poses challenges in storing and maintaining the graph on–chip
+Fig. 3 shows the overall architecture of the proposed VIO
+efficiently.
+hardware accelerator. The VIO pipeline is fully integrated in
+Navion with no external storage or computation required. The
+D. Design Considerations architecture consists of the frontend (i.e.,VFE, IFE), which
+a) Parameters: InNavion,afewimportantparameterscan processes the high–dimensional sensor data, and the backend
+havesignificantimpactonthetrade–offinmemory,throughput (i.e., BE) which performs the state estimation following the
+and accuracy of the design. algorithm discussed in Section II. Navion is a standalone
+• Horizon size determines how many KFs are used in the accelerator that takes images (mono or stereo) and inertial
+BE. Let N be the number of KFs in a horizon. The size measurements as inputs, and outputs the trajectory and the
+of the linear system that BE solves after linearization is sparse 3D map of the surrounding environment.
+O(N2).Thetimecomplexityforsolvingthislinearsystem With the optimizations carried out in this work, no external
+is O(N3). Therefore, reducing N can significantly reduce storage is required (e.g., DRAM), which lowers the overall
+thememoryandincreasethethroughputofthesystem,but system power consumption. Navion has more than 250 pro-
+it will hurt the accuracy of the estimated trajectory [18]. grammable parameters (a subset of them is shown later in
+Navion has a horizon size of 20. Table II). Some of these parameters are used to define the
+• Number of features tracked per frame affects all the camera and IMU calibration and settings, such that a wide
+major components ofVFE linearly in terms of the power range of sensors can be used with Navion. The remaining
+and the throughput. Navion tracks up to 200 features per parameters are used to control the VIO pipeline’s complexity
+frame. and trade–off accuracy, throughput and power consumption
+• Feature track age is the maximal length allowed for a across different environments as shown later in Section V-D.
+feature track. This parameter affects how many feature
+tracks will be included in the factor graph based optimiza- A. IMU Frontend (IFE)
+tion. Since each feature corresponds to a vision factor,
+Inertial measurements, with 6 values per measurement (i.e.,
+scaling the feature track age affects the BE linearly. Note
+3 values from the accelerometer and 3 values the gyroscope)
+that a larger feature track age is generally preferred for
+are streamed into the chip through a 32–bit input bus in single
+high accuracy. Navion has a feature track age of 10.
+precision. IFE (lower left box in Fig. 3) processes them using
+In applications where the tolerance of localization error is
+double precision arithmetic to perform the IMU preintegration
+higher, it is possible to tune these parameters to reduce the
+basedon[20].Itcontainsasmallsharedregisterfileanda2kB
+memoryandincreasethethroughputofthedesignsignificantly.
+SRAM to store intermediate data and the preintegrated results.
+b) Optimization Method: We employ a non–linear factor-
+IFE uses a dedicated double precision arithmetic compute unit
+graph based optimizer rather than an extended Kalman Filter
+that runs in parallel with the rest of the chip. The number
+(EKF) in our BE. EKF essentially summarizes all the feature
+of operations in the preintegration process is relatively small,
+tracks between two adjacent KFs into one factor, hence the
+henceIFE’scomplexityislowcomparedtotherestofthechip.
+maximal feature age can be considered to be 2. Therefore,
+It accounts for only 2.4% of the chip area, while consuming
+EKF has lower complexity but its average motion (i.e., state)
+around 1% of the average total power.
+estimation error can be 3× higher when benchmarked on the
+EuRoC dataset [28].
+B. Vision Frontend (VFE)
+Bundle adjustment is also a very well known technique to
+estimate the camera positions from the visual features [23]. The input images, with a maximum resolution of 752×480
+The goal is to minimize the total reprojection error from the pixels, are streamed into the chip through two 8–bit buses for
+landmark to the features. It is identical to a special case of left and right stereo images, which are processed by theVFE
+the factor graph optimizer presented in this work, where only (upper left box in Fig. 3). The input pixels are stored on–chip
+vision factors and prior factors are used. in line and/or frame buffers to lower the external bandwidth
+5
+Fig.3. OverallarchitectureofNavionchip.AllcomponentsoftheVIOpipelineareintegratedon–chip.Framebuffers,FactorGraph,andLinearSolver
+memoriesaccountfor95%oftheon–chipmemory.Memoryoptimizations,alongwithreschedulingandparallelism,arecarriedouttoenablefullintegration.
+by up to 9× to 0.34 MB/frame only, which is the minimum horizon size of 20 KFs in the optimization problem. Horizon
+bandwidth required to stream in a single frame (i.e., no pixel StatesmemorystoresthestateoftheKFsinthehorizon,while
+is read more than once). VFE uses fixed point arithmetic the Shared Memory stores large intermediate data. BE outputs
+for lower power and smaller area, and can be divided into the trajectory and the sparse 3D map of the surroundings at
+two different dataflows: parallel image processing and serial the KF rate.
+geometric validation. Navion uses double precision arithmetic in the BE and IFE
+The image processing dataflow (i.e., FT, FD,UR, and SM) to ensure robustness of the VIO system. This doubles the size
+processes pixels in parallel to increase the throughput. The of all memories in BE and IFE. Using single precision does
+geometricvalidation,highlightedbythedashedboxinsideVFE not provide sufficient numerical precision for the underlying
+in Fig. 3, implements mono and stereo RANSAC using finite VIO algorithm from [20]. This is due to the fact that the VIO
+state machines (FSM), shared memory and shared arithmetic pipeline is an open–loop system. Therefore, as time goes on,
+compute unit.VFE accounts for 53% of the overall chip area, the uncertainty of the state estimation keeps increasing and the
+andcontains439.4kBSRAMwhichisdominatedbyfourframe conditionnumberofthelinearsystemincreases;thiscausesthe
+buffers: original frames from the camera are stored in Frame problem to be ill–defined and thus cannot be properly solved.
+(1) and Frame (2) memories to support FT. Undistorted and
+rectified frames are stored in Left Frame and Right Frame
+D. Processing Modes
+memories to support SM.VFE detects a total of 1824 features
+Navion has two modes of operations since the VIO is KF–
+per frame, and can track up to 200 features per frame.
+based, as shown earlier in Fig. 2. A detailed timing diagram
+is shown later in Fig. 12. IFE is active in both modes.
+C. Backend
+KF processing (stereo images labeled red in Fig. 2): In this
+BE (right box in Fig. 3) solves the factor graph optimization mode, stereo frames are streamed in and all components are
+problem. Due to the serial nature of this process, a dataflow active. FT, FD, UR and SM modules process the incoming
+similar to the geometric validation in VFE is used with a frames in parallel. The control FSM then starts the mono and
+complex FSM. To reduce area and increase resource sharing, stereo RANSAC in series to perform the geometric verification
+BE’s FSM is divided into a hierarchy of smaller FSMs. and remove outliers before adding new features as needed. BE
+The small FMSs include: 1) Matrix operations that are used then starts solving the factor graph optimization problem. The
+all over the factor graph optimization problem. 2) Cholesky trajectoryandsparsemapoutputsareupdatedafterBE isdone.
+factorization and back–substitution used in both linear solver Non–KF processing (all other stereo images in Fig. 2): In
+and marginalization processes. 3) Rodrigues operations that this mode, FT is the only active component, while the rest of
+are used in the linearization and retract processes. VFE and BE are off and clock–gated to reduce their power
+A shared register file is used, with 85 double precision consumption. Right frames are not streamed in to reduce the
+registers, as a memory hierarchy for intermediate data storage off–chip memory bandwidth. The previously tracked features
+similar to IFE, along with 412.6kB of SRAM. The Factor are stored in the Tracking Data memory, and FT updates them
+GraphmemorystorestheVFE andIFE outputsinthehorizon, in–place if successfully tracked, or removes them from the
+whicharethenlinearizedintotheLinearSolverMatrixmemory. memory if tracking fails. On average, processing non–FK is
+BE includes more than 4000 factors to support a maximum 3.8× faster than processing KF.
+6
+Fig.4. Memorysavingsvs.VIOerrorwithlossyimagecompression.
+Fig.5. Block–wiseimagecompressionarchitecture.
+IV. ARCHITECTUREOPTIMIZATIONS
+threshold (5-bit) and minimum value (5-bit). With a compute
+This section presents the main optimizations carried out to
+overhead of 4 kgates (0.8% of the total kgates) and a 1.4kB
+enable energy–efficient full VIO integration in Navion. Table I,
+line buffer, compression reduces the frame memory size by
+shown in next section, summarizes the resulting size reduction
+4.4× and power by 4.9×. Compressed frames are used in SM
+of the various on–chip memories, which is important to reduce
+andFT,buttheyarenotuseinFDbecauseitismoresensitive
+power consumption and area cost. Additionally, we exploit
+blocking and quantization artifacts as shown in Fig. 5.
+parallelism and rescheduling to increase the overall throughput.
+A. Image Compression B. Feature Tracks Unstructured Sparsity
+VFE hasfourframebuffersasshowninSectionIII-B.These Feature tracks account for 88% of the factor graph memory
+buffers are needed because of the random reading patterns inBE.Theycontainallobservedfeaturesinthecurrenthorizon,
+in FT, as a feature can move to anywhere between frames and are used by BE to solve the non–linear optimization
+depending on the camera movement. Additionally, multiple problem. Each feature track stores the KF IDs where the
+frame readings happens over time in SM since it runs twice landmark is observed in, and the 3D coordinates of the
+at different time slots. As a result, frames are stored on–chip corresponding feature in each KF. Fig. 6–a shows an example
+to avoid re–streaming. Lossy image compression is used to of some feature tracks. Although a maximum feature age is
+reduce the size of these frame buffers. defined(e.g.,10inNavion),featuretrackshavevariablelength
+Fig.4showsthetrade–offbetweenthecompressionratioand depending on the image sequence. A feature track can be short
+the VIO error. For a minimal overhead cost, two compression because its landmark gets out of the field of view while the
+methodsareanalyzed.Truncatingtheleastsignificantbits(LSB) camera is moving (e.g., L
+2
+), or because the tracking algorithm
+the simplest method to reduce the bitwidth with no overhead. fails to track a landmark over time (e.g., L 5 ).
+Fig. 4 shows that VIO error increases by just 6% going from Fig. 6–b shows the feature tracks stored in one memory.
+8–bit to 5–bit per pixel while achieving 38% memory size Designing for the worst case, the memory has to store all
+reduction. However, the error increases much faster after that observations in 20 KFs (i.e., maximum number of KFs in a
+to more than double at the extreme of 1–bit per pixel. horizon) each having 200 features (i.e., maximum number of
+Another lossy compression technique is block–wise quanti- features tracked per frame) and 10 observations per landmark
+zation. The frame is divided into blocks of N×N pixels, and (i.e.,maximumfeatureage).Thisresultsinabig962kBSRAM,
+the dynamic range of each block is quantized into 2 levels with 40,000 entries, each containing a 5–bit KF ID and 3
+for a 1–bit per pixel representation. This technique’s overhead 64–bit double precision numbers for the 3D coordinates per
+includes a line buffer storing N−1 rows and some logic to observation. This memory is populated with measurements
+calculate the dynamic range of each block. The shaded part in fromVFE, and it is continuously changing with old features
+Fig. 4 shows the numbers for three different block sizes: 4×4, being removed and new features being added.
+8×8, and 16×16. The 4×4 block quantization achieved less Toreducethesizeofthislargememory,wenoticedthatitis
+error than the 3–bit case, while increasing the memory savings sparselypopulatedwithamaximumof4,000observationsfrom
+from 2.7× to 4.4×. VFE (200 features tracked per frame, 20 KFs in a horizon).
+Fig. 5 shows the image compression architecture used in However,thedistributionofthesenon–zeroentriesisunknown
+Navion, which combines both lossy compression techniques and depends on the feature track length (Fig. 6–a). As a result,
+described above. The pixels are quantized to 5–bit by simple a two–stage memory architecture is used as shown in Fig. 6–c.
+LSB truncation, then the image is divided into blocks of 4×4 The first sparse memory still has 40,000 entries, but rather
+pixels. The pixel intensity dynamic range within each block is than storing the 3D double precision coordinates, it stores
+found, anda threshold divides this rangein half. Every pixelis 12–bit pointers to the second dense memory, which stores the
+then represented by 1–bit, which is the result of comparing the 3D values of the 4,000 observations. This reduces the graph
+pixel intensity to the threshold. Accordingly, each 4×4 block memory size by 5.4×, with an overhead of increasing access
+of pixels uses 26 bits to store its dynamic range (1-bit/pixel), latency by only one cycle.
+7
+Fig.6. Memorysizereductioninthevisionfactorsmemory.(a)Examplesof
+featuretrackswithvariablelength.(b)Storingfeaturetracksinonememory
+designedforworstcase.(c)Dividingthememoryintotwostageswithpointers.
+Fig.7. Fixedsparsityvisualizationinlinearsolvermatrix,withmemorysize
+C. Linear Solver Structured Sparsity reductionandthroughputincrease.
+The first step in BE to solve the non–linear factor graph
+optimization problem is to linearize all factors in the horizon.
+The result is a linear system of equations (H∆x=ε), where
+H is the Hessian matrix and ε is the residual error resulting
+from the linearization process. With a maximum of 20 KFs
+in the horizon, matrix H size is 300×300 as shown in Fig. 7,
+where each KF’s state contains 15 variables: 3 for position,
+3 for orientation, 3 for velocity, and 6 for IMU bias. The H
+matrix is stored in the linear solver memory in BE, where it
+is updated every KF.
+The H matrix, shown in Fig. 7, has some characteristics that
+enable memory size reduction. For instance, H is symmetric,
+which directly results in 2× memory size reduction by only
+Fig.8. BEprocessingtimesavingsbyexploitingsparsityinthelinearsolver
+storingtheupper(orlower)triangle.Additionally,basedonthe
+matrix. The horizon size (in number of KFs) defines the size of the linear
+ratio between the feature track age and the horizon size, only system.Percentagesshowhowmuchtimeisspentinthelinearsolverrelative
+38% of each of the matrix’s triangles have non–zero values, toBEprocessingtime.
+labeled in black in Fig. 7, and their positions are fixed. By
+storing only the non–zero values, a total 5.2× memory size
+reduction is achieved. Fig. 7 shows the linear solver memory number of KFs in the horizon increases. At 20 KFs in the
+wrapper. A sparse–based control unit takes the read/write horizon, a maximum of 2.5× speed–up of BE processing time
+requests with the row and column addresses, and it controls is achieved.
+whethertoperformtheread/writeoperationonthesmall134kB
+memory or to mask it according to the fixed sparsity pattern.
+D. Rescheduling and Parallelism
+Fig. 7 also shows the linear solver process, happening in–
+place in the linear solver memory. Cholesky factorization Parallelism is carefully used to increase the throughput with
+and back–substitution are used to solve H∆x=ε. These two minimaloverhead.VFE inparticularissuitableforparallelism
+operationsinvolvetraversingthematrixrowbyrowandcolumn due its nature of running image processing computation. The
+by column. Taking into account the fixed sparsity pattern of H, main advantage of rescheduling is that it achieves processing
+the linear solver processing time can be reduced by skipping time savings without any effect on the overall system accuracy.
+processing the zero locations. With the maximum horizon size Fig. 9–a shows the rescheduling ofVFE’s pipeline to make
+of 20 KFs, a 7.2× speed–up is achieved by exploiting the use of parallel processing in hardware. Algorithmically, the
+H matrix structured sparsity. Fig. 8 shows the BE’s overall imageprocessingpartsoftheVFE canruninparallel.Although
+processing time savings with different horizon sizes. The the algorithm has some dependency where FD waits for FT
+linear solver processing time increases with O(N3) without and RANSAC to know how many new features are needed to
+sparsity,comparedtoanincreasemuchslowerthanO(N)when be detected (Fig. 9–a top), this dependency can be broken by
+exploiting sparsity. This results in more time savings as the pre–detecting features and selecting the relevant features later
+8
+Fig.9. (a)ReschedulingVFE’spipelineprocessingKFs.(b)ReschedulingBE’spipeline.
+Memory Size(kB)
+Savings
+Blocks Before After
+FrameBuffers 1410 317.6 4.4×
+LineBuffers 78.2 –
+VFE TrackingData 18.2 –
+FeaturesCandidates 16 –
+KeyframeData 11.7 –
+IFE IntegratedData 2 –
+FactorGraph 1012 205.6 4.9×
+LinearSolverData 882.4 163.5 5.4×
+BE
+HorizonStates 5.2 –
+SharedMemory 36 –
+Total 3471.7 854 4.1×
+TABLEI
+THESIZEOFDIFFERENTMEMORYBLOCKSINNAVION,SHOWINGNUMBERS
+BEFOREANDAFTEROPTIMIZATIONSINSECTIONIV.
+(Fig. 9–a bottom). This parallelism is not exploited in software
+because firing up multiple cores can significantly increase
+power consumption, which is already high with one core. The
+rescheduling results inVFE’s processing time saving between
+43% to 55% depending on the environment. This comes with Fig.10. Diephotoandsummaryofthechipspecifications.
+a 77kB (10%) memory overhead with line buffers to support
+the required bandwidth of the parallel components. Parameter MaximumValue
+AnotherreschedulingiscarriedoutinBE’spipelinetoenable Frameresolution 752×480
+parallelismbetweenBE andVFE.AtKFs,BE waitsforVFE Numberoffeaturesperframe 200
+andIFE toprocesstheiroutputs.However,IFE ismuchfaster Feature
+Pyramid(PFT) 3levels
+Tracking
+Cellsize(CFT) 15×15pixels
+and its output is ready earlier thanVFE as shown in Fig. 9–b. Iterations(IFT) 30perlevel
+BE processing can be rescheduled such that the initialization
+Stereo
+Templatesize(TS) 51×5pixels
+and all IMU factors linearization start immediately after IFE’s
+Searchregion(RS) 421×5pixels
+Horizonsize 20Keyframes
+output is available. This results in BE’s processing time saving Backend Featureage 10Keyframes
+between 4% to 19% depending on the scene, with no overhead. Featuretracks 4000tracks
+TABLEII
+MAINPROGRAMMABLEPARAMETERSWITHTHEIRMAXIMUMVALUES.
+V. IMPLEMENTATIONANDRESULTS
+A. Chip Implementation Results
+Fig. 10 shows the die photo of Navion chip with a summary different sequences in EuRoC dataset [29] used for evaluation;
+of the chip specifications and the memory optimization results. this is referred to as the tracking rate. The chip can also
+Navion is implemented in a 65nm CMOS technology with 2 process inertial measurements at up to 52kHz. Navion updates
+million NAND2 equivalent logic gate count and 854kB on– the states and the sparse 3D map at KF rate of 16–90 fps,
+chip SRAM. The chip contains two clock domains, one for which is the BE rate, also depending on the sequence. It
+VFE and the other for both IFE and BE. By using image consumes an average power consumption of 24mW when
+compressionandexploitingstructuredandunstructuredsparsity, operating at 1V. These numbers are measured when Navion’s
+an overall 4.1× memory saving is achieved, which enables programmable parameters are set to their maximum values;
+fullVIO pipeline integration on–chip. Table I shows different the main parameters are shown in Table II. Changing these
+memory sizes before and after optimizations. parameters values can trade–off accuracy, throughput and
+Navioncanprocessstereoimageswithamaximumresolution power consumption across different environments, as shown
+of 752×480 at a rate of 28–171 fps in real–time across the in Section V-D.
+9
+Fig.12. Navion’stimingbreakdownatmaximumconfiguration(62.5MHz
+VFE clock and 83.3 MHz BE clock). Numbers are averages over EuRoC
+dataset.
+Fig.11. Areaandpowerbreakdown.
+B. Demonstration System
+To validate the fabricated chip, a demonstration system is
+developed for real–time localization and mapping as shown in
+Fig. 13. It is composed of the custom test chip board and a
+Fig. 11 shows Navion’s area and power breakdowns. IFE Xilinx ZC-706 evaluation board. The FPGA board is used to
+has a very low cost from both area and power points of view, stream images and IMU measurements to the chip, and read
+whileVFE and BE have relatively similar area. The average the output results for verification and visualization. The Xilinx
+power consumption of BE is 40% of the total power since it Zynq–7000 FPGA has 2 ARM Cortex–A9 embedded cores.
+is active only at KFs. It’s worth–mentioning that the large on– A C API is developed on an Ubuntu operating system in the
+chipSRAMpowerisonly21%ofthetotalpowerconsumption, ARM core to control the dataflow through several buses using
+althoughitaccountsfor77%ofthechiparea.Thisisaresultof AXI protocol. Fig. 13 shows Navion’s output trajectory drawn
+dividing the large memories (i.e., frame buffers, vision factors on the monitor in real–time. A video of this demo system can
+memory, etc.) into small banks, and clock–gating the ones that be found on the Navion project website [30].
+are not used. This results in 5–9× power savings, depending
+on the memory size.
+C. Evaluation Results
+Fig. 11 also shows a detailed power breakdown of VFE To evaluate Navion’s accuracy, we use the EuRoC
+and BE, where different dataflows result in different power dataset [29] which is one of the most challenging and widely
+distribution. InVFE, parallel image processing modules (i.e., used datasets for UAVs flying indoors. EuRoC dataset contains
+FT, FD, UR, and SM) consume the majority of the power 11differentsequences,eachrepresentingtheUAVflyinginone
+comparedtocontrolandFSM.FT consumesthelargestamount of three different rooms: Machine Hall (MH), Vicon room 1
+of power inVFE because it is always active regardless of the (V1), and Vicon room 2 (V2). Some of the sequences are quite
+frame type (i.e., KF or not). However, in BE, half of the challengingastheyhaverelativelyfastandunstablemotionand
+power is consumed by the control and FSM because of the strong brightness change, which lead to dark and/or blurred
+serial nature of the BE’s architecture. Additionally, almost one images. The sequences are divided into easy, medium and
+quarter of BE’s power is consumed by the shared arithmetic difficult sequences accordingly.
+unit. Table III shows the average error, throughput and power
+numbersoftheVIOcomparingNaviontosoftwareimplementa-
+Fig. 12 shows a detailed timing breakdown for the dif- tions on a desktop Intel Xeon E5-2667 CPU and an embedded
+ferent VIO modules, in both non–KF and KF, measured ARM Cortex-A15 CPU. The trajectory error is defined as
+on average over different sequences in EuRoC dataset (see the difference between the VIO output and the ground truth
+SectionV-C).Basedonthereschedulingoptimizationdiscussed along the whole flight path (Fig. 14). To account for different
+in Section IV-D, FD,UR, and SM modules all run in parallel sequence lengths, the trajectory error is normalized to the
+with FT at KFs, where their processing time is hidden. For flight length. In this experiment, all sequences are processed
+BE, the majority of the processing time (65%) is consumed with the same configuration parameters in both the software
+in linearizing the vision factors. Linearizing IMU and the implementation and Navion. Due to randomness in RANSAC,
+other factors (not shown in Fig. 12) is carried out in parallel all accuracy numbers (i.e., trajectory error) are the average of
+with VFE processing, and it takes less than 2 ms to finish. 5 runs per sequence.
+Additionally, the linear solver is relatively fast (i.e., only 25% Navion’s average trajectory error increases by 6.27 cm, over
+of BE’s processing time) as it exploits sparsity by skipping an average flight length of 83 m in EuRoC dataset. Hence, the
+processing of zeros. normalized error increases from 0.22% to 0.28%. This 0.06
+10
+Fig.13. Demonstrationsystem.ARMcoreinZynq–7000SoCisconnectedtotheon–boardDRAMthoughtAXI0bus.AXI1andAXI2busesareusedto
+connecttheARMcoretothecontrolandtheinterfacelogicontheFPGAfabric.ThetwoclocksignalsneededtorunthechiparegeneratedontheFPGA.
+Fig. 15. VIO average error for the 11 sequences in EuRoC dataset. VIO
+Fig.14. VIOoutputexamplewithgroundtruth,processingasequencefrom
+parametersaresettotheirmaximumvaluesforallsequences.
+EuRoCdataset.
+Platform Xeon ARM Navion
+highly textured regions in the easy sequences (i.e., MH 1,
+Trajectoryerror(cm) 16.98 23.25
+Trajectoryerror(%) 0.22% 0.28% MH 2, V1 1 and V2 1), low trajectory error are achieved in
+Averagetrackingthroughput(fps) 63 19 71 both CPU and Navion. However, the error increases for the
+Frontend 19 3 45
+AverageKF blurry, dark, and fast moving medium and difficult sequences.
+Backend 35 6 32
+throughput(fps) Total 12 2 19 Note that for this experiment, the VIO parameters are set
+Averagepower(W) 27.9 2.4 0.024 to their maximum settings, in both Navion and the software
+Energy(mJ/KF) 3638.6 1573.2 2.3
+implementations, for all 11 sequences.
+TABLEIII
+VIOAVERAGEERROR,THROUGHPUTANDPOWERPROCESSINGEUROC
+DATASET.
+D. Adapting to the environment
+The flexibility that Navion presents with its programmable
+parameters gives an opportunity to trade–off throughput,
+percentage point error increase is mainly due to lossy image accuracy and power consumption. This is done by configuring
+compression and fixed point arithmetic inVFE. Based on the the chip differently based on the environment and/or the UAV
+odometry survey in [31], different algorithms have relative movement. Accuracy numbers for each sequence, previously
+trajectory errors ranging from 0.1 to 2%. Thus, Navion has a shown in Fig. 15, show a large gap between the trajectory
+relativelylowaveragetrajectoryerrorcomparedtotheseworks. error of easy and difficult sequences when all have the same
+Additionally, Navion achieves three orders of magnitude less configuration. Particularly, difficult sequences MH 4, MH 5
+energy consumption compared to both Xeon and ARM cores. and V2 3 have relatively large trajectory error when using the
+Fig. 15 shows the VIO trajectory error detailed for the 11 same configuration as other sequences. Additionally, adapting
+sequences in EuRoC dataset, in both Xeon/ARM CPU and to the environment also means that Navion’s workload can
+in Navion. As expected, with slow motion, bright scene, and change based on the environment, resulting in energy savings.
+11
+Parameters
+Name Error
+Features/frame Horizonsize
+MH 1 35 10 0.33%
+MH 2 35 10 0.22%
+MH 3 35 10 0.22%
+MH 4 150 10 0.29%
+MH 5 100 15 0.30%
+V1 1 35 10 0.21%
+V1 2 35 10 0.19%
+V1 3 35 10 0.33%
+V2 1 50 10 0.33%
+V2 2 35 10 0.16%
+V2 3 50 15 0.34%
+TABLEIV
+VIOINDEPENDENTPARAMETERSPERSEQUENCEFOR0.35%TARGET
+TRAJECTORYERROR.
+To show the potential savings that can be achieved with
+adaptation,wesetatargetnormalizedtrajectoryerrorof0.35%
+for all sequences, and find the optimum configuration for each
+one independently to meet this target. Table IV shows the
+main adapted parameters for each sequence and the resulting
+normalizedtrajectoryerror.Smallnumberoffeaturesandsmall
+horizon size are sufficient in easy sequences because it is easy
+to track them. This reduces the workload of easy sequences,
+which reduces the energy consumption. More features and
+longer horizons are used in difficult sequences to account for
+the short feature tracks.
+Fig.16showsacomparisonbetweenNavion’smeasurements
+with and without adaptation. Fig. 16–a shows the trajectory
+error for each sequence. Although the average trajectory error
+remains the same for both cases, the individual error numbers
+for the easy sequences (i.e., MH 1, MH 2, V1 1 and V2 1)
+increased slightly but are still within the 0.35% target, and Fig.16. Withandwithoutadaptationcomparisonsforthe11sequencesin
+EuRoCdataset.(a)Trajectoryerror.(b)Energyconsumption.
+the error for difficult sequences (i.e., MH 4, MH 5 and
+V2 3) decreased significantly. Fig. 16–b shows the energy
+WithoutAdaptation WithAdaptation
+consumption for each sequence. The energy numbers for all
+Max Fixed Fixed Max Fixed Fixed
+sequences decreased significantly by an average of 2.5×. Configuration Rate Dist Rate Rate Dist. Rate
+Table V shows the average throughput and energy numbers Traj.Error 0.28% 0.27%
+when adapting Navion for each EuRoC dataset sequence. VFEClock(MHz) 62.5 45.7 16.8 62.5 18.6 6.6
+BEClock(MHz) 83.3 60.9 22.5 83.3 24.8 8.8
+Different throughput modes are shown such that: 1) Maximum
+Tracking(fps) 71 41 20 142 41 20
+rate means that Navion is running at its maximum frequency KF(fps) 19 14 5 49 14 5
+for all sequences. 2) Fixed distance means that the throughput Power(mW) 24 18 6 22 7 2
+TABLEV
+of each sequence is set for a constant distance between KFs
+NAVION’SERROR,THROUGHPUT,CLOCKFREQUENCIESANDPOWER
+(5 cm/KF). 3) Fixed rate means that Navion is running at the NUMBERSFORDIFFERENTCONFIGURATIONS,WITHANDWITHOUT
+rate of which EuRoC dataset is captured (i.e, 20 fps). In this ADAPTATION.NUMBERSAREAVERAGESOVEREUROCDATASET.
+third configuration, and with adaptation, Navion can process
+the EuRoC dataset while consuming only an average power
+of 2mW. This experiment is clearly showing the importance
+ASIC solution, Navion. A simple yet effective on–chip image
+of having a configurable VIO accelerator that can adapt to
+compression technique is developed to reduce the size of the
+the environment, not only for an improved accuracy, but also
+memory. A specialized memory architecture is proposed to
+for large energy and power savings. In all these experiments,
+efficientlystorethemono/stereofeaturetrackswithinthewhole
+the power supply was set to 1V. Additional power and energy
+horizon. Both structured and unstructured sparsity patterns of
+savings can be achieved by lowering down the supply voltage.
+the memory for the BE are exploited to further reduce the
+memory and increase the throughput.
+VI. CONCLUSIONS
+Navion is fabricated in a 65nm CMOS technology. Several
+Scaling down localization and mapping to nano and pico important parameters can have significant impact on the trade–
+drones/robots requires hardware and algorithm co–design. In off in throughput, accuracy and energy efficiency of Navion.
+this paper, we improve our initial co–designed visual–inertial These parameters include, for example, keyframe rate, horizon
+odometry on FPGA and propose the first fully integrated size, and number of feature tracks. They are designed to be
+12
+programmable, allowing the chip to prioritize different goals [18] Z. Zhang, A. Suleiman, L. Carlone, V. Sze, and S. Karaman.
+under different scenarios. At its peak performance, Navion can Visual-inertial odometry on chip: An algorithm-and-hardware
+process 752×480 stereo image at up to 171 fps and inertial co-design approach. In RSS, 2017.
+[19] C. Cadena, L. Carlone, H. Carrillo, Y. Latif, D. Scaramuzza,
+measurements at up to 52 kHz while consuming an average of
+J. Neira, I. Reid, and J. J. Leonard. Past, present, and future
+24mW at 1V. When configured to process EuRoC dataset at of simultaneous localization and mapping: Toward the robust-
+the sensor rate of 20 fps, the chip consumes only an average perception age. IEEE Transactions on Robotics, 32(6):1309–
+of 2mW at 1V. Thus, Navion can adapt to handle different 1332, 2016.
+[20] C. Forster, L. Carlone, F. Dellaert, and D. Scaramuzza. IMU
+environments while being energy efficient and processing in
+preintegrationonmanifoldforefficientvisual-inertialmaximum-
+real–time, which makes it suitable for different applications
+a-posteriori estimation. In RSS, 2015.
+suchasautonomousnavigation,mapping,andportableAR/VR. [21] Bruce D. Lucas and Takeo Kanade. An iterative image
+registration technique with an application to stereo vision. In
+REFERENCES The International Joint Conference on Artificial Intelligence,
+volume 2, pages 674–679, 1981.
+[1] Francesco Nex and Fabio Remondino. UAV for 3D mapping
+[22] Jianbo Shi and C. Tomasi. Good features to track. In IEEE
+applications: a review. Applied Geomatics, 6(1):1–15, 2014.
+CVPR, pages 593–600, 1994.
+[2] F Mohammed, A Idries, N Mohamed, K Al-Jaroodi, and
+[23] R. I. Hartley and A. Zisserman. Multiple View Geometry
+I Jawhar. UAVs for smart cities: Opportunities and challenges.
+in Computer Vision. Cambridge University Press, ISBN:
+In International Conference on Unmanned Aircraft Systems
+0521540518, second edition, 2004.
+(ICUAS), 2014.
+[24] L. Kneip, M. Chli, and R. Siegwart. Robust real-time visual
+[3] Kimon P Valavanis and George J Vachtsevanos. UAV Applica-
+odometry with a single camera and an imu. In BMVC, pages
+tions: Introduction. In Handbook of Unmanned Aerial Vehicles,
+1–11, 2011.
+pages 2639–2641. Springer Netherlands, Dordrecht, 2015.
+[25] J. Civera, O. G. Grasa, A. J. Davison, and J. M. M. Montiel.
+[4] D. Chatzopoulos, C. Bermejo, Z. Huang, and P. Hui. Mobile
+1-pointransacforekf-basedstructurefrommotion. InIEEE/RSJ
+augmented reality survey: From where we are to where we go.
+International Conference on Intelligent Robots and Systems,
+IEEE Access, 5:6917–6950, 2017.
+pages 3498–3504, 2009.
+[5] A.I. Mourikis and S.I. Roumeliotis. A multi-state constraint
+[26] F. R. Kschischang, B. J. Frey, and H. A. Loeliger. Factor
+Kalmanfilterforvision-aidedinertialnavigation. InICRA,pages
+graphs and the sum-product algorithm. IEEE Transactions on
+3565–3572, April 2007.
+Information Theory, 47(2):498–519, 2001.
+[6] G. Sibley, L. Matthies, and G. Sukhatme. Sliding window filter
+[27] M. Kaess, A. Ranganathan, and F. Dellaert. isam: Incremental
+withapplicationtoplanetarylanding. JFR,27(5):587–608,2010.
+smoothing and mapping. IEEE Transactions on Robotics,
+[7] C. Forster, Z. Zhang, M. Gassner, M. Werlberger, and D. Scara-
+24(6):1365–1378, 2008.
+muzza. Svo: Semidirect visual odometry for monocular and
+[28] Jeffrey Delmerico and Davide Scaramuzza. A benchmark
+multicamerasystems.IEEETransactionsonRobotics,33(2):249–
+comparison of monocular visual-inertial odometry algorithms
+265, 2017.
+for flying robots. Memory, 10:20, 2018.
+[8] Kimon P Valavanis. Classification of UAVs. In Kimon P
+[29] MichaelBurri,JanoschNikolic,PascalGohl,ThomasSchneider,
+Valavanis and George J Vachtsevanos, editors, Handbook of
+Joern Rehder, Sammy Omari, Markus W Achtelik, and Roland
+Unmanned Aerial Vehicles. Springer Netherlands, Dordrecht,
+Siegwart. The euroc micro aerial vehicle datasets. The
+2015.
+International Journal of Robotics Research, 2016.
+[9] Skydio. https://www.skydio.com/2018/02/introducing-r1/.
+[30] Navion website. http://navion.mit.edu/.
+[10] R J Wood, B Finio, M Karpelson, K Ma, N O Pe´rez-Arancibia,
+[31] F. Fraundorfer and D. Scaramuzza. Visual odometry: Part ii
+P S Sreetharan, H Tanaka, and J P Whitney. Progress on ‘pico’
+matching, robustness, optimization, and applications. IEEE
+air vehicles. The International Journal of Robotics Research,
+Robot. Autom. Mag., 19(2):78–90, 2012.
+31(11):1292–1302, 2012.
+[11] J Bonnet, P Yin, M E Ortiz, P Subsoontorn, and D Endy.
+Controlled Flight of a Biologically Inpsired, Insect-Scale Robot.
+Science, 340(6132):599–603, 2013.
+[12] https://www.qualcomm.com/products/snapdragon/processors/
+410e.
+[13] DarioFloreanoandRobertJWood. Science,technologyandthe
+futureofsmallautonomousdrones. Nature,521(7553):460–466,
+2015.
+[14] J. S. Yoon, J. H. Kim, H. E. Kim, W. Y. Lee, S. H. Kim, AmrSuleiman(S’08–M’18)receivedtheB.S.and
+K. Chung, J. S. Park, and L. S. Kim. A unified graphics and M.S.degreesinElectronicsandElectricalCommuni-
+vision processor with a 0.89 /spl mu/w/fps pose estimation cationsEngineeringfromCairoUniversity,Egyptin
+engine for augmented reality. IEEE Transactions on Very Large 2008and2011respectively.HereceivedtheM.S.and
+Scale Integration (VLSI) Systems, 21(2):206–216, 2013. Ph.D.degreesinElectricalEngineeringandcomputer
+science from MIT in 2013 and 2018 respectively.
+[15] I. Hong, G. Kim, Y. Kim, D. Kim, B. G. Nam, and H. J. Yoo.
+He is currently working as a research scientist in
+A 27 mw reconfigurable marker-less logarithmic camera pose
+FacebookRealityLabs.Amr’sresearchworkfocuses
+estimationengineformobileaugmentedrealityprocessor. IEEE
+ondevelopingnewenergy–efficientimplementations
+JSSC, 50(11):2513–2523, 2015. formachinevisionalgorithms(e.g.detection,recogni-
+[16] Z. Li, Q. Dong, M. Saligane, B. Kempke, L. Gong, Z. Zhang, tion,andtracking).AmrisarecipientoftheEndowed
+R. Dreslinski, D. Sylvester, D. Blaauw, and H. S. Kim. A 1920 fellowshipoftheArabRepublicofEgypt,andthe2015BroadcomFoundation
+times 1080 30-frames/s 2.3 tops/w stereo-depth processor for UniversityResearchCompetition.
+energy-efficient autonomous navigation of micro aerial vehicles.
+IEEE JSSC, 53(1):76–90, 2018.
+[17] S.Murray,W.Floyd-Jones,Y.Qi,G.Konidaris,andD.J.Sorin.
+The microarchitecture of a real-time robot motion planning
+accelerator. In IEEE/ACM MICRO, pages 1–12, 2016.
+13
+Zhengdong Zhang (S’15) received the B.S. in
+ComputerSciencein2011fromTsinghuaUniversity,
+Beijing, China. He received the M.S. degree in
+ComputerSciencefromMassachusettsInstituteof
+LucaCarloneistheCharlesStarkDraperAssistant
+Technology,Cambridgein2014.Between2011and
+Professor in the Department of Aeronautics and
+2012heworkedinMicrosoftResearchAsia,Beijing,
+AstronauticsattheMassachusettsInstituteofTechnol-
+China,asanAssistantResearcher.Heispursuingthe
+ogy,andaPrincipalInvestigatorintheLaboratoryfor
+Ph.D.degreeunderthesupervisionofProf.Vivienne
+Information&DecisionSystems(LIDS).Hereceived
+Sze.Hisresearchinterestspanstheareaofsparsity,
+his PhD from the Polytechnic University of Turin
+low-rank matrix recovery, symmetry/regularity of
+in2012.HejoinedLIDSasapostdoctoralassociate
+textures, 3D computer vision, computational pho-
+(2015) and later as a Research Scientist (2016),
+tographyandvisionsystems.Hiscurrentresearchfocusesonthedesignof
+after spending two years as a postdoctoral fellow
+energy-efficientvisionsystems.
+attheGeorgiaInstituteofTechnology(2013-2015).
+Vivienne Sze (S’04–M’10–SM’16) received the
+Hisresearchinterestsincludenonlinearestimation,
+B.A.Sc.(Hons)degreeinelectricalengineeringfrom
+numericalanddistributedoptimization,andprobabilisticinference,appliedto
+theUniversityofToronto,Toronto,ON,Canada,in
+sensing,perception,anddecision-makinginsingleandmulti-robotsystems.His
+2004, and the S.M. and Ph.D. degree in electrical
+workincludesseminalresultsoncertifiably-correctalgorithmsforlocalization
+engineering from the Massachusetts Institute of
+andmapping,aswellasapproachesforvisual-inertialnavigationanddistributed
+Technology (MIT), Cambridge, MA, in 2006 and
+mapping.Heistherecipientofthe2017TransactionsonRoboticsKing-Sun
+2010respectively.In2011,shereceivedtheJin-Au
+FuMemorialBestPaperAward,andthebestpaperawardatWAFR2016.
+KongOutstandingDoctoralThesisPrizeinElectrical
+EngineeringatMIT.
+SheisanAssociateProfessoratMITintheElectri-
+calEngineeringandComputerScienceDepartment.
+Herresearchinterestsincludeenergy-awaresignalprocessingalgorithms,and
+Sertac Karaman is an Associate Professor of
+low-power circuit and system design for portable multimedia applications
+AeronauticsandAstronauticsattheMassachusetts
+including computer vision, deep learning, autonomous navigation, image
+Institute of Technology (since Fall 2012). He has
+processing and video coding. Prior to joining MIT, she was a Member
+obtainedB.S.degreesinmechanicalengineeringand
+of Technical Staff in the Systems and Applications R&D Center at Texas
+incomputerengineeringfromtheIstanbulTechnical
+Instruments (TI), Dallas, TX, where she designed low-power algorithms
+University, Turkey, in 2007; an S.M. degree in
+andarchitecturesforvideocoding.ShealsorepresentedTIintheJCT-VC
+mechanical engineering from MIT in 2009; and a
+committeeofITU-TandISO/IECstandardsbodyduringthedevelopmentof
+Ph.D.degreeinelectricalengineeringandcomputer
+HighEfficiencyVideoCoding(HEVC),whichreceivedaPrimetimeEmmy
+sciencealsofromMITin2012.Hisresearchinterests
+EngineeringAward.Withinthecommittee,shewastheprimarycoordinatorof
+lieinthebroadareasofroboticsandcontroltheory.
+thecoreexperimentoncoefficientscanningandcoding,andhaschaired/vice-
+Inparticular,hestudiestheapplicationsofprobability
+chairedseveraladhocgroupsonentropycoding.Sheisaco-editorofHigh
+theory,stochasticprocesses,stochasticgeometry,formalmethods,andoptimiza-
+EfficiencyVideoCoding(HEVC):AlgorithmsandArchitectures(Springer,
+tionforthedesignandanalysisofhigh-performancecyber-physicalsystems.
+2014).
+Theapplicationareasofhisresearchincludedriverlesscars,unmannedaerial
+Prof.Szeisarecipientofthe2018&2017QualcommFacultyAward,the
+vehicles,distributedaerialsurveillancesystems,airtrafficcontrol,certification
+2018 Facebook Faculty Award, the 2016 Google Faculty Research Award,
+andverificationofcontrolsystemssoftware,andmanyothers.Hedelivered
+the 2016 AFOSR Young Investigator Research Program Award, the 2016
+thetheRobotics:ScienceandSystemsEarlyCareerSpotlightTalkin2017.
+3M Non-Tenured Faculty Award, the 2014 DARPA Young Faculty Award,
+HeistherecipientofanIEEERoboticsandAutomationSocietyEarlyCareer
+the2007DAC/ISSCCStudentDesignContestAwardandaco-recipientof
+Award in 2017, an Office of Naval Research Young Investigator Award in
+the2017CICCOutstandingInvitedPaperAward,the2016IEEEMicroTop
+2017, Army Research Office Young Investigator Award in 2015, National
+PicksAwardandthe2008A-SSCCOutstandingDesignAward.Prof.Szeisa
+ScienceFoundationFacultyCareerDevelopment(CAREER)Awardin2014,
+DistinguishedLectureroftheIEEESolid-StateCircuitsSociety(SSCS),and
+AIAAWrightBrothersGraduateAwardin2012,andanNVIDIAFellowship
+currentlyservesonSSCSAdComandthetechnicalprogramcommitteesfor
+in2011.HeservesasaboardmemberfortheRobotics:ScienceandSystems
+VLSISymposium,SysMLandMICRO.
+(RSS) Foundation, as the technical area chair for the robotics area for the
+IEEETransactionsonAerospaceElectronicSystems,andaco-chairofthe
+IEEERoboticsandAutomationSocietyTechnicalCommitteeofAlgorithms
+forthePlanningandControlofRobotMotion.
