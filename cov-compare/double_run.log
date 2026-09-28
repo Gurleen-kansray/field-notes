@@ -1,1 +1,749 @@
-vio_bench: processed 3/300 frames (1%)
+vio_bench: processed 3/300 frames (1%)vio_bench: processed 6/300 frames (2%)augment_clone: event#0 new_clone_idx=0 total_clones=1
+augment_clone: event#1 new_clone_idx=1 total_clones=2
+augment_clone: event#2 new_clone_idx=2 total_clones=3
+vio_bench: processed 9/300 frames (3%)augment_clone: event#3 new_clone_idx=3 total_clones=4
+augment_clone: event#4 new_clone_idx=4 total_clones=5
+augment_clone: event#5 new_clone_idx=5 total_clones=6
+vio_bench: processed 12/300 frames (4%)augment_clone: event#6 new_clone_idx=6 total_clones=7
+augment_clone: event#7 new_clone_idx=7 total_clones=8
+augment_clone: event#8 new_clone_idx=8 total_clones=9
+vio_bench: processed 15/300 frames (5%)augment_clone: event#9 new_clone_idx=9 total_clones=10
+augment_clone: event#10 new_clone_idx=10 total_clones=11
+vio_bench: call#15 diag[0] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#15 diag[1] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#15 diag[2] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#15 diag[3] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#15 diag[4] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#15 diag[5] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#15 diag[6] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#15 diag[7] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#15 diag[8] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#15 diag[9] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#15 diag[10] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#15 diag[11] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#15 diag[12] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#15 diag[13] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#15 diag[14] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#15 diag[15] KH=-0.0116378 1-KH=1.01164 (rel_gap=1.01164)
+vio_bench: call#15 diag[16] KH=0.0539697 1-KH=0.94603 (rel_gap=0.94603)
+vio_bench: call#15 diag[17] KH=0.0431956 1-KH=0.956804 (rel_gap=0.956804)
+vio_bench: call#15 diag[18] KH=-0.000532036 1-KH=1.00053 (rel_gap=1.00053)
+vio_bench: call#15 diag[19] KH=-0.000340207 1-KH=1.00034 (rel_gap=1.00034)
+vio_bench: call#15 diag[20] KH=3.06229e-05 1-KH=0.999969 (rel_gap=0.999969)
+vio_bench: call#15 diag[21] KH=-0.0119649 1-KH=1.01196 (rel_gap=1.01196)
+vio_bench: call#15 diag[22] KH=0.155199 1-KH=0.844801 (rel_gap=0.844801)
+vio_bench: call#15 diag[23] KH=0.0184393 1-KH=0.981561 (rel_gap=0.981561)
+vio_bench: call#15 diag[24] KH=-0.00396349 1-KH=1.00396 (rel_gap=1.00396)
+vio_bench: call#15 diag[25] KH=-0.00256509 1-KH=1.00257 (rel_gap=1.00257)
+vio_bench: call#15 diag[26] KH=0.00046467 1-KH=0.999535 (rel_gap=0.999535)
+vio_bench: call#15 diag[27] KH=-0.0134247 1-KH=1.01342 (rel_gap=1.01342)
+vio_bench: call#15 diag[28] KH=0.225781 1-KH=0.774219 (rel_gap=0.774219)
+vio_bench: call#15 diag[29] KH=0.00370564 1-KH=0.996294 (rel_gap=0.996294)
+vio_bench: call#15 diag[30] KH=-0.00504971 1-KH=1.00505 (rel_gap=1.00505)
+vio_bench: call#15 diag[31] KH=-0.00319378 1-KH=1.00319 (rel_gap=1.00319)
+vio_bench: call#15 diag[32] KH=0.00106272 1-KH=0.998937 (rel_gap=0.998937)
+vio_bench: call#15 diag[33] KH=-0.00693052 1-KH=1.00693 (rel_gap=1.00693)
+vio_bench: call#15 diag[34] KH=0.263151 1-KH=0.736849 (rel_gap=0.736849)
+vio_bench: call#15 diag[35] KH=0.000558605 1-KH=0.999441 (rel_gap=0.999441)
+vio_bench: call#15 diag[36] KH=-0.00525794 1-KH=1.00526 (rel_gap=1.00526)
+vio_bench: call#15 diag[37] KH=-0.00236251 1-KH=1.00236 (rel_gap=1.00236)
+vio_bench: call#15 diag[38] KH=0.00155791 1-KH=0.998442 (rel_gap=0.998442)
+vio_bench: call#15 diag[39] KH=0.0039293 1-KH=0.996071 (rel_gap=0.996071)
+vio_bench: call#15 diag[40] KH=0.265104 1-KH=0.734896 (rel_gap=0.734896)
+vio_bench: call#15 diag[41] KH=0.0036136 1-KH=0.996386 (rel_gap=0.996386)
+vio_bench: call#15 diag[42] KH=-0.00505934 1-KH=1.00506 (rel_gap=1.00506)
+vio_bench: call#15 diag[43] KH=-0.000480408 1-KH=1.00048 (rel_gap=1.00048)
+vio_bench: call#15 diag[44] KH=0.00189901 1-KH=0.998101 (rel_gap=0.998101)
+vio_bench: call#15 diag[45] KH=0.00747812 1-KH=0.992522 (rel_gap=0.992522)
+vio_bench: call#15 diag[46] KH=0.228943 1-KH=0.771057 (rel_gap=0.771057)
+vio_bench: call#15 diag[47] KH=0.0084484 1-KH=0.991552 (rel_gap=0.991552)
+vio_bench: call#15 diag[48] KH=-0.00161934 1-KH=1.00162 (rel_gap=1.00162)
+vio_bench: call#15 diag[49] KH=0.0012629 1-KH=0.998737 (rel_gap=0.998737)
+vio_bench: call#15 diag[50] KH=0.00216337 1-KH=0.997837 (rel_gap=0.997837)
+vio_bench: call#15 diag[51] KH=0.0142267 1-KH=0.985773 (rel_gap=0.985773)
+vio_bench: call#15 diag[52] KH=0.151191 1-KH=0.848809 (rel_gap=0.848809)
+vio_bench: call#15 diag[53] KH=0.0156426 1-KH=0.984357 (rel_gap=0.984357)
+vio_bench: call#15 diag[54] KH=0.00618922 1-KH=0.993811 (rel_gap=0.993811)
+vio_bench: call#15 diag[55] KH=0.00355357 1-KH=0.996446 (rel_gap=0.996446)
+vio_bench: call#15 diag[56] KH=0.00167679 1-KH=0.998323 (rel_gap=0.998323)
+vio_bench: call#15 diag[57] KH=0.0231392 1-KH=0.976861 (rel_gap=0.976861)
+vio_bench: call#15 diag[58] KH=0.0265091 1-KH=0.973491 (rel_gap=0.973491)
+vio_bench: call#15 diag[59] KH=0.0205223 1-KH=0.979478 (rel_gap=0.979478)
+vio_bench: call#15 diag[60] KH=0.0222243 1-KH=0.977776 (rel_gap=0.977776)
+vio_bench: call#15 diag[61] KH=0.0064284 1-KH=0.993572 (rel_gap=0.993572)
+vio_bench: call#15 diag[62] KH=-0.000235292 1-KH=1.00024 (rel_gap=1.00024)
+vio_bench: call#15 diag[63] KH=0.0373691 1-KH=0.962631 (rel_gap=0.962631)
+vio_bench: call#15 diag[64] KH=-0.14977 1-KH=1.14977 (rel_gap=1.14977)
+vio_bench: call#15 diag[65] KH=0.0178385 1-KH=0.982161 (rel_gap=0.982161)
+vio_bench: call#15 diag[66] KH=0.0491559 1-KH=0.950844 (rel_gap=0.950844)
+vio_bench: call#15 diag[67] KH=0.0105214 1-KH=0.989479 (rel_gap=0.989479)
+vio_bench: call#15 diag[68] KH=-0.00380795 1-KH=1.00381 (rel_gap=1.00381)
+vio_bench: call#15 diag[69] KH=0.0564068 1-KH=0.943593 (rel_gap=0.943593)
+vio_bench: call#15 diag[70] KH=-0.38158 1-KH=1.38158 (rel_gap=1.38158)
+vio_bench: call#15 diag[71] KH=0.00252289 1-KH=0.997477 (rel_gap=0.997477)
+vio_bench: call#15 diag[72] KH=0.0916258 1-KH=0.908374 (rel_gap=0.908374)
+vio_bench: call#15 diag[73] KH=0.0164397 1-KH=0.98356 (rel_gap=0.98356)
+vio_bench: call#15 diag[74] KH=-0.009276 1-KH=1.00928 (rel_gap=1.00928)
+vio_bench: call#15 diag[75] KH=0.0881206 1-KH=0.911879 (rel_gap=0.911879)
+vio_bench: call#15 diag[76] KH=-0.671253 1-KH=1.67125 (rel_gap=1.67125)
+vio_bench: call#15 diag[77] KH=-0.031348 1-KH=1.03135 (rel_gap=1.03135)
+vio_bench: call#15 diag[78] KH=0.151579 1-KH=0.848421 (rel_gap=0.848421)
+vio_bench: call#15 diag[79] KH=0.0256782 1-KH=0.974322 (rel_gap=0.974322)
+vio_bench: call#15 diag[80] KH=-0.0168339 1-KH=1.01683 (rel_gap=1.01683)
+vio_bench: call#16 diag[0] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#16 diag[1] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#16 diag[2] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#16 diag[3] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#16 diag[4] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#16 diag[5] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#16 diag[6] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#16 diag[7] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#16 diag[8] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#16 diag[9] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#16 diag[10] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#16 diag[11] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#16 diag[12] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#16 diag[13] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#16 diag[14] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#16 diag[15] KH=-0.00926786 1-KH=1.00927 (rel_gap=1.00927)
+vio_bench: call#16 diag[16] KH=-0.0538536 1-KH=1.05385 (rel_gap=1.05385)
+vio_bench: call#16 diag[17] KH=0.0335466 1-KH=0.966453 (rel_gap=0.966453)
+vio_bench: call#16 diag[18] KH=-0.000377393 1-KH=1.00038 (rel_gap=1.00038)
+vio_bench: call#16 diag[19] KH=-0.000226375 1-KH=1.00023 (rel_gap=1.00023)
+vio_bench: call#16 diag[20] KH=8.15561e-06 1-KH=0.999992 (rel_gap=0.999992)
+vio_bench: call#16 diag[21] KH=-0.00782589 1-KH=1.00783 (rel_gap=1.00783)
+vio_bench: call#16 diag[22] KH=0.0467355 1-KH=0.953264 (rel_gap=0.953264)
+vio_bench: call#16 diag[23] KH=0.0146942 1-KH=0.985306 (rel_gap=0.985306)
+vio_bench: call#16 diag[24] KH=-0.00249903 1-KH=1.0025 (rel_gap=1.0025)
+vio_bench: call#16 diag[25] KH=-0.00160226 1-KH=1.0016 (rel_gap=1.0016)
+vio_bench: call#16 diag[26] KH=0.000155232 1-KH=0.999845 (rel_gap=0.999845)
+vio_bench: call#16 diag[27] KH=-0.00800705 1-KH=1.00801 (rel_gap=1.00801)
+vio_bench: call#16 diag[28] KH=0.122813 1-KH=0.877187 (rel_gap=0.877187)
+vio_bench: call#16 diag[29] KH=0.00300972 1-KH=0.99699 (rel_gap=0.99699)
+vio_bench: call#16 diag[30] KH=-0.00266142 1-KH=1.00266 (rel_gap=1.00266)
+vio_bench: call#16 diag[31] KH=-0.0018494 1-KH=1.00185 (rel_gap=1.00185)
+vio_bench: call#16 diag[32] KH=0.000409868 1-KH=0.99959 (rel_gap=0.99959)
+vio_bench: call#16 diag[33] KH=-0.00222329 1-KH=1.00222 (rel_gap=1.00222)
+vio_bench: call#16 diag[34] KH=0.172391 1-KH=0.827609 (rel_gap=0.827609)
+vio_bench: call#16 diag[35] KH=0.000109198 1-KH=0.999891 (rel_gap=0.999891)
+vio_bench: call#16 diag[36] KH=-0.00229363 1-KH=1.00229 (rel_gap=1.00229)
+vio_bench: call#16 diag[37] KH=-0.00109497 1-KH=1.00109 (rel_gap=1.00109)
+vio_bench: call#16 diag[38] KH=0.000628261 1-KH=0.999372 (rel_gap=0.999372)
+vio_bench: call#16 diag[39] KH=0.00640636 1-KH=0.993594 (rel_gap=0.993594)
+vio_bench: call#16 diag[40] KH=0.193267 1-KH=0.806733 (rel_gap=0.806733)
+vio_bench: call#16 diag[41] KH=0.00179551 1-KH=0.998204 (rel_gap=0.998204)
+vio_bench: call#16 diag[42] KH=-0.00208205 1-KH=1.00208 (rel_gap=1.00208)
+vio_bench: call#16 diag[43] KH=0.000299226 1-KH=0.999701 (rel_gap=0.999701)
+vio_bench: call#16 diag[44] KH=0.000841067 1-KH=0.999159 (rel_gap=0.999159)
+vio_bench: call#16 diag[45] KH=0.00797824 1-KH=0.992022 (rel_gap=0.992022)
+vio_bench: call#16 diag[46] KH=0.183433 1-KH=0.816567 (rel_gap=0.816567)
+vio_bench: call#16 diag[47] KH=0.00446815 1-KH=0.995532 (rel_gap=0.995532)
+vio_bench: call#16 diag[48] KH=-0.000300943 1-KH=1.0003 (rel_gap=1.0003)
+vio_bench: call#16 diag[49] KH=0.0013121 1-KH=0.998688 (rel_gap=0.998688)
+vio_bench: call#16 diag[50] KH=0.00118104 1-KH=0.998819 (rel_gap=0.998819)
+vio_bench: call#16 diag[51] KH=0.0112608 1-KH=0.988739 (rel_gap=0.988739)
+vio_bench: call#16 diag[52] KH=0.140089 1-KH=0.859911 (rel_gap=0.859911)
+vio_bench: call#16 diag[53] KH=0.00936628 1-KH=0.990634 (rel_gap=0.990634)
+vio_bench: call#16 diag[54] KH=0.00356101 1-KH=0.996439 (rel_gap=0.996439)
+vio_bench: call#16 diag[55] KH=0.00253746 1-KH=0.997463 (rel_gap=0.997463)
+vio_bench: call#16 diag[56] KH=0.00117783 1-KH=0.998822 (rel_gap=0.998822)
+vio_bench: call#16 diag[57] KH=0.0153953 1-KH=0.984605 (rel_gap=0.984605)
+vio_bench: call#16 diag[58] KH=0.0589329 1-KH=0.941067 (rel_gap=0.941067)
+vio_bench: call#16 diag[59] KH=0.0132817 1-KH=0.986718 (rel_gap=0.986718)
+vio_bench: call#16 diag[60] KH=0.0120185 1-KH=0.987982 (rel_gap=0.987982)
+vio_bench: call#16 diag[61] KH=0.00400669 1-KH=0.995993 (rel_gap=0.995993)
+vio_bench: call#16 diag[62] KH=0.000344062 1-KH=0.999656 (rel_gap=0.999656)
+vio_bench: call#16 diag[63] KH=0.0227479 1-KH=0.977252 (rel_gap=0.977252)
+vio_bench: call#16 diag[64] KH=-0.0640775 1-KH=1.06408 (rel_gap=1.06408)
+vio_bench: call#16 diag[65] KH=0.0123432 1-KH=0.987657 (rel_gap=0.987657)
+vio_bench: call#16 diag[66] KH=0.026701 1-KH=0.973299 (rel_gap=0.973299)
+vio_bench: call#16 diag[67] KH=0.00622051 1-KH=0.993779 (rel_gap=0.993779)
+vio_bench: call#16 diag[68] KH=-0.00143509 1-KH=1.00144 (rel_gap=1.00144)
+vio_bench: call#16 diag[69] KH=0.0329207 1-KH=0.967079 (rel_gap=0.967079)
+vio_bench: call#16 diag[70] KH=-0.232315 1-KH=1.23231 (rel_gap=1.23231)
+vio_bench: call#16 diag[71] KH=0.00280094 1-KH=0.997199 (rel_gap=0.997199)
+vio_bench: call#16 diag[72] KH=0.0506451 1-KH=0.949355 (rel_gap=0.949355)
+vio_bench: call#16 diag[73] KH=0.00963249 1-KH=0.990368 (rel_gap=0.990368)
+vio_bench: call#16 diag[74] KH=-0.00426573 1-KH=1.00427 (rel_gap=1.00427)
+vio_bench: call#16 diag[75] KH=0.0521286 1-KH=0.947871 (rel_gap=0.947871)
+vio_bench: call#16 diag[76] KH=-0.447923 1-KH=1.44792 (rel_gap=1.44792)
+vio_bench: call#16 diag[77] KH=-0.0194132 1-KH=1.01941 (rel_gap=1.01941)
+vio_bench: call#16 diag[78] KH=0.0849015 1-KH=0.915099 (rel_gap=0.915099)
+vio_bench: call#16 diag[79] KH=0.0152325 1-KH=0.984767 (rel_gap=0.984767)
+vio_bench: call#16 diag[80] KH=-0.00819966 1-KH=1.0082 (rel_gap=1.0082)
+vio_bench: call#17 diag[0] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#17 diag[1] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#17 diag[2] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#17 diag[3] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#17 diag[4] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#17 diag[5] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#17 diag[6] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#17 diag[7] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#17 diag[8] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#17 diag[9] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#17 diag[10] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#17 diag[11] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#17 diag[12] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#17 diag[13] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#17 diag[14] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#17 diag[15] KH=-0.07766 1-KH=1.07766 (rel_gap=1.07766)
+vio_bench: call#17 diag[16] KH=-0.0108456 1-KH=1.01085 (rel_gap=1.01085)
+vio_bench: call#17 diag[17] KH=0.0200139 1-KH=0.979986 (rel_gap=0.979986)
+vio_bench: call#17 diag[18] KH=-0.000210812 1-KH=1.00021 (rel_gap=1.00021)
+vio_bench: call#17 diag[19] KH=-8.15951e-05 1-KH=1.00008 (rel_gap=1.00008)
+vio_bench: call#17 diag[20] KH=-0.00020954 1-KH=1.00021 (rel_gap=1.00021)
+vio_bench: call#17 diag[21] KH=-0.0479986 1-KH=1.048 (rel_gap=1.048)
+vio_bench: call#17 diag[22] KH=-0.0402851 1-KH=1.04029 (rel_gap=1.04029)
+vio_bench: call#17 diag[23] KH=0.00596873 1-KH=0.994031 (rel_gap=0.994031)
+vio_bench: call#17 diag[24] KH=-0.00141361 1-KH=1.00141 (rel_gap=1.00141)
+vio_bench: call#17 diag[25] KH=6.60195e-05 1-KH=0.999934 (rel_gap=0.999934)
+vio_bench: call#17 diag[26] KH=-0.00143705 1-KH=1.00144 (rel_gap=1.00144)
+vio_bench: call#17 diag[27] KH=-0.0217849 1-KH=1.02178 (rel_gap=1.02178)
+vio_bench: call#17 diag[28] KH=-0.0599316 1-KH=1.05993 (rel_gap=1.05993)
+vio_bench: call#17 diag[29] KH=0.00203165 1-KH=0.997968 (rel_gap=0.997968)
+vio_bench: call#17 diag[30] KH=-0.001968 1-KH=1.00197 (rel_gap=1.00197)
+vio_bench: call#17 diag[31] KH=0.00114289 1-KH=0.998857 (rel_gap=0.998857)
+vio_bench: call#17 diag[32] KH=-0.00135979 1-KH=1.00136 (rel_gap=1.00136)
+vio_bench: call#17 diag[33] KH=0.000371824 1-KH=0.999628 (rel_gap=0.999628)
+vio_bench: call#17 diag[34] KH=-0.0674732 1-KH=1.06747 (rel_gap=1.06747)
+vio_bench: call#17 diag[35] KH=0.00369437 1-KH=0.996306 (rel_gap=0.996306)
+vio_bench: call#17 diag[36] KH=-0.00210834 1-KH=1.00211 (rel_gap=1.00211)
+vio_bench: call#17 diag[37] KH=0.00223712 1-KH=0.997763 (rel_gap=0.997763)
+vio_bench: call#17 diag[38] KH=-0.000334517 1-KH=1.00033 (rel_gap=1.00033)
+vio_bench: call#17 diag[39] KH=0.0187248 1-KH=0.981275 (rel_gap=0.981275)
+vio_bench: call#17 diag[40] KH=-0.0655989 1-KH=1.0656 (rel_gap=1.0656)
+vio_bench: call#17 diag[41] KH=0.0102409 1-KH=0.989759 (rel_gap=0.989759)
+vio_bench: call#17 diag[42] KH=-0.00223565 1-KH=1.00224 (rel_gap=1.00224)
+vio_bench: call#17 diag[43] KH=0.00271967 1-KH=0.99728 (rel_gap=0.99728)
+vio_bench: call#17 diag[44] KH=0.00133418 1-KH=0.998666 (rel_gap=0.998666)
+vio_bench: call#17 diag[45] KH=0.0321984 1-KH=0.967802 (rel_gap=0.967802)
+vio_bench: call#17 diag[46] KH=-0.056917 1-KH=1.05692 (rel_gap=1.05692)
+vio_bench: call#17 diag[47] KH=0.0220427 1-KH=0.977957 (rel_gap=0.977957)
+vio_bench: call#17 diag[48] KH=-0.00256927 1-KH=1.00257 (rel_gap=1.00257)
+vio_bench: call#17 diag[49] KH=0.00236962 1-KH=0.99763 (rel_gap=0.99763)
+vio_bench: call#17 diag[50] KH=0.00340132 1-KH=0.996599 (rel_gap=0.996599)
+vio_bench: call#17 diag[51] KH=0.0409606 1-KH=0.959039 (rel_gap=0.959039)
+vio_bench: call#17 diag[52] KH=-0.0326588 1-KH=1.03266 (rel_gap=1.03266)
+vio_bench: call#17 diag[53] KH=0.0305919 1-KH=0.969408 (rel_gap=0.969408)
+vio_bench: call#17 diag[54] KH=-0.00128961 1-KH=1.00129 (rel_gap=1.00129)
+vio_bench: call#17 diag[55] KH=0.00106082 1-KH=0.998939 (rel_gap=0.998939)
+vio_bench: call#17 diag[56] KH=0.00528712 1-KH=0.994713 (rel_gap=0.994713)
+vio_bench: call#17 diag[57] KH=0.0449494 1-KH=0.955051 (rel_gap=0.955051)
+vio_bench: call#17 diag[58] KH=0.0101538 1-KH=0.989846 (rel_gap=0.989846)
+vio_bench: call#17 diag[59] KH=0.0297289 1-KH=0.970271 (rel_gap=0.970271)
+vio_bench: call#17 diag[60] KH=0.00328867 1-KH=0.996711 (rel_gap=0.996711)
+vio_bench: call#17 diag[61] KH=-0.0011582 1-KH=1.00116 (rel_gap=1.00116)
+vio_bench: call#17 diag[62] KH=0.00635996 1-KH=0.99364 (rel_gap=0.99364)
+vio_bench: call#17 diag[63] KH=0.0427191 1-KH=0.957281 (rel_gap=0.957281)
+vio_bench: call#17 diag[64] KH=0.0668256 1-KH=0.933174 (rel_gap=0.933174)
+vio_bench: call#17 diag[65] KH=0.0170318 1-KH=0.982968 (rel_gap=0.982968)
+vio_bench: call#17 diag[66] KH=0.0131397 1-KH=0.98686 (rel_gap=0.98686)
+vio_bench: call#17 diag[67] KH=-0.00412219 1-KH=1.00412 (rel_gap=1.00412)
+vio_bench: call#17 diag[68] KH=0.00639629 1-KH=0.993604 (rel_gap=0.993604)
+vio_bench: call#17 diag[69] KH=0.0328896 1-KH=0.96711 (rel_gap=0.96711)
+vio_bench: call#17 diag[70] KH=0.130812 1-KH=0.869188 (rel_gap=0.869188)
+vio_bench: call#17 diag[71] KH=-0.00949681 1-KH=1.0095 (rel_gap=1.0095)
+vio_bench: call#17 diag[72] KH=0.030878 1-KH=0.969122 (rel_gap=0.969122)
+vio_bench: call#17 diag[73] KH=-0.00791959 1-KH=1.00792 (rel_gap=1.00792)
+vio_bench: call#17 diag[74] KH=0.00562964 1-KH=0.99437 (rel_gap=0.99437)
+vio_bench: call#17 diag[75] KH=0.014773 1-KH=0.985227 (rel_gap=0.985227)
+vio_bench: call#17 diag[76] KH=0.200788 1-KH=0.799212 (rel_gap=0.799212)
+vio_bench: call#17 diag[77] KH=-0.0531386 1-KH=1.05314 (rel_gap=1.05314)
+vio_bench: call#17 diag[78] KH=0.058863 1-KH=0.941137 (rel_gap=0.941137)
+vio_bench: call#17 diag[79] KH=-0.0125414 1-KH=1.01254 (rel_gap=1.01254)
+vio_bench: call#17 diag[80] KH=0.00393494 1-KH=0.996065 (rel_gap=0.996065)
+vio_bench: call#18 diag[0] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#18 diag[1] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#18 diag[2] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#18 diag[3] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#18 diag[4] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#18 diag[5] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#18 diag[6] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#18 diag[7] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#18 diag[8] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#18 diag[9] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#18 diag[10] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#18 diag[11] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#18 diag[12] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#18 diag[13] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#18 diag[14] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#18 diag[15] KH=-0.0613137 1-KH=1.06131 (rel_gap=1.06131)
+vio_bench: call#18 diag[16] KH=-0.0127488 1-KH=1.01275 (rel_gap=1.01275)
+vio_bench: call#18 diag[17] KH=0.0103231 1-KH=0.989677 (rel_gap=0.989677)
+vio_bench: call#18 diag[18] KH=-0.000168405 1-KH=1.00017 (rel_gap=1.00017)
+vio_bench: call#18 diag[19] KH=-5.6813e-05 1-KH=1.00006 (rel_gap=1.00006)
+vio_bench: call#18 diag[20] KH=-0.000155562 1-KH=1.00016 (rel_gap=1.00016)
+vio_bench: call#18 diag[21] KH=-0.0365482 1-KH=1.03655 (rel_gap=1.03655)
+vio_bench: call#18 diag[22] KH=-0.0278542 1-KH=1.02785 (rel_gap=1.02785)
+vio_bench: call#18 diag[23] KH=0.00220776 1-KH=0.997792 (rel_gap=0.997792)
+vio_bench: call#18 diag[24] KH=-0.00106072 1-KH=1.00106 (rel_gap=1.00106)
+vio_bench: call#18 diag[25] KH=0.000158696 1-KH=0.999841 (rel_gap=0.999841)
+vio_bench: call#18 diag[26] KH=-0.00108681 1-KH=1.00109 (rel_gap=1.00109)
+vio_bench: call#18 diag[27] KH=-0.0147504 1-KH=1.01475 (rel_gap=1.01475)
+vio_bench: call#18 diag[28] KH=-0.0385369 1-KH=1.03854 (rel_gap=1.03854)
+vio_bench: call#18 diag[29] KH=0.00154856 1-KH=0.998451 (rel_gap=0.998451)
+vio_bench: call#18 diag[30] KH=-0.0013919 1-KH=1.00139 (rel_gap=1.00139)
+vio_bench: call#18 diag[31] KH=0.0010907 1-KH=0.998909 (rel_gap=0.998909)
+vio_bench: call#18 diag[32] KH=-0.00108166 1-KH=1.00108 (rel_gap=1.00108)
+vio_bench: call#18 diag[33] KH=0.00361161 1-KH=0.996388 (rel_gap=0.996388)
+vio_bench: call#18 diag[34] KH=-0.0416638 1-KH=1.04166 (rel_gap=1.04166)
+vio_bench: call#18 diag[35] KH=0.00480841 1-KH=0.995192 (rel_gap=0.995192)
+vio_bench: call#18 diag[36] KH=-0.00141652 1-KH=1.00142 (rel_gap=1.00142)
+vio_bench: call#18 diag[37] KH=0.0019955 1-KH=0.998005 (rel_gap=0.998005)
+vio_bench: call#18 diag[38] KH=-0.000387151 1-KH=1.00039 (rel_gap=1.00039)
+vio_bench: call#18 diag[39] KH=0.0186255 1-KH=0.981375 (rel_gap=0.981375)
+vio_bench: call#18 diag[40] KH=-0.0407867 1-KH=1.04079 (rel_gap=1.04079)
+vio_bench: call#18 diag[41] KH=0.0115713 1-KH=0.988429 (rel_gap=0.988429)
+vio_bench: call#18 diag[42] KH=-0.0015556 1-KH=1.00156 (rel_gap=1.00156)
+vio_bench: call#18 diag[43] KH=0.0023335 1-KH=0.997667 (rel_gap=0.997667)
+vio_bench: call#18 diag[44] KH=0.000802799 1-KH=0.999197 (rel_gap=0.999197)
+vio_bench: call#18 diag[45] KH=0.0292233 1-KH=0.970777 (rel_gap=0.970777)
+vio_bench: call#18 diag[46] KH=-0.0376559 1-KH=1.03766 (rel_gap=1.03766)
+vio_bench: call#18 diag[47] KH=0.0216377 1-KH=0.978362 (rel_gap=0.978362)
+vio_bench: call#18 diag[48] KH=-0.00203289 1-KH=1.00203 (rel_gap=1.00203)
+vio_bench: call#18 diag[49] KH=0.00188837 1-KH=0.998112 (rel_gap=0.998112)
+vio_bench: call#18 diag[50] KH=0.00230182 1-KH=0.997698 (rel_gap=0.997698)
+vio_bench: call#18 diag[51] KH=0.0356272 1-KH=0.964373 (rel_gap=0.964373)
+vio_bench: call#18 diag[52] KH=-0.0230981 1-KH=1.0231 (rel_gap=1.0231)
+vio_bench: call#18 diag[53] KH=0.0282252 1-KH=0.971775 (rel_gap=0.971775)
+vio_bench: call#18 diag[54] KH=-0.00142956 1-KH=1.00143 (rel_gap=1.00143)
+vio_bench: call#18 diag[55] KH=0.000606936 1-KH=0.999393 (rel_gap=0.999393)
+vio_bench: call#18 diag[56] KH=0.00373452 1-KH=0.996265 (rel_gap=0.996265)
+vio_bench: call#18 diag[57] KH=0.0378171 1-KH=0.962183 (rel_gap=0.962183)
+vio_bench: call#18 diag[58] KH=0.00649038 1-KH=0.99351 (rel_gap=0.99351)
+vio_bench: call#18 diag[59] KH=0.0260789 1-KH=0.973921 (rel_gap=0.973921)
+vio_bench: call#18 diag[60] KH=0.00150064 1-KH=0.998499 (rel_gap=0.998499)
+vio_bench: call#18 diag[61] KH=-0.00144873 1-KH=1.00145 (rel_gap=1.00145)
+vio_bench: call#18 diag[62] KH=0.00465866 1-KH=0.995341 (rel_gap=0.995341)
+vio_bench: call#18 diag[63] KH=0.0344075 1-KH=0.965593 (rel_gap=0.965593)
+vio_bench: call#18 diag[64] KH=0.0458087 1-KH=0.954191 (rel_gap=0.954191)
+vio_bench: call#18 diag[65] KH=0.0137034 1-KH=0.986297 (rel_gap=0.986297)
+vio_bench: call#18 diag[66] KH=0.00816637 1-KH=0.991834 (rel_gap=0.991834)
+vio_bench: call#18 diag[67] KH=-0.00412365 1-KH=1.00412 (rel_gap=1.00412)
+vio_bench: call#18 diag[68] KH=0.00497833 1-KH=0.995022 (rel_gap=0.995022)
+vio_bench: call#18 diag[69] KH=0.0240903 1-KH=0.97591 (rel_gap=0.97591)
+vio_bench: call#18 diag[70] KH=0.0889988 1-KH=0.911001 (rel_gap=0.911001)
+vio_bench: call#18 diag[71] KH=-0.01019 1-KH=1.01019 (rel_gap=1.01019)
+vio_bench: call#18 diag[72] KH=0.0203823 1-KH=0.979618 (rel_gap=0.979618)
+vio_bench: call#18 diag[73] KH=-0.00745299 1-KH=1.00745 (rel_gap=1.00745)
+vio_bench: call#18 diag[74] KH=0.00490224 1-KH=0.995098 (rel_gap=0.995098)
+vio_bench: call#18 diag[75] KH=0.00632858 1-KH=0.993671 (rel_gap=0.993671)
+vio_bench: call#18 diag[76] KH=0.133685 1-KH=0.866315 (rel_gap=0.866315)
+vio_bench: call#18 diag[77] KH=-0.0473028 1-KH=1.0473 (rel_gap=1.0473)
+vio_bench: call#18 diag[78] KH=0.0397785 1-KH=0.960221 (rel_gap=0.960221)
+vio_bench: call#18 diag[79] KH=-0.0114337 1-KH=1.01143 (rel_gap=1.01143)
+vio_bench: call#18 diag[80] KH=0.0045111 1-KH=0.995489 (rel_gap=0.995489)
+vio_bench: call#19 diag[0] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#19 diag[1] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#19 diag[2] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#19 diag[3] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#19 diag[4] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#19 diag[5] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#19 diag[6] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#19 diag[7] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#19 diag[8] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#19 diag[9] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#19 diag[10] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#19 diag[11] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#19 diag[12] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#19 diag[13] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#19 diag[14] KH=0 1-KH=1 (rel_gap=1)
+vio_bench: call#19 diag[15] KH=-0.0226008 1-KH=1.0226 (rel_gap=1.0226)
+vio_bench: call#19 diag[16] KH=-0.272924 1-KH=1.27292 (rel_gap=1.27292)
+vio_bench: call#19 diag[17] KH=-0.0216237 1-KH=1.02162 (rel_gap=1.02162)
+vio_bench: call#19 diag[18] KH=-0.000409246 1-KH=1.00041 (rel_gap=1.00041)
+vio_bench: call#19 diag[19] KH=-3.1496e-05 1-KH=1.00003 (rel_gap=1.00003)
+vio_bench: call#19 diag[20] KH=0.000109854 1-KH=0.99989 (rel_gap=0.99989)
+vio_bench: call#19 diag[21] KH=-0.0079043 1-KH=1.0079 (rel_gap=1.0079)
+vio_bench: call#19 diag[22] KH=-0.113243 1-KH=1.11324 (rel_gap=1.11324)
+vio_bench: call#19 diag[23] KH=-0.00381305 1-KH=1.00381 (rel_gap=1.00381)
+vio_bench: call#19 diag[24] KH=-0.00172637 1-KH=1.00173 (rel_gap=1.00173)
+vio_bench: call#19 diag[25] KH=0.000549931 1-KH=0.99945 (rel_gap=0.99945)
+vio_bench: call#19 diag[26] KH=0.000607757 1-KH=0.999392 (rel_gap=0.999392)
+vio_bench: call#19 diag[27] KH=0.00320116 1-KH=0.996799 (rel_gap=0.996799)
+vio_bench: call#19 diag[28] KH=0.00437734 1-KH=0.995623 (rel_gap=0.995623)
+vio_bench: call#19 diag[29] KH=0.00934992 1-KH=0.99065 (rel_gap=0.99065)
+vio_bench: call#19 diag[30] KH=-0.000334344 1-KH=1.00033 (rel_gap=1.00033)
+vio_bench: call#19 diag[31] KH=0.00171423 1-KH=0.998286 (rel_gap=0.998286)
+vio_bench: call#19 diag[32] KH=0.00019885 1-KH=0.999801 (rel_gap=0.999801)
+vio_bench: call#19 diag[33] KH=0.0126962 1-KH=0.987304 (rel_gap=0.987304)
+vio_bench: call#19 diag[34] KH=0.0927635 1-KH=0.907237 (rel_gap=0.907237)
+vio_bench: call#19 diag[35] KH=0.0217486 1-KH=0.978251 (rel_gap=0.978251)
+vio_bench: call#19 diag[36] KH=0.00176655 1-KH=0.998233 (rel_gap=0.998233)
+vio_bench: call#19 diag[37] KH=0.0028177 1-KH=0.997182 (rel_gap=0.997182)
+vio_bench: call#19 diag[38] KH=-0.00080178 1-KH=1.0008 (rel_gap=1.0008)
+vio_bench: call#19 diag[39] KH=0.0194093 1-KH=0.980591 (rel_gap=0.980591)
+vio_bench: call#19 diag[40] KH=0.13193 1-KH=0.86807 (rel_gap=0.86807)
+vio_bench: call#19 diag[41] KH=0.0327483 1-KH=0.967252 (rel_gap=0.967252)
+vio_bench: call#19 diag[42] KH=0.00284687 1-KH=0.997153 (rel_gap=0.997153)
+vio_bench: call#19 diag[43] KH=0.0031026 1-KH=0.996897 (rel_gap=0.996897)
+vio_bench: call#19 diag[44] KH=-0.00199223 1-KH=1.00199 (rel_gap=1.00199)
+vio_bench: call#19 diag[45] KH=0.0206414 1-KH=0.979359 (rel_gap=0.979359)
+vio_bench: call#19 diag[46] KH=0.136267 1-KH=0.863733 (rel_gap=0.863733)
+vio_bench: call#19 diag[47] KH=0.0362043 1-KH=0.963796 (rel_gap=0.963796)
+vio_bench: call#19 diag[48] KH=0.00258977 1-KH=0.99741 (rel_gap=0.99741)
+vio_bench: call#19 diag[49] KH=0.00175807 1-KH=0.998242 (rel_gap=0.998242)
+vio_bench: call#19 diag[50] KH=-0.00305952 1-KH=1.00306 (rel_gap=1.00306)
+vio_bench: call#19 diag[51] KH=0.019192 1-KH=0.980808 (rel_gap=0.980808)
+vio_bench: call#19 diag[52] KH=0.121459 1-KH=0.878541 (rel_gap=0.878541)
+vio_bench: call#19 diag[53] KH=0.0362497 1-KH=0.96375 (rel_gap=0.96375)
+vio_bench: call#19 diag[54] KH=0.00164504 1-KH=0.998355 (rel_gap=0.998355)
+vio_bench: call#19 diag[55] KH=-0.000565281 1-KH=1.00057 (rel_gap=1.00057)
+vio_bench: call#19 diag[56] KH=-0.00361481 1-KH=1.00361 (rel_gap=1.00361)
+vio_bench: call#19 diag[57] KH=0.0155629 1-KH=0.984437 (rel_gap=0.984437)
+vio_bench: call#19 diag[58] KH=0.10199 1-KH=0.89801 (rel_gap=0.89801)
+vio_bench: call#19 diag[59] KH=0.0309216 1-KH=0.969078 (rel_gap=0.969078)
+vio_bench: call#19 diag[60] KH=0.000301506 1-KH=0.999698 (rel_gap=0.999698)
+vio_bench: call#19 diag[61] KH=-0.00350056 1-KH=1.0035 (rel_gap=1.0035)
+vio_bench: call#19 diag[62] KH=-0.00338313 1-KH=1.00338 (rel_gap=1.00338)
+vio_bench: call#19 diag[63] KH=0.00896592 1-KH=0.991034 (rel_gap=0.991034)
+vio_bench: call#19 diag[64] KH=0.0551991 1-KH=0.944801 (rel_gap=0.944801)
+vio_bench: call#19 diag[65] KH=0.0233102 1-KH=0.97669 (rel_gap=0.97669)
+vio_bench: call#19 diag[66] KH=-0.000803183 1-KH=1.0008 (rel_gap=1.0008)
+vio_bench: call#19 diag[67] KH=-0.00639269 1-KH=1.00639 (rel_gap=1.00639)
+vio_bench: call#19 diag[68] KH=-0.00180241 1-KH=1.0018 (rel_gap=1.0018)
+vio_bench: call#19 diag[69] KH=-0.0010293 1-KH=1.00103 (rel_gap=1.00103)
+vio_bench: call#19 diag[70] KH=-0.0217338 1-KH=1.02173 (rel_gap=1.02173)
+vio_bench: call#19 diag[71] KH=0.0148872 1-KH=0.985113 (rel_gap=0.985113)
+vio_bench: call#19 diag[72] KH=-0.000670207 1-KH=1.00067 (rel_gap=1.00067)
+vio_bench: call#19 diag[73] KH=-0.00854815 1-KH=1.00855 (rel_gap=1.00855)
+vio_bench: call#19 diag[74] KH=0.00166685 1-KH=0.998333 (rel_gap=0.998333)
+vio_bench: call#19 diag[75] KH=-0.0136041 1-KH=1.0136 (rel_gap=1.0136)
+vio_bench: call#19 diag[76] KH=-0.160655 1-KH=1.16066 (rel_gap=1.16066)
+vio_bench: call#19 diag[77] KH=0.0114187 1-KH=0.988581 (rel_gap=0.988581)
+vio_bench: call#19 diag[78] KH=0.0039152 1-KH=0.996085 (rel_gap=0.996085)
+vio_bench: call#19 diag[79] KH=-0.00945068 1-KH=1.00945 (rel_gap=1.00945)
+vio_bench: call#19 diag[80] KH=0.00812016 1-KH=0.99188 (rel_gap=0.99188)
+augment_clone: event#11 new_clone_idx=10 total_clones=11
+vio_bench: processed 18/300 frames (6%)augment_clone: event#12 new_clone_idx=10 total_clones=11
+augment_clone: event#13 new_clone_idx=10 total_clones=11
+augment_clone: event#14 new_clone_idx=10 total_clones=11
+vio_bench: processed 21/300 frames (7%)augment_clone: event#15 new_clone_idx=10 total_clones=11
+augment_clone: event#16 new_clone_idx=10 total_clones=11
+augment_clone: event#17 new_clone_idx=10 total_clones=11
+vio_bench: processed 24/300 frames (8%)augment_clone: event#18 new_clone_idx=10 total_clones=11
+augment_clone: event#19 new_clone_idx=10 total_clones=11
+augment_clone: event#20 new_clone_idx=10 total_clones=11
+vio_bench: processed 27/300 frames (9%)augment_clone: event#21 new_clone_idx=10 total_clones=11
+augment_clone: event#22 new_clone_idx=10 total_clones=11
+augment_clone: event#23 new_clone_idx=10 total_clones=11
+vio_bench: processed 30/300 frames (10%)augment_clone: event#24 new_clone_idx=10 total_clones=11
+augment_clone: event#25 new_clone_idx=10 total_clones=11
+augment_clone: event#26 new_clone_idx=10 total_clones=11
+vio_bench: processed 33/300 frames (11%)augment_clone: event#27 new_clone_idx=10 total_clones=11
+augment_clone: event#28 new_clone_idx=10 total_clones=11
+augment_clone: event#29 new_clone_idx=10 total_clones=11
+vio_bench: processed 36/300 frames (12%)augment_clone: event#30 new_clone_idx=10 total_clones=11
+augment_clone: event#31 new_clone_idx=10 total_clones=11
+augment_clone: event#32 new_clone_idx=10 total_clones=11
+vio_bench: processed 39/300 frames (13%)augment_clone: event#33 new_clone_idx=10 total_clones=11
+augment_clone: event#34 new_clone_idx=10 total_clones=11
+augment_clone: event#35 new_clone_idx=10 total_clones=11
+vio_bench: processed 42/300 frames (14%)augment_clone: event#36 new_clone_idx=10 total_clones=11
+augment_clone: event#37 new_clone_idx=10 total_clones=11
+augment_clone: event#38 new_clone_idx=10 total_clones=11
+vio_bench: processed 45/300 frames (15%)augment_clone: event#39 new_clone_idx=10 total_clones=11
+augment_clone: event#40 new_clone_idx=10 total_clones=11
+augment_clone: event#41 new_clone_idx=10 total_clones=11
+vio_bench: processed 48/300 frames (16%)augment_clone: event#42 new_clone_idx=10 total_clones=11
+augment_clone: event#43 new_clone_idx=10 total_clones=11
+augment_clone: event#44 new_clone_idx=10 total_clones=11
+vio_bench: processed 51/300 frames (17%)augment_clone: event#45 new_clone_idx=10 total_clones=11
+augment_clone: event#46 new_clone_idx=10 total_clones=11
+augment_clone: event#47 new_clone_idx=10 total_clones=11
+vio_bench: processed 54/300 frames (18%)augment_clone: event#48 new_clone_idx=10 total_clones=11
+augment_clone: event#49 new_clone_idx=10 total_clones=11
+augment_clone: event#50 new_clone_idx=10 total_clones=11
+vio_bench: processed 57/300 frames (19%)augment_clone: event#51 new_clone_idx=10 total_clones=11
+augment_clone: event#52 new_clone_idx=10 total_clones=11
+augment_clone: event#53 new_clone_idx=10 total_clones=11
+vio_bench: processed 60/300 frames (20%)augment_clone: event#54 new_clone_idx=10 total_clones=11
+augment_clone: event#55 new_clone_idx=10 total_clones=11
+augment_clone: event#56 new_clone_idx=10 total_clones=11
+vio_bench: processed 63/300 frames (21%)augment_clone: event#57 new_clone_idx=10 total_clones=11
+augment_clone: event#58 new_clone_idx=10 total_clones=11
+augment_clone: event#59 new_clone_idx=10 total_clones=11
+vio_bench: processed 66/300 frames (22%)augment_clone: event#60 new_clone_idx=10 total_clones=11
+augment_clone: event#61 new_clone_idx=10 total_clones=11
+augment_clone: event#62 new_clone_idx=10 total_clones=11
+vio_bench: processed 69/300 frames (23%)augment_clone: event#63 new_clone_idx=10 total_clones=11
+augment_clone: event#64 new_clone_idx=10 total_clones=11
+augment_clone: event#65 new_clone_idx=10 total_clones=11
+vio_bench: processed 72/300 frames (24%)augment_clone: event#66 new_clone_idx=10 total_clones=11
+augment_clone: event#67 new_clone_idx=10 total_clones=11
+augment_clone: event#68 new_clone_idx=10 total_clones=11
+vio_bench: processed 75/300 frames (25%)augment_clone: event#69 new_clone_idx=10 total_clones=11
+augment_clone: event#70 new_clone_idx=10 total_clones=11
+augment_clone: event#71 new_clone_idx=10 total_clones=11
+vio_bench: processed 78/300 frames (26%)augment_clone: event#72 new_clone_idx=10 total_clones=11
+augment_clone: event#73 new_clone_idx=10 total_clones=11
+augment_clone: event#74 new_clone_idx=10 total_clones=11
+vio_bench: processed 81/300 frames (27%)augment_clone: event#75 new_clone_idx=10 total_clones=11
+augment_clone: event#76 new_clone_idx=10 total_clones=11
+augment_clone: event#77 new_clone_idx=10 total_clones=11
+vio_bench: processed 84/300 frames (28%)augment_clone: event#78 new_clone_idx=10 total_clones=11
+augment_clone: event#79 new_clone_idx=10 total_clones=11
+augment_clone: event#80 new_clone_idx=10 total_clones=11
+vio_bench: processed 87/300 frames (29%)augment_clone: event#81 new_clone_idx=10 total_clones=11
+augment_clone: event#82 new_clone_idx=10 total_clones=11
+augment_clone: event#83 new_clone_idx=10 total_clones=11
+vio_bench: processed 90/300 frames (30%)augment_clone: event#84 new_clone_idx=10 total_clones=11
+augment_clone: event#85 new_clone_idx=10 total_clones=11
+augment_clone: event#86 new_clone_idx=10 total_clones=11
+vio_bench: processed 93/300 frames (31%)augment_clone: event#87 new_clone_idx=10 total_clones=11
+augment_clone: event#88 new_clone_idx=10 total_clones=11
+augment_clone: event#89 new_clone_idx=10 total_clones=11
+vio_bench: processed 96/300 frames (32%)augment_clone: event#90 new_clone_idx=10 total_clones=11
+augment_clone: event#91 new_clone_idx=10 total_clones=11
+augment_clone: event#92 new_clone_idx=10 total_clones=11
+vio_bench: processed 99/300 frames (33%)augment_clone: event#93 new_clone_idx=10 total_clones=11
+augment_clone: event#94 new_clone_idx=10 total_clones=11
+augment_clone: event#95 new_clone_idx=10 total_clones=11
+vio_bench: processed 102/300 frames (34%)augment_clone: event#96 new_clone_idx=10 total_clones=11
+augment_clone: event#97 new_clone_idx=10 total_clones=11
+augment_clone: event#98 new_clone_idx=10 total_clones=11
+vio_bench: processed 105/300 frames (35%)augment_clone: event#99 new_clone_idx=10 total_clones=11
+augment_clone: event#100 new_clone_idx=10 total_clones=11
+augment_clone: event#101 new_clone_idx=10 total_clones=11
+vio_bench: processed 108/300 frames (36%)augment_clone: event#102 new_clone_idx=10 total_clones=11
+augment_clone: event#103 new_clone_idx=10 total_clones=11
+augment_clone: event#104 new_clone_idx=10 total_clones=11
+vio_bench: processed 111/300 frames (37%)augment_clone: event#105 new_clone_idx=10 total_clones=11
+augment_clone: event#106 new_clone_idx=10 total_clones=11
+augment_clone: event#107 new_clone_idx=10 total_clones=11
+vio_bench: processed 114/300 frames (38%)augment_clone: event#108 new_clone_idx=10 total_clones=11
+augment_clone: event#109 new_clone_idx=10 total_clones=11
+augment_clone: event#110 new_clone_idx=10 total_clones=11
+vio_bench: processed 117/300 frames (39%)augment_clone: event#111 new_clone_idx=10 total_clones=11
+augment_clone: event#112 new_clone_idx=10 total_clones=11
+augment_clone: event#113 new_clone_idx=10 total_clones=11
+vio_bench: processed 120/300 frames (40%)augment_clone: event#114 new_clone_idx=10 total_clones=11
+augment_clone: event#115 new_clone_idx=10 total_clones=11
+augment_clone: event#116 new_clone_idx=10 total_clones=11
+vio_bench: processed 123/300 frames (41%)augment_clone: event#117 new_clone_idx=10 total_clones=11
+augment_clone: event#118 new_clone_idx=10 total_clones=11
+augment_clone: event#119 new_clone_idx=10 total_clones=11
+vio_bench: processed 126/300 frames (42%)augment_clone: event#120 new_clone_idx=10 total_clones=11
+augment_clone: event#121 new_clone_idx=10 total_clones=11
+augment_clone: event#122 new_clone_idx=10 total_clones=11
+vio_bench: processed 129/300 frames (43%)augment_clone: event#123 new_clone_idx=10 total_clones=11
+augment_clone: event#124 new_clone_idx=10 total_clones=11
+augment_clone: event#125 new_clone_idx=10 total_clones=11
+vio_bench: processed 132/300 frames (44%)augment_clone: event#126 new_clone_idx=10 total_clones=11
+augment_clone: event#127 new_clone_idx=10 total_clones=11
+augment_clone: event#128 new_clone_idx=10 total_clones=11
+vio_bench: processed 135/300 frames (45%)augment_clone: event#129 new_clone_idx=10 total_clones=11
+augment_clone: event#130 new_clone_idx=10 total_clones=11
+augment_clone: event#131 new_clone_idx=10 total_clones=11
+vio_bench: processed 138/300 frames (46%)augment_clone: event#132 new_clone_idx=10 total_clones=11
+augment_clone: event#133 new_clone_idx=10 total_clones=11
+augment_clone: event#134 new_clone_idx=10 total_clones=11
+vio_bench: processed 141/300 frames (47%)augment_clone: event#135 new_clone_idx=10 total_clones=11
+augment_clone: event#136 new_clone_idx=10 total_clones=11
+augment_clone: event#137 new_clone_idx=10 total_clones=11
+vio_bench: processed 144/300 frames (48%)augment_clone: event#138 new_clone_idx=10 total_clones=11
+augment_clone: event#139 new_clone_idx=10 total_clones=11
+augment_clone: event#140 new_clone_idx=10 total_clones=11
+vio_bench: processed 147/300 frames (49%)augment_clone: event#141 new_clone_idx=10 total_clones=11
+augment_clone: event#142 new_clone_idx=10 total_clones=11
+augment_clone: event#143 new_clone_idx=10 total_clones=11
+vio_bench: processed 150/300 frames (50%)augment_clone: event#144 new_clone_idx=10 total_clones=11
+augment_clone: event#145 new_clone_idx=10 total_clones=11
+augment_clone: event#146 new_clone_idx=10 total_clones=11
+vio_bench: processed 153/300 frames (51%)augment_clone: event#147 new_clone_idx=10 total_clones=11
+augment_clone: event#148 new_clone_idx=10 total_clones=11
+augment_clone: event#149 new_clone_idx=10 total_clones=11
+vio_bench: processed 156/300 frames (52%)augment_clone: event#150 new_clone_idx=10 total_clones=11
+augment_clone: event#151 new_clone_idx=10 total_clones=11
+augment_clone: event#152 new_clone_idx=10 total_clones=11
+vio_bench: processed 159/300 frames (53%)augment_clone: event#153 new_clone_idx=10 total_clones=11
+augment_clone: event#154 new_clone_idx=10 total_clones=11
+augment_clone: event#155 new_clone_idx=10 total_clones=11
+vio_bench: processed 162/300 frames (54%)augment_clone: event#156 new_clone_idx=10 total_clones=11
+augment_clone: event#157 new_clone_idx=10 total_clones=11
+augment_clone: event#158 new_clone_idx=10 total_clones=11
+vio_bench: processed 165/300 frames (55%)augment_clone: event#159 new_clone_idx=10 total_clones=11
+augment_clone: event#160 new_clone_idx=10 total_clones=11
+augment_clone: event#161 new_clone_idx=10 total_clones=11
+vio_bench: processed 168/300 frames (56%)augment_clone: event#162 new_clone_idx=10 total_clones=11
+augment_clone: event#163 new_clone_idx=10 total_clones=11
+augment_clone: event#164 new_clone_idx=10 total_clones=11
+vio_bench: processed 171/300 frames (57%)augment_clone: event#165 new_clone_idx=10 total_clones=11
+augment_clone: event#166 new_clone_idx=10 total_clones=11
+augment_clone: event#167 new_clone_idx=10 total_clones=11
+vio_bench: processed 174/300 frames (58%)augment_clone: event#168 new_clone_idx=10 total_clones=11
+augment_clone: event#169 new_clone_idx=10 total_clones=11
+augment_clone: event#170 new_clone_idx=10 total_clones=11
+vio_bench: processed 177/300 frames (59%)augment_clone: event#171 new_clone_idx=10 total_clones=11
+augment_clone: event#172 new_clone_idx=10 total_clones=11
+augment_clone: event#173 new_clone_idx=10 total_clones=11
+vio_bench: processed 180/300 frames (60%)augment_clone: event#174 new_clone_idx=10 total_clones=11
+augment_clone: event#175 new_clone_idx=10 total_clones=11
+augment_clone: event#176 new_clone_idx=10 total_clones=11
+vio_bench: processed 183/300 frames (61%)augment_clone: event#177 new_clone_idx=10 total_clones=11
+augment_clone: event#178 new_clone_idx=10 total_clones=11
+augment_clone: event#179 new_clone_idx=10 total_clones=11
+vio_bench: processed 186/300 frames (62%)augment_clone: event#180 new_clone_idx=10 total_clones=11
+augment_clone: event#181 new_clone_idx=10 total_clones=11
+augment_clone: event#182 new_clone_idx=10 total_clones=11
+vio_bench: processed 189/300 frames (63%)augment_clone: event#183 new_clone_idx=10 total_clones=11
+augment_clone: event#184 new_clone_idx=10 total_clones=11
+augment_clone: event#185 new_clone_idx=10 total_clones=11
+vio_bench: processed 192/300 frames (64%)augment_clone: event#186 new_clone_idx=10 total_clones=11
+augment_clone: event#187 new_clone_idx=10 total_clones=11
+augment_clone: event#188 new_clone_idx=10 total_clones=11
+vio_bench: processed 195/300 frames (65%)augment_clone: event#189 new_clone_idx=10 total_clones=11
+augment_clone: event#190 new_clone_idx=10 total_clones=11
+augment_clone: event#191 new_clone_idx=10 total_clones=11
+vio_bench: processed 198/300 frames (66%)augment_clone: event#192 new_clone_idx=10 total_clones=11
+augment_clone: event#193 new_clone_idx=10 total_clones=11
+augment_clone: event#194 new_clone_idx=10 total_clones=11
+vio_bench: processed 201/300 frames (67%)augment_clone: event#195 new_clone_idx=10 total_clones=11
+augment_clone: event#196 new_clone_idx=10 total_clones=11
+augment_clone: event#197 new_clone_idx=10 total_clones=11
+vio_bench: processed 204/300 frames (68%)augment_clone: event#198 new_clone_idx=10 total_clones=11
+augment_clone: event#199 new_clone_idx=10 total_clones=11
+augment_clone: event#200 new_clone_idx=10 total_clones=11
+vio_bench: processed 207/300 frames (69%)augment_clone: event#201 new_clone_idx=10 total_clones=11
+augment_clone: event#202 new_clone_idx=10 total_clones=11
+augment_clone: event#203 new_clone_idx=10 total_clones=11
+vio_bench: processed 210/300 frames (70%)augment_clone: event#204 new_clone_idx=10 total_clones=11
+augment_clone: event#205 new_clone_idx=10 total_clones=11
+augment_clone: event#206 new_clone_idx=10 total_clones=11
+vio_bench: processed 213/300 frames (71%)augment_clone: event#207 new_clone_idx=10 total_clones=11
+augment_clone: event#208 new_clone_idx=10 total_clones=11
+augment_clone: event#209 new_clone_idx=10 total_clones=11
+vio_bench: processed 216/300 frames (72%)augment_clone: event#210 new_clone_idx=10 total_clones=11
+augment_clone: event#211 new_clone_idx=10 total_clones=11
+augment_clone: event#212 new_clone_idx=10 total_clones=11
+vio_bench: processed 219/300 frames (73%)augment_clone: event#213 new_clone_idx=10 total_clones=11
+augment_clone: event#214 new_clone_idx=10 total_clones=11
+augment_clone: event#215 new_clone_idx=10 total_clones=11
+vio_bench: processed 222/300 frames (74%)augment_clone: event#216 new_clone_idx=10 total_clones=11
+augment_clone: event#217 new_clone_idx=10 total_clones=11
+augment_clone: event#218 new_clone_idx=10 total_clones=11
+vio_bench: processed 225/300 frames (75%)augment_clone: event#219 new_clone_idx=10 total_clones=11
+augment_clone: event#220 new_clone_idx=10 total_clones=11
+augment_clone: event#221 new_clone_idx=10 total_clones=11
+vio_bench: processed 228/300 frames (76%)augment_clone: event#222 new_clone_idx=10 total_clones=11
+augment_clone: event#223 new_clone_idx=10 total_clones=11
+augment_clone: event#224 new_clone_idx=10 total_clones=11
+vio_bench: processed 231/300 frames (77%)augment_clone: event#225 new_clone_idx=10 total_clones=11
+augment_clone: event#226 new_clone_idx=10 total_clones=11
+augment_clone: event#227 new_clone_idx=10 total_clones=11
+vio_bench: processed 234/300 frames (78%)augment_clone: event#228 new_clone_idx=10 total_clones=11
+augment_clone: event#229 new_clone_idx=10 total_clones=11
+augment_clone: event#230 new_clone_idx=10 total_clones=11
+vio_bench: processed 237/300 frames (79%)augment_clone: event#231 new_clone_idx=10 total_clones=11
+augment_clone: event#232 new_clone_idx=10 total_clones=11
+augment_clone: event#233 new_clone_idx=10 total_clones=11
+vio_bench: processed 240/300 frames (80%)augment_clone: event#234 new_clone_idx=10 total_clones=11
+augment_clone: event#235 new_clone_idx=10 total_clones=11
+augment_clone: event#236 new_clone_idx=10 total_clones=11
+vio_bench: processed 243/300 frames (81%)augment_clone: event#237 new_clone_idx=10 total_clones=11
+augment_clone: event#238 new_clone_idx=10 total_clones=11
+augment_clone: event#239 new_clone_idx=10 total_clones=11
+vio_bench: processed 246/300 frames (82%)augment_clone: event#240 new_clone_idx=10 total_clones=11
+augment_clone: event#241 new_clone_idx=10 total_clones=11
+augment_clone: event#242 new_clone_idx=10 total_clones=11
+vio_bench: processed 249/300 frames (83%)augment_clone: event#243 new_clone_idx=10 total_clones=11
+augment_clone: event#244 new_clone_idx=10 total_clones=11
+augment_clone: event#245 new_clone_idx=10 total_clones=11
+vio_bench: processed 252/300 frames (84%)augment_clone: event#246 new_clone_idx=10 total_clones=11
+augment_clone: event#247 new_clone_idx=10 total_clones=11
+augment_clone: event#248 new_clone_idx=10 total_clones=11
+vio_bench: processed 255/300 frames (85%)augment_clone: event#249 new_clone_idx=10 total_clones=11
+augment_clone: event#250 new_clone_idx=10 total_clones=11
+augment_clone: event#251 new_clone_idx=10 total_clones=11
+vio_bench: processed 258/300 frames (86%)augment_clone: event#252 new_clone_idx=10 total_clones=11
+augment_clone: event#253 new_clone_idx=10 total_clones=11
+augment_clone: event#254 new_clone_idx=10 total_clones=11
+vio_bench: processed 261/300 frames (87%)augment_clone: event#255 new_clone_idx=10 total_clones=11
+augment_clone: event#256 new_clone_idx=10 total_clones=11
+augment_clone: event#257 new_clone_idx=10 total_clones=11
+vio_bench: processed 264/300 frames (88%)augment_clone: event#258 new_clone_idx=10 total_clones=11
+augment_clone: event#259 new_clone_idx=10 total_clones=11
+augment_clone: event#260 new_clone_idx=10 total_clones=11
+vio_bench: processed 267/300 frames (89%)augment_clone: event#261 new_clone_idx=10 total_clones=11
+augment_clone: event#262 new_clone_idx=10 total_clones=11
+augment_clone: event#263 new_clone_idx=10 total_clones=11
+vio_bench: processed 270/300 frames (90%)augment_clone: event#264 new_clone_idx=10 total_clones=11
+augment_clone: event#265 new_clone_idx=10 total_clones=11
+augment_clone: event#266 new_clone_idx=10 total_clones=11
+vio_bench: processed 273/300 frames (91%)augment_clone: event#267 new_clone_idx=10 total_clones=11
+augment_clone: event#268 new_clone_idx=10 total_clones=11
+augment_clone: event#269 new_clone_idx=10 total_clones=11
+vio_bench: processed 276/300 frames (92%)augment_clone: event#270 new_clone_idx=10 total_clones=11
+augment_clone: event#271 new_clone_idx=10 total_clones=11
+augment_clone: event#272 new_clone_idx=10 total_clones=11
+vio_bench: processed 279/300 frames (93%)augment_clone: event#273 new_clone_idx=10 total_clones=11
+augment_clone: event#274 new_clone_idx=10 total_clones=11
+augment_clone: event#275 new_clone_idx=10 total_clones=11
+vio_bench: processed 282/300 frames (94%)augment_clone: event#276 new_clone_idx=10 total_clones=11
+augment_clone: event#277 new_clone_idx=10 total_clones=11
+augment_clone: event#278 new_clone_idx=10 total_clones=11
+vio_bench: processed 285/300 frames (95%)augment_clone: event#279 new_clone_idx=10 total_clones=11
+augment_clone: event#280 new_clone_idx=10 total_clones=11
+augment_clone: event#281 new_clone_idx=10 total_clones=11
+vio_bench: processed 288/300 frames (96%)augment_clone: event#282 new_clone_idx=10 total_clones=11
+augment_clone: event#283 new_clone_idx=10 total_clones=11
+augment_clone: event#284 new_clone_idx=10 total_clones=11
+vio_bench: processed 291/300 frames (97%)augment_clone: event#285 new_clone_idx=10 total_clones=11
+augment_clone: event#286 new_clone_idx=10 total_clones=11
+augment_clone: event#287 new_clone_idx=10 total_clones=11
+vio_bench: processed 294/300 frames (98%)augment_clone: event#288 new_clone_idx=10 total_clones=11
+augment_clone: event#289 new_clone_idx=10 total_clones=11
+augment_clone: event#290 new_clone_idx=10 total_clones=11
+vio_bench: processed 297/300 frames (99%)augment_clone: event#291 new_clone_idx=10 total_clones=11
+augment_clone: event#292 new_clone_idx=10 total_clones=11
+augment_clone: event#293 new_clone_idx=10 total_clones=11
+vio_bench: processed 300/300 frames (100%)augment_clone: event#294 new_clone_idx=10 total_clones=11
+
+# VIO benchmark — /mnt/d/work/data/vicon_room1/vicon_room1/V1_01_easy/asl/mav0
+
+**Verdict:** ✅ OK — ATE 0.0654543 m within gate 0.5 m.
+
+## Estimator health
+
+| Check | Value |
+|---|---|
+| Init method | `static` |
+| Platform tilt at init (deg) | 112.181 |
+| Init gravity residual | 0.00183561 |
+| Camera↔IMU extrinsics | set |
+| Peak speed (m/s) | 0.451704 |
+| Max position norm (m) | 1.33928 |
+
+## Accuracy
+
+| Metric | Value |
+|---|---|
+| ATE (m) | 0.0654543 (gate 0.5) |
+| RPE RMSE (m) | 0.0732334 |
+| RPE translation (%) | 1771.14 |
+| RPE rotation (deg/m) | 76.6085 |
+
+## Performance
+
+| Metric | Value |
+|---|---|
+| Frames | 300 |
+| Real-time factor | 0.836992× |
+| Throughput (fps) | 16.7958 |
+| Latency p50 / p99 (ms) | 34.5872 / 91.0555 |
+
+## Energy (empirical — rapl)
+
+_RAPL unavailable (no powercap zones, or `energy_uj` not readable — often root-only since CVE-2020-8694). Run with energy-read access for J/W._
+
+## Operator profile (first-order; Phase-2 graphs energy input)
+
+| Stage | GFLOPs | MB moved |
+|---|---|---|
+| pyramid | 1.70554 | 284.256 |
+| fast | 1.73261 | 108.288 |
+| klt | 3.9204 | 490.05 |
+| msckf_propagate | 2.92702 | 148.579 |
+| msckf_update | 0.852432 | 71.6387 |
+
+vio_bench: wrote /mnt/d/work/field-notes/cov-compare/double_run.json and /mnt/d/work/field-notes/cov-compare/double_run.md

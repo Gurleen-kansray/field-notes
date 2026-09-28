@@ -18,4 +18,432 @@ vio_bench: SLOW frame 62 took 1044.21 ms, tracked 150, state dim 81
 vio_bench: SLOW frame 65 took 1076.01 ms, tracked 150, state dim 81
 vio_bench: processed 66/300 frames (22%)vio_bench: processed 69/300 frames (23%)UPD 19;UPD 19;
 vio_bench: SLOW frame 70 took 1001.86 ms, tracked 150, state dim 81
-vio_bench: processed 72/300 frames (24%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: processed 72/300 frames (24%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 72 took 119966 ms, tracked 150, state dim 81
+vio_bench: processed 75/300 frames (25%)UPD 19;
+vio_bench: SLOW frame 76 took 1021.31 ms, tracked 150, state dim 81
+vio_bench: processed 78/300 frames (26%)UPD 19;
+vio_bench: SLOW frame 80 took 1055.37 ms, tracked 150, state dim 81
+vio_bench: processed 81/300 frames (27%)UPD 19;
+vio_bench: SLOW frame 81 took 1038.23 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 83 took 128746 ms, tracked 150, state dim 81
+vio_bench: processed 84/300 frames (28%)UPD 5;vio_bench: processed 87/300 frames (29%)UPD 1;vio_bench: processed 90/300 frames (30%)UPD 19;
+vio_bench: SLOW frame 91 took 1014.38 ms, tracked 150, state dim 81
+UPD 19;
+vio_bench: SLOW frame 92 took 1043.66 ms, tracked 150, state dim 81
+vio_bench: processed 93/300 frames (31%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 94 took 115722 ms, tracked 150, state dim 81
+UPD 1;vio_bench: processed 96/300 frames (32%)UPD 19;
+vio_bench: SLOW frame 98 took 1029.54 ms, tracked 150, state dim 81
+vio_bench: processed 99/300 frames (33%)UPD 11;vio_bench: processed 102/300 frames (34%)UPD 19;UPD 19;vio_bench: processed 105/300 frames (35%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 105 took 81461.7 ms, tracked 150, state dim 81
+UPD 1;vio_bench: processed 108/300 frames (36%)UPD 3;UPD 19;UPD 5;UPD 1;
+vio_bench: SLOW frame 109 took 1404.42 ms, tracked 150, state dim 81
+UPD 7;UPD 7;vio_bench: processed 111/300 frames (37%)UPD 9;UPD 5;UPD 11;UPD 11;UPD 11;UPD 11;
+vio_bench: SLOW frame 112 took 2297.56 ms, tracked 150, state dim 81
+UPD 19;UPD 13;UPD 13;
+vio_bench: SLOW frame 113 took 2358.76 ms, tracked 150, state dim 81
+vio_bench: processed 114/300 frames (38%)UPD 19;UPD 19;UPD 15;UPD 1;
+vio_bench: SLOW frame 114 took 2885.04 ms, tracked 150, state dim 81
+UPD 1;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 116 took 113718 ms, tracked 150, state dim 81
+vio_bench: processed 117/300 frames (39%)UPD 1;UPD 1;UPD 1;UPD 1;UPD 3;vio_bench: processed 120/300 frames (40%)UPD 19;UPD 5;
+vio_bench: SLOW frame 120 took 1387.2 ms, tracked 150, state dim 81
+UPD 19;UPD 19;
+vio_bench: SLOW frame 121 took 1981.86 ms, tracked 150, state dim 81
+UPD 19;UPD 19;
+vio_bench: SLOW frame 122 took 2082.05 ms, tracked 150, state dim 81
+vio_bench: processed 123/300 frames (41%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;UPD 13;
+vio_bench: SLOW frame 124 took 5281.64 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 3;
+vio_bench: SLOW frame 125 took 4955.29 ms, tracked 150, state dim 81
+vio_bench: processed 126/300 frames (42%)UPD 19;UPD 19;
+vio_bench: SLOW frame 126 took 1954.42 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 1;UPD 1;
+vio_bench: SLOW frame 127 took 104846 ms, tracked 150, state dim 81
+UPD 19;UPD 19;
+vio_bench: SLOW frame 128 took 1945.08 ms, tracked 150, state dim 81
+vio_bench: processed 129/300 frames (43%)UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 129 took 2900.41 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 17;
+vio_bench: SLOW frame 131 took 4782.26 ms, tracked 150, state dim 81
+vio_bench: processed 132/300 frames (44%)UPD 19;UPD 19;
+vio_bench: SLOW frame 132 took 1950.9 ms, tracked 150, state dim 81
+UPD 19;UPD 15;
+vio_bench: SLOW frame 133 took 1725.08 ms, tracked 150, state dim 81
+vio_bench: processed 135/300 frames (45%)UPD 19;UPD 19;UPD 19;UPD 13;
+vio_bench: SLOW frame 135 took 3443.26 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 136 took 3854.2 ms, tracked 150, state dim 81
+UPD 19;UPD 19;
+vio_bench: SLOW frame 137 took 1950.85 ms, tracked 150, state dim 81
+vio_bench: processed 138/300 frames (46%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 138 took 104504 ms, tracked 150, state dim 81
+UPD 19;UPD 19;
+vio_bench: SLOW frame 139 took 1975.14 ms, tracked 150, state dim 81
+UPD 19;UPD 19;
+vio_bench: SLOW frame 140 took 2075.08 ms, tracked 150, state dim 81
+vio_bench: processed 141/300 frames (47%)UPD 19;
+vio_bench: SLOW frame 141 took 1027.54 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 15;UPD 9;UPD 9;UPD 7;
+vio_bench: SLOW frame 142 took 4035.43 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 7;UPD 9;UPD 5;UPD 5;
+vio_bench: SLOW frame 143 took 3304.6 ms, tracked 150, state dim 81
+vio_bench: processed 144/300 frames (48%)UPD 19;UPD 9;UPD 15;
+vio_bench: SLOW frame 144 took 2210.1 ms, tracked 150, state dim 81
+UPD 11;UPD 11;UPD 7;UPD 3;UPD 11;UPD 7;
+vio_bench: SLOW frame 145 took 2654.59 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 1;
+vio_bench: SLOW frame 146 took 3090.87 ms, tracked 150, state dim 81
+vio_bench: processed 147/300 frames (49%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 15;UPD 15;UPD 15;UPD 15;UPD 15;UPD 15;UPD 15;UPD 15;UPD 15;UPD 15;UPD 15;UPD 15;UPD 15;UPD 15;UPD 15;UPD 15;UPD 15;UPD 13;UPD 1;UPD 3;
+vio_bench: SLOW frame 147 took 18540.7 ms, tracked 150, state dim 81
+UPD 19;UPD 17;UPD 17;UPD 17;
+vio_bench: SLOW frame 148 took 3547.66 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 149 took 57748.4 ms, tracked 150, state dim 81
+vio_bench: processed 150/300 frames (50%)UPD 3;UPD 19;UPD 3;
+vio_bench: SLOW frame 151 took 1250.58 ms, tracked 150, state dim 81
+UPD 3;UPD 3;vio_bench: processed 153/300 frames (51%)UPD 19;UPD 5;UPD 5;UPD 5;UPD 5;UPD 5;UPD 5;UPD 9;UPD 9;UPD 9;UPD 9;UPD 9;UPD 9;UPD 9;UPD 9;UPD 9;UPD 7;UPD 3;UPD 1;
+vio_bench: SLOW frame 153 took 7242.89 ms, tracked 150, state dim 81
+UPD 19;UPD 5;
+vio_bench: SLOW frame 154 took 1309.36 ms, tracked 150, state dim 81
+vio_bench: processed 156/300 frames (52%)UPD 11;UPD 5;UPD 3;
+vio_bench: SLOW frame 156 took 1039.52 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 5;UPD 5;
+vio_bench: SLOW frame 157 took 2664.35 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 15;UPD 1;
+vio_bench: SLOW frame 158 took 6931.3 ms, tracked 150, state dim 81
+vio_bench: processed 159/300 frames (53%)UPD 19;UPD 1;
+vio_bench: SLOW frame 159 took 1239.19 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 160 took 43733.1 ms, tracked 150, state dim 81
+UPD 19;UPD 13;
+vio_bench: SLOW frame 161 took 1663.24 ms, tracked 150, state dim 81
+vio_bench: processed 162/300 frames (54%)UPD 19;
+vio_bench: SLOW frame 162 took 1114.52 ms, tracked 150, state dim 81
+UPD 19;UPD 3;
+vio_bench: SLOW frame 163 took 1270.08 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 164 took 21366.9 ms, tracked 150, state dim 81
+vio_bench: processed 165/300 frames (55%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 165 took 5004.68 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 9;
+vio_bench: SLOW frame 166 took 3484.4 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 11;UPD 3;
+vio_bench: SLOW frame 167 took 3806.46 ms, tracked 150, state dim 81
+vio_bench: processed 168/300 frames (56%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 3;
+vio_bench: SLOW frame 168 took 5214.86 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 169 took 16392.1 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 17;
+vio_bench: SLOW frame 170 took 2780.63 ms, tracked 150, state dim 81
+vio_bench: processed 171/300 frames (57%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 1;
+vio_bench: SLOW frame 171 took 54975 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 172 took 3916.63 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 173 took 3026.48 ms, tracked 150, state dim 81
+vio_bench: processed 174/300 frames (58%)UPD 19;UPD 19;UPD 3;UPD 15;
+vio_bench: SLOW frame 174 took 2953.11 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 11;
+vio_bench: SLOW frame 175 took 21721.7 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 5;
+vio_bench: SLOW frame 176 took 4453.16 ms, tracked 150, state dim 81
+vio_bench: processed 177/300 frames (59%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 9;UPD 9;UPD 5;
+vio_bench: SLOW frame 177 took 5410.68 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 178 took 4964.66 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;UPD 1;
+vio_bench: SLOW frame 179 took 5947.2 ms, tracked 150, state dim 81
+vio_bench: processed 180/300 frames (60%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 15;UPD 15;UPD 15;UPD 15;UPD 7;
+vio_bench: SLOW frame 180 took 20172.4 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 17;
+vio_bench: SLOW frame 181 took 4033.81 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 11;
+vio_bench: SLOW frame 182 took 44716.7 ms, tracked 150, state dim 81
+vio_bench: processed 183/300 frames (61%)UPD 19;UPD 19;UPD 19;UPD 3;
+vio_bench: SLOW frame 183 took 3299.37 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 1;
+vio_bench: SLOW frame 184 took 5382.44 ms, tracked 150, state dim 81
+UPD 19;UPD 19;
+vio_bench: SLOW frame 185 took 2195.7 ms, tracked 150, state dim 81
+vio_bench: processed 186/300 frames (62%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 186 took 18148 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 7;UPD 13;UPD 11;
+vio_bench: SLOW frame 187 took 5609.41 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 188 took 5182.07 ms, tracked 150, state dim 81
+vio_bench: processed 189/300 frames (63%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;UPD 9;
+vio_bench: SLOW frame 189 took 8047.33 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 1;
+vio_bench: SLOW frame 190 took 6326.43 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 191 took 21338.9 ms, tracked 150, state dim 81
+vio_bench: processed 192/300 frames (64%)UPD 19;UPD 19;UPD 19;UPD 9;UPD 9;
+vio_bench: SLOW frame 192 took 3948.92 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 11;UPD 11;UPD 9;UPD 5;
+vio_bench: SLOW frame 193 took 41920.4 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;
+vio_bench: SLOW frame 194 took 6638.7 ms, tracked 150, state dim 81
+vio_bench: processed 195/300 frames (65%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 15;
+vio_bench: SLOW frame 195 took 10541.2 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 3;
+vio_bench: SLOW frame 196 took 6110.46 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 7;
+vio_bench: SLOW frame 197 took 14033.2 ms, tracked 150, state dim 81
+vio_bench: processed 198/300 frames (66%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 7;
+vio_bench: SLOW frame 198 took 7292.61 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 17;
+vio_bench: SLOW frame 199 took 6682.79 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 11;
+vio_bench: SLOW frame 200 took 8430.71 ms, tracked 150, state dim 81
+vio_bench: processed 201/300 frames (67%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;UPD 3;
+vio_bench: SLOW frame 201 took 10548.4 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 15;UPD 15;UPD 15;
+vio_bench: SLOW frame 202 took 27053 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 203 took 4883.51 ms, tracked 150, state dim 81
+vio_bench: processed 204/300 frames (68%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 204 took 39326.7 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 205 took 7942.06 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 206 took 10506.5 ms, tracked 150, state dim 81
+vio_bench: processed 207/300 frames (69%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 207 took 5856.03 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 208 took 15087.5 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 209 took 6117.55 ms, tracked 150, state dim 81
+vio_bench: processed 210/300 frames (70%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 210 took 7254.65 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 211 took 8105.64 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 212 took 11354.5 ms, tracked 150, state dim 81
+vio_bench: processed 213/300 frames (71%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 213 took 29270.8 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 214 took 6520.07 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 215 took 39153.1 ms, tracked 150, state dim 81
+vio_bench: processed 216/300 frames (72%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 216 took 9524.7 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 217 took 11753 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 218 took 6801.86 ms, tracked 150, state dim 81
+vio_bench: processed 219/300 frames (73%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 219 took 14165.6 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 220 took 5881.38 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 221 took 7802.95 ms, tracked 150, state dim 81
+vio_bench: processed 222/300 frames (74%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 222 took 7698.16 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 223 took 10546.4 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 224 took 25887.5 ms, tracked 150, state dim 81
+vio_bench: processed 225/300 frames (75%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 225 took 5775.03 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 226 took 38790.7 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 227 took 9937.73 ms, tracked 150, state dim 81
+vio_bench: processed 228/300 frames (76%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 228 took 11610.3 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 229 took 6816.96 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 230 took 15195.2 ms, tracked 150, state dim 81
+vio_bench: processed 231/300 frames (77%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 231 took 5630.41 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 232 took 7970.49 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 233 took 7880.64 ms, tracked 150, state dim 81
+vio_bench: processed 234/300 frames (78%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;UPD 3;
+vio_bench: SLOW frame 234 took 10958.1 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 15;
+vio_bench: SLOW frame 235 took 26376.8 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 9;
+vio_bench: SLOW frame 236 took 6012.97 ms, tracked 150, state dim 81
+vio_bench: processed 237/300 frames (79%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 1;UPD 9;UPD 5;
+vio_bench: SLOW frame 237 took 36621.5 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 238 took 8524.85 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 239 took 9443.61 ms, tracked 150, state dim 81
+vio_bench: processed 240/300 frames (80%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 240 took 4728.3 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 9;UPD 9;
+vio_bench: SLOW frame 241 took 14078.4 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 17;
+vio_bench: SLOW frame 242 took 4644.27 ms, tracked 150, state dim 81
+vio_bench: processed 243/300 frames (81%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 243 took 6608.63 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 244 took 5783.41 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 245 took 12226.8 ms, tracked 150, state dim 81
+vio_bench: processed 246/300 frames (82%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 246 took 24146.6 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 17;
+vio_bench: SLOW frame 247 took 6739.53 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 248 took 38030.4 ms, tracked 150, state dim 81
+vio_bench: processed 249/300 frames (83%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;
+vio_bench: SLOW frame 249 took 10414.8 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 1;UPD 7;UPD 5;
+vio_bench: SLOW frame 250 took 12423.2 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 3;
+vio_bench: SLOW frame 251 took 6970.6 ms, tracked 150, state dim 81
+vio_bench: processed 252/300 frames (84%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 11;UPD 1;
+vio_bench: SLOW frame 252 took 15731.3 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 7;
+vio_bench: SLOW frame 253 took 5158.76 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 254 took 6747 ms, tracked 150, state dim 81
+vio_bench: processed 255/300 frames (85%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 11;UPD 15;
+vio_bench: SLOW frame 255 took 8119.36 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;UPD 5;
+vio_bench: SLOW frame 256 took 11955.7 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 15;
+vio_bench: SLOW frame 257 took 22226.4 ms, tracked 150, state dim 81
+vio_bench: processed 258/300 frames (86%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 258 took 8803.35 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 3;
+vio_bench: SLOW frame 259 took 32312.7 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;UPD 13;UPD 5;
+vio_bench: SLOW frame 260 took 13028.4 ms, tracked 150, state dim 81
+vio_bench: processed 261/300 frames (87%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 15;UPD 5;UPD 7;
+vio_bench: SLOW frame 261 took 14845.3 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 3;UPD 17;
+vio_bench: SLOW frame 262 took 7878.53 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 9;UPD 9;
+vio_bench: SLOW frame 263 took 11594.8 ms, tracked 150, state dim 81
+vio_bench: processed 264/300 frames (88%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;UPD 15;
+vio_bench: SLOW frame 264 took 6217.2 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 9;
+vio_bench: SLOW frame 265 took 7187 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 11;UPD 11;UPD 17;
+vio_bench: SLOW frame 266 took 8667.79 ms, tracked 150, state dim 81
+vio_bench: processed 267/300 frames (89%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 17;UPD 17;UPD 17;
+vio_bench: SLOW frame 267 took 10088.7 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 268 took 16959.1 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 15;UPD 9;UPD 15;UPD 1;UPD 9;UPD 9;
+vio_bench: SLOW frame 269 took 11612.3 ms, tracked 150, state dim 81
+vio_bench: processed 270/300 frames (90%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 9;
+vio_bench: SLOW frame 270 took 28830.1 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 9;UPD 7;UPD 15;UPD 11;UPD 17;
+vio_bench: SLOW frame 271 took 17760.6 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 15;UPD 1;
+vio_bench: SLOW frame 272 took 14854.3 ms, tracked 150, state dim 81
+vio_bench: processed 273/300 frames (91%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;
+vio_bench: SLOW frame 273 took 6817.05 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 5;UPD 5;UPD 5;UPD 1;UPD 1;UPD 1;
+vio_bench: SLOW frame 274 took 10223.4 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 1;
+vio_bench: SLOW frame 275 took 4029.29 ms, tracked 150, state dim 81
+vio_bench: processed 276/300 frames (92%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 5;UPD 5;UPD 17;UPD 11;UPD 11;UPD 3;UPD 11;UPD 9;UPD 1;UPD 7;UPD 7;
+vio_bench: SLOW frame 276 took 11830.6 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 11;UPD 17;UPD 7;UPD 15;UPD 11;
+vio_bench: SLOW frame 277 took 7843.01 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;UPD 13;UPD 13;UPD 13;UPD 17;UPD 13;
+vio_bench: SLOW frame 278 took 11633.7 ms, tracked 150, state dim 81
+vio_bench: processed 279/300 frames (93%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 17;UPD 13;UPD 15;UPD 9;UPD 15;UPD 13;UPD 11;
+vio_bench: SLOW frame 279 took 22400.7 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 17;UPD 17;UPD 9;UPD 1;UPD 11;UPD 3;UPD 13;UPD 15;UPD 17;UPD 17;UPD 13;
+vio_bench: SLOW frame 280 took 12838.4 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 11;UPD 11;UPD 7;UPD 11;UPD 7;UPD 15;UPD 7;UPD 3;UPD 3;UPD 1;UPD 17;UPD 17;
+vio_bench: SLOW frame 281 took 19919.5 ms, tracked 150, state dim 81
+vio_bench: processed 282/300 frames (94%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 5;UPD 3;UPD 15;UPD 11;UPD 17;
+vio_bench: SLOW frame 282 took 9252.95 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 3;UPD 17;UPD 5;UPD 5;
+vio_bench: SLOW frame 283 took 9147.76 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 1;
+vio_bench: SLOW frame 284 took 2056.4 ms, tracked 150, state dim 81
+vio_bench: processed 285/300 frames (95%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 1;
+vio_bench: SLOW frame 285 took 8681.22 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;
+vio_bench: SLOW frame 286 took 3808.36 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;UPD 1;
+vio_bench: SLOW frame 287 took 16842.2 ms, tracked 150, state dim 81
+vio_bench: processed 288/300 frames (96%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 15;
+vio_bench: SLOW frame 288 took 8279.23 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;UPD 17;UPD 11;
+vio_bench: SLOW frame 289 took 12403.1 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 15;
+vio_bench: SLOW frame 290 took 14856.5 ms, tracked 150, state dim 81
+vio_bench: processed 291/300 frames (97%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;
+vio_bench: SLOW frame 291 took 17774.6 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 7;
+vio_bench: SLOW frame 292 took 18180.1 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 9;
+vio_bench: SLOW frame 293 took 11922.5 ms, tracked 150, state dim 81
+vio_bench: processed 294/300 frames (98%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 9;UPD 1;UPD 15;
+vio_bench: SLOW frame 294 took 13411.3 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 15;UPD 9;
+vio_bench: SLOW frame 295 took 4954.06 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;UPD 7;
+vio_bench: SLOW frame 296 took 10595.6 ms, tracked 150, state dim 81
+vio_bench: processed 297/300 frames (99%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 15;
+vio_bench: SLOW frame 297 took 4543 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;UPD 11;
+vio_bench: SLOW frame 298 took 16035.7 ms, tracked 150, state dim 81
+UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;UPD 9;
+vio_bench: SLOW frame 299 took 8655.14 ms, tracked 150, state dim 81
+vio_bench: processed 300/300 frames (100%)UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 19;UPD 13;UPD 11;
+vio_bench: SLOW frame 300 took 13388.3 ms, tracked 150, state dim 81
+
+# VIO benchmark — /mnt/d/work/data/vicon_room1/vicon_room1/V1_01_easy/asl/mav0
+
+**Verdict:** ✅ OK — ATE 0.0635357 m within gate 0.5 m.
+
+## Estimator health
+
+| Check | Value |
+|---|---|
+| Init method | `static` |
+| Platform tilt at init (deg) | 112.181 |
+| Init gravity residual | 0.00183561 |
+| Camera↔IMU extrinsics | set |
+| Peak speed (m/s) | 0.448508 |
+| Max position norm (m) | 1.3371 |
+
+## Accuracy
+
+| Metric | Value |
+|---|---|
+| ATE (m) | 0.0635357 (gate 0.5) |
+| RPE RMSE (m) | 0.0700161 |
+| RPE translation (%) | 1763.63 |
+| RPE rotation (deg/m) | 77.4652 |
+
+## Performance
+
+| Metric | Value |
+|---|---|
+| Frames | 300 |
+| Real-time factor | 0.00436201× |
+| Throughput (fps) | 0.0875319 |
+| Latency p50 / p99 (ms) | 3808.36 / 129664 |
+
+## Energy (empirical — rapl)
+
+_RAPL unavailable (no powercap zones, or `energy_uj` not readable — often root-only since CVE-2020-8694). Run with energy-read access for J/W._
+
+## Operator profile (first-order; Phase-2 graphs energy input)
+
+| Stage | GFLOPs | MB moved |
+|---|---|---|
+| pyramid | 1.70554 | 284.256 |
+| fast | 1.73261 | 108.288 |
+| klt | 3.9204 | 490.05 |
+| msckf_propagate | 2.92702 | 148.579 |
+| msckf_update | 0.852432 | 71.6387 |
+
+vio_bench: wrote /mnt/d/work/field-notes/cov-compare/posit_run.json and /mnt/d/work/field-notes/cov-compare/posit_run.md
