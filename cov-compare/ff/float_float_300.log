@@ -1,0 +1,50 @@
+vio_bench: processed 3/300 frames (1%)vio_bench: processed 6/300 frames (2%)vio_bench: processed 9/300 frames (3%)vio_bench: processed 12/300 frames (4%)vio_bench: processed 15/300 frames (5%)vio_bench: processed 18/300 frames (6%)vio_bench: processed 21/300 frames (7%)vio_bench: processed 24/300 frames (8%)vio_bench: processed 27/300 frames (9%)vio_bench: processed 30/300 frames (10%)vio_bench: processed 33/300 frames (11%)vio_bench: processed 36/300 frames (12%)vio_bench: processed 39/300 frames (13%)vio_bench: processed 42/300 frames (14%)vio_bench: processed 45/300 frames (15%)vio_bench: processed 48/300 frames (16%)vio_bench: processed 51/300 frames (17%)vio_bench: processed 54/300 frames (18%)vio_bench: processed 57/300 frames (19%)vio_bench: processed 60/300 frames (20%)vio_bench: processed 63/300 frames (21%)vio_bench: processed 66/300 frames (22%)vio_bench: processed 69/300 frames (23%)vio_bench: processed 72/300 frames (24%)vio_bench: processed 75/300 frames (25%)vio_bench: processed 78/300 frames (26%)vio_bench: processed 81/300 frames (27%)vio_bench: processed 84/300 frames (28%)vio_bench: processed 87/300 frames (29%)vio_bench: processed 90/300 frames (30%)vio_bench: processed 93/300 frames (31%)vio_bench: processed 96/300 frames (32%)vio_bench: processed 99/300 frames (33%)vio_bench: processed 102/300 frames (34%)vio_bench: processed 105/300 frames (35%)vio_bench: processed 108/300 frames (36%)vio_bench: processed 111/300 frames (37%)vio_bench: processed 114/300 frames (38%)vio_bench: processed 117/300 frames (39%)vio_bench: processed 120/300 frames (40%)vio_bench: processed 123/300 frames (41%)vio_bench: processed 126/300 frames (42%)vio_bench: processed 129/300 frames (43%)vio_bench: processed 132/300 frames (44%)vio_bench: processed 135/300 frames (45%)vio_bench: processed 138/300 frames (46%)vio_bench: processed 141/300 frames (47%)vio_bench: processed 144/300 frames (48%)vio_bench: processed 147/300 frames (49%)vio_bench: processed 150/300 frames (50%)vio_bench: processed 153/300 frames (51%)vio_bench: processed 156/300 frames (52%)vio_bench: processed 159/300 frames (53%)vio_bench: processed 162/300 frames (54%)vio_bench: processed 165/300 frames (55%)vio_bench: processed 168/300 frames (56%)vio_bench: processed 171/300 frames (57%)vio_bench: processed 174/300 frames (58%)vio_bench: processed 177/300 frames (59%)vio_bench: processed 180/300 frames (60%)vio_bench: processed 183/300 frames (61%)vio_bench: processed 186/300 frames (62%)vio_bench: processed 189/300 frames (63%)vio_bench: processed 192/300 frames (64%)vio_bench: processed 195/300 frames (65%)vio_bench: processed 198/300 frames (66%)vio_bench: processed 201/300 frames (67%)vio_bench: processed 204/300 frames (68%)vio_bench: processed 207/300 frames (69%)vio_bench: processed 210/300 frames (70%)vio_bench: processed 213/300 frames (71%)vio_bench: processed 216/300 frames (72%)vio_bench: processed 219/300 frames (73%)vio_bench: processed 222/300 frames (74%)vio_bench: processed 225/300 frames (75%)vio_bench: processed 228/300 frames (76%)vio_bench: processed 231/300 frames (77%)vio_bench: processed 234/300 frames (78%)vio_bench: DIVERGED at frame 234 (t=1.40372e+09 s): speed 55.4606 m/s, |pos| 129.594 m
+vio_bench: processed 237/300 frames (79%)vio_bench: processed 240/300 frames (80%)vio_bench: processed 243/300 frames (81%)vio_bench: processed 246/300 frames (82%)vio_bench: processed 249/300 frames (83%)vio_bench: processed 252/300 frames (84%)vio_bench: processed 255/300 frames (85%)vio_bench: processed 258/300 frames (86%)vio_bench: processed 261/300 frames (87%)vio_bench: processed 264/300 frames (88%)vio_bench: processed 267/300 frames (89%)vio_bench: processed 270/300 frames (90%)vio_bench: processed 273/300 frames (91%)vio_bench: processed 276/300 frames (92%)vio_bench: processed 279/300 frames (93%)vio_bench: processed 282/300 frames (94%)vio_bench: processed 285/300 frames (95%)vio_bench: processed 288/300 frames (96%)vio_bench: processed 291/300 frames (97%)vio_bench: processed 294/300 frames (98%)vio_bench: processed 297/300 frames (99%)vio_bench: processed 300/300 frames (100%)
+# VIO benchmark — /mnt/d/work/data/vicon_room1/vicon_room1/V1_01_easy/asl/mav0
+
+**Verdict:** ❌ DIVERGED at frame 234 (t=1.40372e+09 s) — peak speed 142.758 m/s, |pos| up to 494.124 m. Metrics below are not meaningful.
+
+## Estimator health
+
+| Check | Value |
+|---|---|
+| Init method | `static` |
+| Platform tilt at init (deg) | 112.181 |
+| Init gravity residual | 0.0018357 |
+| Camera↔IMU extrinsics | set |
+| Peak speed (m/s) | 142.758 |
+| Max position norm (m) | 494.124 |
+
+## Accuracy
+
+| Metric | Value |
+|---|---|
+| ATE (m) | 136.265 (gate 0.5) |
+| RPE RMSE (m) | 56.4556 |
+| RPE translation (%) | 19030.4 |
+| RPE rotation (deg/m) | 336.828 |
+
+## Performance
+
+| Metric | Value |
+|---|---|
+| Frames | 300 |
+| Real-time factor | 0.849783× |
+| Throughput (fps) | 17.0525 |
+| Latency p50 / p99 (ms) | 33.0313 / 63.2045 |
+
+## Energy (empirical — rapl)
+
+_RAPL unavailable (no powercap zones, or `energy_uj` not readable — often root-only since CVE-2020-8694). Run with energy-read access for J/W._
+
+## Operator profile (first-order; Phase-2 graphs energy input)
+
+| Stage | GFLOPs | MB moved |
+|---|---|---|
+| pyramid | 1.70554 | 284.256 |
+| fast | 1.73261 | 108.288 |
+| klt | 3.9204 | 490.05 |
+| msckf_propagate | 2.92702 | 148.579 |
+| msckf_update | 0.852432 | 71.6387 |
+
+vio_bench: wrote /mnt/d/work/field-notes/cov-compare/ff/float_float_300.json and /mnt/d/work/field-notes/cov-compare/ff/float_float_300.md

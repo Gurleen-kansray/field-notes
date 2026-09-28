@@ -1,0 +1,59 @@
+{
+  "sequence": "/mnt/d/work/data/vicon_room1/vicon_room1/V1_01_easy/asl/mav0",
+  "accuracy": {
+    "available": true,
+    "ate_m": 0.255464,
+    "ate_gate_m": 0.5,
+    "rpe_rmse_m": 0.294445,
+    "rpe_translation_pct": 17.0773,
+    "rpe_rotation_deg_per_m": 3.21376
+  },
+  "performance": {
+    "frames": 2912,
+    "sequence_duration_s": 145.55,
+    "processing_s": 166.044,
+    "real_time_factor": 0.876575,
+    "fps": 17.5375,
+    "latency_p50_ms": 39.647,
+    "latency_p99_ms": 53.693
+  },
+  "energy": {
+    "backend": "rapl",
+    "rapl_available": false,
+    "energy_j": 0,
+    "energy_per_frame_mj": 0,
+    "avg_power_w": 0
+  },
+  "efficiency": {
+    "accuracy_within_gate": true,
+    "fps_per_watt": 0
+  },
+  "health": {
+    "init_method": "static",
+    "init_tilt_deg": 112.181,
+    "init_gravity_residual": 0.00183561,
+    "extrinsics_identity": false,
+    "diverged": false,
+    "divergence_frame": 0,
+    "divergence_time_s": 0,
+    "peak_speed_mps": 1.07036,
+    "max_position_m": 5.43412
+  },
+  "operator_profile": [
+    { "name": "pyramid", "flops": 1.65551e+10, "bytes": 2.75918e+09 },
+    { "name": "fast", "flops": 1.68178e+10, "bytes": 1.05112e+09 },
+    { "name": "klt", "flops": 3.73814e+10, "bytes": 4.67268e+09 },
+    { "name": "msckf_propagate", "flops": 3.06825e+10, "bytes": 1.51944e+09 },
+    { "name": "msckf_update", "flops": 8.66813e+09, "bytes": 7.06523e+08 }
+  ],
+  "counts": {
+    "width": 752,
+    "height": 480,
+    "pyramid_levels": 3,
+    "avg_tracked_features": 147.349,
+    "avg_state_dim": 80.7734,
+    "imu_samples": 29111,
+    "camera_updates": 2912,
+    "avg_update_rows": 294.698
+  }
+}
